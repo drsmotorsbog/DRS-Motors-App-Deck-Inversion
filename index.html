@@ -633,6 +633,24 @@ h3.luz,.ico.luz{color:var(--acc-2)}
 .g-paso .vn{font-family:var(--fd);font-size:44px;line-height:1;color:var(--c)}
 .g-num{color:var(--txt-1)}
 .g-num b{font-weight:600}
+/* Costos operativos: estructura mensual y anual */
+.cos-cab{display:flex;flex-wrap:wrap;gap:24px 38px;align-items:end;justify-content:space-between}
+.cos-tot{display:flex;flex-wrap:wrap;gap:15px 38px}
+.cos-tot div{display:grid;gap:4px}
+.cos-tot div:first-child .cifra-d{color:var(--acc-2)}
+.cos-barra{display:flex;gap:2px;height:24px;margin-top:24px}
+.cos-barra i{display:block;height:100%;min-width:2px;transition:flex-grow .7s cubic-bezier(.3,.9,.3,1)}
+.cos-t tr.sec th{color:var(--c);border-left:4px solid var(--c);padding-left:15px}
+.cos-t tr.tot th,.cos-t tr.tot td{color:var(--c)}
+.cos-t td.p{color:var(--txt-3)}
+.cos-t{min-width:0}
+.sv-t .bar{display:block;height:4px;margin-top:7.5px;margin-left:auto;background:var(--c);transform-origin:right center}
+.sv-t tr.sub th .chip{margin-left:7.5px;vertical-align:2px}
+.sv-t tr.sub th small{letter-spacing:.02em;line-height:1.5}
+@media (max-width: 480px){ .sv-t tr > :nth-child(4){display:table-cell} .sv-t tr > :nth-child(3){display:none} }
+.cos-t tr.sub th small{display:block;font-size:11px;letter-spacing:var(--track-caption);color:var(--txt-3);margin-top:2px}
+@media (max-width: 480px){ .cos-t tr > :nth-child(4){display:none} .cos-t th,.cos-t td{padding-inline:7.5px} .cos-t tr.sub th{padding-left:15px} }
+.cos-t tfoot tr + tr th,.cos-t tfoot tr + tr td{font-weight:400;color:var(--txt-2)}
 @media (max-width: 960px){ .pot,.maxr{grid-template-columns:minmax(0,1fr)} .geo{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width: 480px){ .geo{grid-template-columns:minmax(0,1fr)} }
 </style>
@@ -873,7 +891,7 @@ h3.luz,.ico.luz{color:var(--acc-2)}
     <div class="cab">
       <p class="eyebrow">05</p>
       <h2 data-cota>Mercado potencial · TAM, SAM, SOM</h2>
-      <p>Base: propietarios personas naturales (encuestas de hogares), no matrícula. TAM: gasto anual en servicios intermediables. SAM: comisiones si todo ese gasto pasara por la app. SOM: penetración alcanzable.</p>
+      <p>Base: propietarios personas naturales (encuestas de hogares), no matrícula. TAM: gasto y valor transado al año en los 11 servicios de la app. SAM: ingreso si todo pasara por la app con su tarifa. SOM: penetración alcanzable.</p>
     </div>
     <div class="pot">
       <svg class="cuadros" id="cuadros" viewBox="0 0 400 400" role="img" aria-label="Propietarios por fase geográfica, área proporcional"></svg>
@@ -881,22 +899,43 @@ h3.luz,.ico.luz{color:var(--acc-2)}
         <table class="pot-t">
           <thead><tr><th>Fase geográfica</th><th class="n">Dueños carro</th><th class="n">Dueños moto</th><th class="n">TAM / año</th><th class="n">SAM / año</th></tr></thead>
           <tbody>
-            <tr data-g="1"><th><i class="pt-g"></i>F1 · Zonas iniciales de Bogotá</th><td class="n">240 mil</td><td class="n">43 mil</td><td class="n">$ 1,2 billones</td><td class="n">$ 106 mil M</td></tr>
-            <tr data-g="2"><th><i class="pt-g"></i>F2 · Bogotá</th><td class="n">860 mil</td><td class="n">525 mil</td><td class="n">$ 4,7 billones</td><td class="n">$ 424 mil M</td></tr>
-            <tr data-g="3"><th><i class="pt-g"></i>F3 · Bogotá-Región + 7 áreas metropolitanas</th><td class="n">2,4 M</td><td class="n">3,4 M</td><td class="n">$ 14 billones</td><td class="n">$ 1.235 mil M</td></tr>
-            <tr data-g="4"><th><i class="pt-g"></i>F4 · Colombia</th><td class="n">4,1 M</td><td class="n">5,0 M</td><td class="n">$ 23 billones</td><td class="n">$ 2.020 mil M</td></tr>
+            <tr data-g="1"><th><i class="pt-g"></i>F1 · Zonas iniciales de Bogotá</th><td class="n">240 mil</td><td class="n">43 mil</td><td class="n gt">—</td><td class="n gs">—</td></tr>
+            <tr data-g="2"><th><i class="pt-g"></i>F2 · Bogotá</th><td class="n">860 mil</td><td class="n">525 mil</td><td class="n gt">—</td><td class="n gs">—</td></tr>
+            <tr data-g="3"><th><i class="pt-g"></i>F3 · Bogotá-Región + 7 áreas metropolitanas</th><td class="n">2,4 M</td><td class="n">3,4 M</td><td class="n gt">—</td><td class="n gs">—</td></tr>
+            <tr data-g="4"><th><i class="pt-g"></i>F4 · Colombia</th><td class="n">4,1 M</td><td class="n">5,0 M</td><td class="n gt">—</td><td class="n gs">—</td></tr>
           </tbody>
         </table>
       </div>
     </div>
-    <p class="fuente" style="margin-top:15px">Gasto intermediable por dueño y año (E): carro en Bogotá $ 4,61 M (parqueo 1,2 · taller 1,5 · SOAT 0,7 · todo riesgo 0,66 · lavado 0,3 · tecnomecánica 0,25); carro en otras ciudades $ 4,01 M; moto $ 1,3–1,4 M. Comisiones del SAM: 10 % en parqueo, lavado, taller, tecnomecánica y todo riesgo; 4 % en SOAT. Dueños: EM2023 Bogotá, RUNT 2025 y ANDI; estimaciones propias marcadas (E).</p>
+    <p class="fuente" style="margin-top:15px">Dueños: EM2023 Bogotá, RUNT 2025 y ANDI. TAM y SAM: suma de las líneas de servicio de abajo; estimaciones propias marcadas (E).</p>
 
     <div class="rej rej-4" style="margin-top:38px">
       <div class="dato" data-sube><b class="cifra-d num">47 % · 56 %</b><span>Evasión de SOAT y de tecnomecánica (RUNT). Mercado de las alertas de Mi garaje.</span></div>
       <div class="dato" data-sube><b class="cifra-d num" data-odo>1.787.268</b><span>Traspasos en 2025, +16,3 % (RUNT). Mercado de trámites y compraventa.</span></div>
-      <div class="dato" data-sube><b class="cifra-d num">$ 3,6 billones</b><span>Primas de SOAT en 2025; 11,3 M de vehículos asegurados (Fasecolda).</span></div>
-      <div class="dato" data-sube><b class="cifra-d num">2,48 M</b><span>Vehículos con seguro todo riesgo en 2025 (Fasecolda).</span></div>
+      <div class="dato" data-sube><b class="cifra-d num">$ 4,13 billones</b><span>Primas de SOAT emitidas en 2025 (Fasecolda).</span></div>
+      <div class="dato" data-sube><b class="cifra-d num">$ 6,59 billones</b><span>Primas del ramo automóviles en 2025; 2,48 M de vehículos con todo riesgo (Fasecolda).</span></div>
     </div>
+
+    <div class="cab" style="margin-top:60px">
+      <p class="eyebrow">Por línea de servicio</p>
+      <h2 data-cota>TAM y SAM por servicio</h2>
+      <p>Mercado anual de cada servicio de la app y tarifa de la plataforma.</p>
+    </div>
+    <div class="cos-cab">
+      <div class="seg" role="group" aria-label="Fase geográfica" id="svFase">
+        <button type="button" data-g="1" aria-pressed="false"><span>F1</span></button>
+        <button type="button" data-g="2" aria-pressed="false"><span>F2</span></button>
+        <button type="button" data-g="3" aria-pressed="false"><span>F3</span></button>
+        <button type="button" data-g="4" aria-pressed="true"><span>F4</span></button>
+      </div>
+      <div class="cos-tot">
+        <div><span class="etq suave">TAM / año</span><b class="cifra-d num" id="svTam">—</b></div>
+        <div><span class="etq suave">SAM / año</span><b class="cifra-d num" id="svSam">—</b></div>
+      </div>
+    </div>
+    <p class="etq suave" id="svGeo" style="margin-top:15px"></p>
+    <div class="tabla-env" style="margin-top:15px"><table class="pyg cos-t sv-t" id="svT"></table></div>
+    <p class="fuente" style="margin-top:15px">Valores por dueño y año en Bogotá; fuera de Bogotá el parqueo se toma al 50 %. Volúmenes nacionales (traspasos, crédito, publicidad) repartidos según dueños. Tarifas (E) sobre referencias de mercado: comisión del ramo automóviles 15,6 % (Fasecolda); SOAT sin tope de comisión vigente desde la sentencia C-395 de 2022; RTM con tarifa regulada, solo cargo fijo por cita. Excluye repuestos y mensualidades de comercios. <i>Comentario jurídico: cobrar comisión de seguros exige ser intermediario inscrito ante la Superfinanciera o actuar con uno; en parqueaderos la tarifa va al operador, nunca por encima del tope por minuto.</i></p>
 
     <div class="cab" style="margin-top:60px">
       <p class="eyebrow">Revenue máximo</p>
@@ -922,7 +961,7 @@ h3.luz,.ico.luz{color:var(--acc-2)}
         <fieldset class="control">
           <legend>Método</legend>
           <div class="seg seg-v" id="mxMet">
-            <label><input type="radio" name="mxm" value="arriba" checked><span>Arriba-abajo · $ 8.750 carro / $ 3.500 moto al mes</span></label>
+            <label><input type="radio" name="mxm" value="arriba" checked><span id="mxArribaTxt">Arriba-abajo · por línea de servicio</span></label>
             <label><input type="radio" name="mxm" value="P"><span>Abajo-arriba · pesimista · $ 1.200 al mes</span></label>
             <label><input type="radio" name="mxm" value="C"><span>Abajo-arriba · conservador · $ 3.650 al mes</span></label>
             <label><input type="radio" name="mxm" value="F"><span>Abajo-arriba · favorable · $ 5.500 al mes</span></label>
@@ -943,7 +982,7 @@ h3.luz,.ico.luz{color:var(--acc-2)}
         <svg id="mxGraf" viewBox="0 0 640 230" role="img" aria-label="Ingreso anual potencial por fase geográfica"></svg>
       </div>
     </div>
-    <p class="fuente" style="margin-top:15px">Arriba-abajo (E): por usuario activo pasa por la app el 30 % de su gasto en parqueo, lavado, SOAT y tecnomecánica, 15 % del taller y 10 % del todo riesgo, + $ 15.000 al año de publicidad y crédito; excluye mensualidades de comercios. Abajo-arriba: ingreso por usuario activo del tablero de proyecciones (año 3–5). Techo con 30 % de penetración en Colombia: $ 120–192 mil M al año (abajo-arriba conservador a arriba-abajo).</p>
+    <p class="fuente" style="margin-top:15px">Arriba-abajo (E): por usuario activo pasa por la app el 30 % de su gasto en parqueo, lavado, RTM, peritaje, SOAT y avisos; 15 % del taller; 10 % del todo riesgo y de la compraventa; 5 % del crédito; toda su publicidad, con la tarifa de cada línea. Abajo-arriba: ingreso por usuario activo del tablero de proyecciones (año 3–5). <span id="mxTecho"></span></p>
   </div>
 </section>
 
@@ -1303,27 +1342,26 @@ h3.luz,.ico.luz{color:var(--acc-2)}
   <div class="envoltura">
     <div class="cab">
       <p class="eyebrow">14</p>
-      <h2 data-cota>Costos operativos · desde el mes 9</h2>
-      <p>Meses 5 a 8: $ 541.200 al mes de software (incluye Vercel Pro y Expo Starter).</p>
+      <h2 data-cota>Costos operativos · estructura mensual y anual</h2>
+      <p>Operación desde el mes 9. Pesos de 2026, sin inflación.</p>
     </div>
-    <div class="tabla-env">
-      <table>
-        <thead><tr><th>Servicio</th><th>Uso</th><th class="n">Hasta 1.000 activos</th><th class="n">~10.000 activos</th></tr></thead>
-        <tbody>
-          <tr><th>Claude Max 5x</th><td>Desarrollo continuo</td><td class="n">330.000</td><td class="n">330.000</td></tr>
-          <tr><th>Supabase</th><td>Base de datos, autenticación, archivos</td><td class="n">82.500</td><td class="n">≈ 247.500</td></tr>
-          <tr><th>Expo EAS</th><td>Compilación y actualizaciones</td><td class="n">0</td><td class="n">≈ 178.000</td></tr>
-          <tr><th>Apple Developer</th><td>App Store (prorrateado)</td><td class="n">27.200</td><td class="n">27.200</td></tr>
-          <tr><th>Google Maps</th><td>Mapa, lugares, rutas</td><td class="n">0</td><td class="n">≈ 247.500 (est.)</td></tr>
-          <tr><th>Correo y monitoreo</th><td>Comprobantes y alertas</td><td class="n">0</td><td class="n">≈ 152.000</td></tr>
-          <tr><th>Dominio</th><td>Prorrateado</td><td class="n">11.000</td><td class="n">11.000</td></tr>
-          <tr><th>Panel web, notificaciones, GitHub, DIAN</th><td>Planes gratis (Vercel Pro: 66.000)</td><td class="n">0</td><td class="n">0</td></tr>
-        </tbody>
-        <tfoot><tr><th colspan="2">Software al mes</th><td class="n">≈ 451.000</td><td class="n">≈ 1.193.000</td></tr></tfoot>
-      </table>
+    <div class="cos-cab">
+      <div class="seg" role="group" aria-label="Escala de usuarios activos" id="cosEsc">
+        <button type="button" data-e="0" aria-pressed="true"><span>Hasta 1.000 activos</span></button>
+        <button type="button" data-e="1" aria-pressed="false"><span>~10.000 activos</span></button>
+      </div>
+      <div class="cos-tot">
+        <div><span class="etq suave">Total mensual</span><b class="cifra-d num" id="cosMes">—</b></div>
+        <div><span class="etq suave">Total anual</span><b class="cifra-d num" id="cosAnio">—</b></div>
+        <div><span class="etq suave">Anual sin nómina</span><b class="cifra-d num" id="cosSinN">—</b></div>
+      </div>
     </div>
+    <div class="cos-barra" id="cosBarra" aria-hidden="true"></div>
+    <div class="ley" id="cosLey" style="margin-top:15px"></div>
+    <div class="tabla-env" style="margin-top:24px"><table class="pyg cos-t" id="cosT"></table></div>
+    <p class="fuente" style="margin-top:15px">Meses 5 a 8: $ 541.200 al mes de software (Vercel Pro y Expo Starter). El tablero de proyecciones usa ese valor fijo + $ 80 por usuario activo, +10 % anual. Variables (E): 0,18 reservas por usuario activo al mes, ticket de $ 40.000 y tarifa de $ 1.000 (caso conservador, año 1). Nómina: supuesto del tablero (casos pesimista y conservador); $ 0 si los fundadores la difieren.</p>
     <div class="rej rej-3" style="margin-top:38px">
-      <div class="dato"><b class="cifra-d num">≈ $ 3,95 M</b><span>Opex mensual: software + $ 3 M de pauta + $ 500.000 de comercial. Sin nómina ni contador.</span></div>
+      <div class="dato"><b class="cifra-d num">≈ $ 3,95 M</b><span>Funcionamiento mínimo al mes: software, pauta y comercios.</span></div>
       <div class="dato"><b class="cifra-d num">2,65 % + $ 700</b><span>+ IVA por transacción (Wompi). Costo variable.</span></div>
       <div class="dato"><b class="cifra-d num">$ 0</b><span>Comisión de Apple y Google en servicios consumidos fuera de la app. Contenido digital (informe, premium): 15–30 %.</span></div>
     </div>
@@ -1427,6 +1465,7 @@ h3.luz,.ico.luz{color:var(--acc-2)}
       <li>Valle de Aburrá: <a href="https://www.elcolombiano.com/medellin/motos-60-parque-automotor-del-valle-de-aburra-LA37734971" target="_blank" rel="noopener">El Colombiano</a> · Bucaramanga: <a href="https://www.vanguardia.com/area-metropolitana/bucaramanga/2025/04/12/ya-hay-467-motos-por-cada-100-habitantes-en-el-area-metropolitana-de-bucaramanga/" target="_blank" rel="noopener">Vanguardia</a> · Cartagena: <a href="https://cartagenacomovamos.org/wp-content/uploads/2025/02/comovamosen-movilidad-ICV2023-cartagenacomovamos.pdf" target="_blank" rel="noopener">Cartagena Cómo Vamos</a> · hogares con moto: <a href="https://www.bluradio.com/motor/uno-de-cada-cuatro-hogares-en-colombia-tiene-motocicleta-segun-estudio-so35" target="_blank" rel="noopener">ANDI vía Blu Radio</a>.</li>
       <li>SOAT 2026 y seguros: <a href="https://www.fasecolda.com/wp-content/uploads/Tarifas-SOAT-2026-referencia.pdf" target="_blank" rel="noopener">tarifas Fasecolda</a> · <a href="https://www.fasecolda.com/wp-content/uploads/COMUNICADO-2026-CIFRAS-FINAL.pdf" target="_blank" rel="noopener">cifras Fasecolda 2025</a> · tecnomecánica 2026: <a href="https://www.grupor5.com/tecnomecanica/2026" target="_blank" rel="noopener">Grupo R5</a> · taller: <a href="https://www.portafolio.co/economia/finanzas/tener-carro-en-colombia-ahora-cuesta-mas-mantenimiento-y-reparacion-subieron-mas-que-la-inflacion-502447" target="_blank" rel="noopener">Portafolio</a>.</li>
       <li>Penetración de referencia: <a href="https://lanotaeconomica.com.co/movidas-empresarial/flypass-primera-empresa-en-colombia-en-crear-pago-electronico-de-peajes-y-parqueaderos" target="_blank" rel="noopener">Flypass</a> · <a href="https://www.portafolio.co/negocios/empresas/colombia-entre-las-tres-plazas-claves-de-la-region-para-waze-514978" target="_blank" rel="noopener">Waze</a>.</li>
+      <li>Líneas de servicio: primas 2025 por ramo, <a href="https://www.fasecolda.com/wp-content/uploads/Cifras-diciembre-2025.pdf" target="_blank" rel="noopener">Fasecolda, diciembre de 2025</a> · comisión del ramo automóviles, <a href="https://segurocanguro.com/recursos/precio-seguro-auto-colombia/" target="_blank" rel="noopener">Seguro Canguro con datos de Fasecolda</a> · SOAT sin tope de comisión, <a href="https://ambitojuridico.com/sites/default/files/2022-11/Com-C-395-22.pdf" target="_blank" rel="noopener">sentencia C-395 de 2022</a> · posventa, <a href="https://www.elcolombiano.com/negocios/autopartes-colombia-antioquia-crecimiento-carros-motos-CP39053023" target="_blank" rel="noopener">Asopartes vía El Colombiano</a> · tecnomecánica 2026, <a href="https://www.bloomberglinea.com/latinoamerica/colombia/precios-de-la-tecnomecanica-2026-para-carros-y-motos-asi-quedaron-las-tarifas-en-colombia/" target="_blank" rel="noopener">Bloomberg Línea</a> · peritajes, <a href="https://granautos.com.co/precio-peritaje-carro/" target="_blank" rel="noopener">Granautos</a> · ventas 2025, <a href="https://www.portafolio.co/negocios/vehiculo/sector-automotor-cerro-2025-con-su-mejor-diciembre-en-seis-anos-matriculas-nuevas-crecieron-485576" target="_blank" rel="noopener">carros</a> y <a href="https://www.elcolombiano.com/negocios/bajaj-akt-suzuki-lideraron-ventas-motos-colombia-2025-DC32219578" target="_blank" rel="noopener">motos</a> · traspasos de usados, <a href="https://www.elcarrocolombiano.com/?p=290133" target="_blank" rel="noopener">Andemos</a> · crédito vehicular, <a href="https://www.elcolombiano.com/negocios/creditos-vehiculo-colombia-enero-2026-record-bancos-fenalco-NO33683428" target="_blank" rel="noopener">Fenalco Antioquia</a> · avisos, <a href="https://blog.bancolombia.com/vida-cotidiana/venta-de-carros-de-segunda/" target="_blank" rel="noopener">Bancolombia</a> · publicidad digital 2025, <a href="https://www.iabcolombia.com/noticias/la-inversion-en-publicidad-digital-en-colombia-supero-los-3-billones-en-2025/" target="_blank" rel="noopener">IAB Colombia</a> · CPM en Colombia, <a href="https://www.superads.ai/facebook-ads-costs/cpm-cost-per-mille/colombia" target="_blank" rel="noopener">Superads</a>.</li>
     </ol>
   </div>
 </section>
@@ -1798,12 +1837,75 @@ var CASOS = {
 
   /* ================= Mercado potencial ================= */
   var GEO = [
-    {g:1, n:'F1 · Zonas iniciales de Bogotá', car:240e3, moto:43e3, sam:106e9},
-    {g:2, n:'F2 · Bogotá', car:860e3, moto:525e3, sam:424e9},
-    {g:3, n:'F3 · Áreas metropolitanas', car:2.4e6, moto:3.4e6, sam:1235e9},
-    {g:4, n:'F4 · Colombia', car:4.1e6, moto:5.0e6, sam:2020e9}
+    {g:1, n:'F1 · Zonas iniciales de Bogotá', car:240e3, moto:43e3},
+    {g:2, n:'F2 · Bogotá', car:860e3, moto:525e3},
+    {g:3, n:'F3 · Áreas metropolitanas', car:2.4e6, moto:3.4e6},
+    {g:4, n:'F4 · Colombia', car:4.1e6, moto:5.0e6}
   ];
+  /* Líneas de servicio: gasto o valor transado por dueño y año en Bogotá (carro, moto), factor fuera de Bogotá,
+     tarifa de la plataforma y parte del gasto de un usuario activo que pasa por la app (arriba-abajo). Todo (E) salvo fuente. */
+  var SV = [
+    {gr:'Servicios al vehículo', c:'var(--ser-1)', l:[
+      {n:'Parqueaderos', f:'V1', car:1200000, moto:240000, fu:.5, t:.08, cap:.30, b:'Carro $ 1,2 M · moto $ 240 mil al año (E). Tope 2026: $ 230/min carro, $ 161/min moto'},
+      {n:'Lavado', f:'V1', car:300000, moto:60000, t:.10, cap:.30, b:'Carro $ 300 mil · moto $ 60 mil al año (E)'},
+      {n:'Talleres y mantenimiento', f:'V1', car:1500000, moto:500000, t:.10, cap:.15, b:'Carro $ 1,5 M · moto $ 500 mil al año (E). Posventa total: $ 26,3 billones (Asopartes)'},
+      {n:'Revisión técnico-mecánica', f:'V2', car:250000, moto:130000, t:.05, cap:.30, b:'Tarifa 2026: carro $ 317–368 mil, moto $ 218–247 mil; 56 % de evasión. Cargo fijo ≈ $ 15.000 por cita'},
+      {n:'Peritajes', f:'V2', car:17700, moto:8820, t:.18, cap:.30, b:'30 % de los traspasos (E) × $ 250 mil carro, $ 180 mil moto'}]},
+    {gr:'Seguros y crédito', c:'var(--pos)', l:[
+      {n:'SOAT', f:'V2', car:700000, moto:150000, t:.03, cap:.30, b:'Primas 2025: $ 4,13 billones (Fasecolda); parte de dueños personas naturales (E)'},
+      {n:'Seguro todo riesgo', f:'V3', car:1100000, moto:20000, t:.08, cap:.10, b:'70 % de $ 6,59 billones del ramo automóviles (E). Comisión del ramo: 15,6 %'},
+      {n:'Crédito vehicular', f:'V3', car:2384000, moto:345000, t:.01, cap:.05, b:'Desembolsos ≈ $ 11,5 billones al año (E); enero 2026: $ 1,19 billones'}]},
+    {gr:'Compraventa', c:'var(--warn)', l:[
+      {n:'Venta de vehículos', f:'V4', car:11830000, moto:980400, t:.01, cap:.10, b:'≈ 970 mil carros × $ 50 M y 817 mil motos × $ 6 M al año (E). Compraventa protegida'},
+      {n:'Publicación en marketplace', f:'V4', car:31900, moto:9800, t:.20, cap:.30, b:'1,5 avisos por traspaso × $ 90 mil carro, $ 40 mil moto; 20 % paga destacado (E)'}]},
+    {gr:'Publicidad', c:'var(--ser-3)', l:[
+      {n:'Publicidad in-app', f:'V3', car:26700, moto:26700, t:.08, cap:1, b:'8 % de $ 3,04 billones de publicidad digital (IAB 2025) (E). Inventario: 15 aperturas al mes × CPM $ 12.000'}]}
+  ];
+  var BOG = GEO[1];
+  function svTam(z, x){
+    var cb = Math.min(z.car, BOG.car), mb = Math.min(z.moto, BOG.moto), fu = x.fu || 1;
+    return x.car * (cb + (z.car - cb) * fu) + x.moto * (mb + (z.moto - mb) * fu);
+  }
+  GEO.forEach(function(z){
+    z.tam = 0; z.sam = 0;
+    SV.forEach(function(g){ g.l.forEach(function(x){ var v = svTam(z, x); z.tam += v; z.sam += v * x.t; }); });
+  });
+  var ARPU_A = {car:0, moto:0};
+  SV.forEach(function(g){ g.l.forEach(function(x){ ARPU_A.car += x.car * x.t * x.cap; ARPU_A.moto += x.moto * x.t * x.cap; }); });
   var fmtMM = function(v){ var m = v / 1e9; return '$ ' + (m >= 100 ? ent(m) : dec(m, 1)) + ' mil M'; };
+  var fmtB = function(v){ return v >= 1e12 ? '$ ' + dec(v / 1e12, v >= 1e13 ? 0 : 1) + ' billones' : fmtMM(v); };
+  [].forEach.call(document.querySelectorAll('.pot-t tbody tr'), function(tr, i){ tr.querySelector('.gt').textContent = fmtB(GEO[i].tam); tr.querySelector('.gs').textContent = fmtMM(GEO[i].sam); });
+  (function(){
+    var geo = 3, visto = QUIETO;
+    function pintar(){
+      var z = GEO[geo], maxS = 0, h = '<thead><tr><th>Servicio</th><th class="n">TAM / año</th><th class="n">Tarifa</th><th class="n">SAM / año</th></tr></thead><tbody>';
+      SV.forEach(function(g){ g.l.forEach(function(x){ maxS = Math.max(maxS, svTam(z, x) * x.t); }); });
+      SV.forEach(function(g){
+        h += '<tr class="sec" style="--c:' + g.c + '"><th colspan="4">' + g.gr + '</th></tr>';
+        g.l.forEach(function(x){
+          var tam = svTam(z, x), sam = tam * x.t;
+          h += '<tr class="sub" style="--c:' + g.c + '"><th>' + x.n + '<span class="chip ' + x.f + '">' + x.f + '</span><small>' + x.b + '</small></th><td class="n">' + fmtB(tam) + '</td><td class="n p">' + dec(x.t * 100, 0) + ' %</td><td class="n">' + fmtMM(sam) + '<i class="bar" style="width:' + Math.max(2, sam / maxS * 100) + '%;transform:scaleX(' + (visto ? 1 : 0) + ')"></i></td></tr>';
+        });
+      });
+      h += '</tbody><tfoot><tr><th>Total</th><td class="n">' + fmtB(z.tam) + '</td><td class="n p">' + dec(z.sam / z.tam * 100, 1) + ' %</td><td class="n">' + fmtMM(z.sam) + '</td></tr></tfoot>';
+      $('svT').innerHTML = h;
+      $('svTam').textContent = fmtB(z.tam);
+      $('svSam').textContent = fmtMM(z.sam);
+      $('svGeo').textContent = z.n + ' · ' + ent(z.car) + ' dueños de carro · ' + ent(z.moto) + ' de moto';
+    }
+    [].forEach.call(document.querySelectorAll('#svFase button'), function(btn){
+      btn.addEventListener('click', function(){
+        geo = +btn.dataset.g - 1;
+        [].forEach.call(document.querySelectorAll('#svFase button'), function(o){ o.setAttribute('aria-pressed', o === btn ? 'true' : 'false'); });
+        pintar();
+      });
+    });
+    pintar();
+    alVer($('svT'), function(){
+      visto = true;
+      [].forEach.call($('svT').querySelectorAll('.bar'), function(b, i){ b.style.transform = 'scaleX(1)'; anim(b, [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:700, delay:i * 60}); });
+    }, 0.2);
+  })();
   (function(){
     var svg = $('cuadros'), h = '', max = GEO[3].car + GEO[3].moto;
     GEO.slice().reverse().forEach(function(z){
@@ -1823,7 +1925,7 @@ var CASOS = {
   }
   function mxIngreso(z, o){
     var uc = z.car * o.pen, um = o.motos ? z.moto * o.pen : 0;
-    var ing = o.m === 'arriba' ? uc * 105000 + um * 42000 : (uc + um) * ARPU[o.m] * 12;
+    var ing = o.m === 'arriba' ? uc * ARPU_A.car + um * ARPU_A.moto : (uc + um) * ARPU[o.m] * 12;
     return {ing:ing, us:uc + um};
   }
   function mxPintar(){
@@ -1842,10 +1944,75 @@ var CASOS = {
     });
     $('mxGraf').innerHTML = h;
   }
+  $('mxArribaTxt').textContent = 'Arriba-abajo · $ ' + ent(Math.round(ARPU_A.car / 12 / 50) * 50) + ' carro / $ ' + ent(Math.round(ARPU_A.moto / 12 / 50) * 50) + ' moto al mes';
+  (function(){
+    var o = {pen:.3, motos:true}, z = GEO[3];
+    var bajo = mxIngreso(z, Object.assign({m:'C'}, o)).ing, alto = Math.max(mxIngreso(z, Object.assign({m:'arriba'}, o)).ing, mxIngreso(z, Object.assign({m:'F'}, o)).ing);
+    $('mxTecho').textContent = 'Techo con 30 % de penetración en Colombia: ' + fmtMM(bajo).replace(' mil M', '') + '–' + fmtMM(alto).replace('$ ', '') + ' al año (abajo-arriba conservador a ' + (alto === mxIngreso(z, Object.assign({m:'F'}, o)).ing ? 'favorable' : 'arriba-abajo') + ').';
+  })();
   [].forEach.call(document.querySelectorAll('input[name="mxf"],input[name="mxm"],#mxMotos'), function(el){ el.addEventListener('change', mxPintar); });
   $('mxPen').addEventListener('input', mxPintar);
   mxPintar();
   alVer($('mxGraf'), function(){ [].forEach.call($('mxGraf').querySelectorAll('.mxb'), function(r, i){ r.style.transformOrigin = '230px 0'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:700, delay:i * 120}); }); }, 0.4);
+
+  /* ================= Costos operativos ================= */
+  /* [concepto, detalle, hasta 1.000 activos, ~10.000 activos] en COP al mes */
+  var COSTOS = [
+    {g:'Software', c:'var(--ser-1)', l:[
+      ['Claude Max 5x', 'Desarrollo continuo', 330000, 330000],
+      ['Supabase', 'Base de datos, autenticación, archivos', 82500, 247500],
+      ['Expo EAS', 'Compilación y actualizaciones', 0, 178000],
+      ['Apple Developer', 'App Store, prorrateado', 27200, 27200],
+      ['Google Maps', 'Mapa, lugares, rutas (E)', 0, 247500],
+      ['Correo y monitoreo', 'Comprobantes y alertas', 0, 152000],
+      ['Dominio', 'Prorrateado', 11000, 11000],
+      ['Panel web, notificaciones, GitHub, DIAN', 'Planes gratis', 0, 0]]},
+    {g:'Adquisición', c:'var(--ser-3)', l:[
+      ['Pauta', 'Meta y TikTok', 3000000, 3000000],
+      ['Firma de comercios', 'Transporte, material y soporte', 500000, 500000]]},
+    {g:'Equipo', c:'var(--warn)', n:true, l:[
+      ['Nómina', 'Supuesto del tablero', 10000000, 10000000]]},
+    {g:'Administración', c:'var(--pos)', l:[
+      ['Contabilidad y legal', 'Desde el mes 9', 800000, 800000]]},
+    {g:'Variables (E)', c:'var(--neg)', l:[
+      ['Pasarela de pagos', '2,65 % + $ 700 + IVA por pago', 382700, 3826700],
+      ['ICA', '9,66 por mil de los ingresos', 10100, 100800]]}
+  ];
+  (function(){
+    var esc = 0, visto = QUIETO, $t = $('cosT'), $b = $('cosBarra');
+    var suma = function(l, e){ return l.reduce(function(x, r){ return x + r[2 + e]; }, 0); };
+    $b.innerHTML = COSTOS.map(function(g){ return '<i style="background:' + g.c + ';flex-grow:0"></i>'; }).join('');
+    $('cosLey').innerHTML = COSTOS.map(function(g){ return '<span><i style="background:' + g.c + '"></i>' + g.g + '</span>'; }).join('');
+    function pintar(){
+      var tot = COSTOS.reduce(function(x, g){ return x + suma(g.l, esc); }, 0);
+      var nom = COSTOS.filter(function(g){ return g.n; }).reduce(function(x, g){ return x + suma(g.l, esc); }, 0);
+      var k = function(v){ return dec(v / 1000, v % 1000 ? 1 : 0); };
+      var pc = function(v){ return v ? dec(v / tot * 100, 1) + ' %' : '—'; };
+      var h = '<thead><tr><th>Miles de COP</th><th class="n">Mensual</th><th class="n">Anual</th><th class="n">% del total</th></tr></thead><tbody>';
+      COSTOS.forEach(function(g){
+        var st = suma(g.l, esc);
+        h += '<tr class="sec" style="--c:' + g.c + '"><th colspan="4">' + g.g + '</th></tr>';
+        g.l.forEach(function(r){ h += '<tr class="sub"><th>' + r[0] + '<small>' + r[1] + '</small></th><td class="n">' + k(r[2 + esc]) + '</td><td class="n">' + k(r[2 + esc] * 12) + '</td><td class="n p">' + pc(r[2 + esc]) + '</td></tr>'; });
+        if (g.l.length > 1) h += '<tr class="tot" style="--c:' + g.c + '"><th>Subtotal ' + g.g.replace(' (E)', '').toLowerCase() + '</th><td class="n">' + k(st) + '</td><td class="n">' + k(st * 12) + '</td><td class="n">' + pc(st) + '</td></tr>';
+      });
+      h += '</tbody><tfoot><tr><th>Total</th><td class="n">' + k(tot) + '</td><td class="n">' + k(tot * 12) + '</td><td class="n">100 %</td></tr>';
+      h += '<tr><th>Total sin nómina</th><td class="n">' + k(tot - nom) + '</td><td class="n">' + k((tot - nom) * 12) + '</td><td class="n">' + pc(tot - nom) + '</td></tr></tfoot>';
+      $t.innerHTML = h;
+      $('cosMes').textContent = '$ ' + dec(tot / 1e6, 1) + ' M';
+      $('cosAnio').textContent = '$ ' + dec(tot * 12 / 1e6, 1) + ' M';
+      $('cosSinN').textContent = '$ ' + dec((tot - nom) * 12 / 1e6, 1) + ' M';
+      if (visto) [].forEach.call($b.children, function(i, k){ i.style.flexGrow = suma(COSTOS[k].l, esc) / tot; });
+    }
+    [].forEach.call(document.querySelectorAll('#cosEsc button'), function(btn){
+      btn.addEventListener('click', function(){
+        esc = +btn.dataset.e;
+        [].forEach.call(document.querySelectorAll('#cosEsc button'), function(o){ o.setAttribute('aria-pressed', o === btn ? 'true' : 'false'); });
+        pintar();
+      });
+    });
+    pintar();
+    alVer($b, function(){ visto = true; pintar(); }, 0.5);
+  })();
 
   /* ================= Fuentes de ingreso ================= */
   var ING = [

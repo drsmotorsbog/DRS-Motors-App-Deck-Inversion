@@ -229,12 +229,75 @@
 
   /* ================= Mercado potencial ================= */
   var GEO = [
-    {g:1, n:'F1 · Zonas iniciales de Bogotá', car:240e3, moto:43e3, sam:106e9},
-    {g:2, n:'F2 · Bogotá', car:860e3, moto:525e3, sam:424e9},
-    {g:3, n:'F3 · Áreas metropolitanas', car:2.4e6, moto:3.4e6, sam:1235e9},
-    {g:4, n:'F4 · Colombia', car:4.1e6, moto:5.0e6, sam:2020e9}
+    {g:1, n:'F1 · Zonas iniciales de Bogotá', car:240e3, moto:43e3},
+    {g:2, n:'F2 · Bogotá', car:860e3, moto:525e3},
+    {g:3, n:'F3 · Áreas metropolitanas', car:2.4e6, moto:3.4e6},
+    {g:4, n:'F4 · Colombia', car:4.1e6, moto:5.0e6}
   ];
+  /* Líneas de servicio: gasto o valor transado por dueño y año en Bogotá (carro, moto), factor fuera de Bogotá,
+     tarifa de la plataforma y parte del gasto de un usuario activo que pasa por la app (arriba-abajo). Todo (E) salvo fuente. */
+  var SV = [
+    {gr:'Servicios al vehículo', c:'var(--ser-1)', l:[
+      {n:'Parqueaderos', f:'V1', car:1200000, moto:240000, fu:.5, t:.08, cap:.30, b:'Carro $ 1,2 M · moto $ 240 mil al año (E). Tope 2026: $ 230/min carro, $ 161/min moto'},
+      {n:'Lavado', f:'V1', car:300000, moto:60000, t:.10, cap:.30, b:'Carro $ 300 mil · moto $ 60 mil al año (E)'},
+      {n:'Talleres y mantenimiento', f:'V1', car:1500000, moto:500000, t:.10, cap:.15, b:'Carro $ 1,5 M · moto $ 500 mil al año (E). Posventa total: $ 26,3 billones (Asopartes)'},
+      {n:'Revisión técnico-mecánica', f:'V2', car:250000, moto:130000, t:.05, cap:.30, b:'Tarifa 2026: carro $ 317–368 mil, moto $ 218–247 mil; 56 % de evasión. Cargo fijo ≈ $ 15.000 por cita'},
+      {n:'Peritajes', f:'V2', car:17700, moto:8820, t:.18, cap:.30, b:'30 % de los traspasos (E) × $ 250 mil carro, $ 180 mil moto'}]},
+    {gr:'Seguros y crédito', c:'var(--pos)', l:[
+      {n:'SOAT', f:'V2', car:700000, moto:150000, t:.03, cap:.30, b:'Primas 2025: $ 4,13 billones (Fasecolda); parte de dueños personas naturales (E)'},
+      {n:'Seguro todo riesgo', f:'V3', car:1100000, moto:20000, t:.08, cap:.10, b:'70 % de $ 6,59 billones del ramo automóviles (E). Comisión del ramo: 15,6 %'},
+      {n:'Crédito vehicular', f:'V3', car:2384000, moto:345000, t:.01, cap:.05, b:'Desembolsos ≈ $ 11,5 billones al año (E); enero 2026: $ 1,19 billones'}]},
+    {gr:'Compraventa', c:'var(--warn)', l:[
+      {n:'Venta de vehículos', f:'V4', car:11830000, moto:980400, t:.01, cap:.10, b:'≈ 970 mil carros × $ 50 M y 817 mil motos × $ 6 M al año (E). Compraventa protegida'},
+      {n:'Publicación en marketplace', f:'V4', car:31900, moto:9800, t:.20, cap:.30, b:'1,5 avisos por traspaso × $ 90 mil carro, $ 40 mil moto; 20 % paga destacado (E)'}]},
+    {gr:'Publicidad', c:'var(--ser-3)', l:[
+      {n:'Publicidad in-app', f:'V3', car:26700, moto:26700, t:.08, cap:1, b:'8 % de $ 3,04 billones de publicidad digital (IAB 2025) (E). Inventario: 15 aperturas al mes × CPM $ 12.000'}]}
+  ];
+  var BOG = GEO[1];
+  function svTam(z, x){
+    var cb = Math.min(z.car, BOG.car), mb = Math.min(z.moto, BOG.moto), fu = x.fu || 1;
+    return x.car * (cb + (z.car - cb) * fu) + x.moto * (mb + (z.moto - mb) * fu);
+  }
+  GEO.forEach(function(z){
+    z.tam = 0; z.sam = 0;
+    SV.forEach(function(g){ g.l.forEach(function(x){ var v = svTam(z, x); z.tam += v; z.sam += v * x.t; }); });
+  });
+  var ARPU_A = {car:0, moto:0};
+  SV.forEach(function(g){ g.l.forEach(function(x){ ARPU_A.car += x.car * x.t * x.cap; ARPU_A.moto += x.moto * x.t * x.cap; }); });
   var fmtMM = function(v){ var m = v / 1e9; return '$ ' + (m >= 100 ? ent(m) : dec(m, 1)) + ' mil M'; };
+  var fmtB = function(v){ return v >= 1e12 ? '$ ' + dec(v / 1e12, v >= 1e13 ? 0 : 1) + ' billones' : fmtMM(v); };
+  [].forEach.call(document.querySelectorAll('.pot-t tbody tr'), function(tr, i){ tr.querySelector('.gt').textContent = fmtB(GEO[i].tam); tr.querySelector('.gs').textContent = fmtMM(GEO[i].sam); });
+  (function(){
+    var geo = 3, visto = QUIETO;
+    function pintar(){
+      var z = GEO[geo], maxS = 0, h = '<thead><tr><th>Servicio</th><th class="n">TAM / año</th><th class="n">Tarifa</th><th class="n">SAM / año</th></tr></thead><tbody>';
+      SV.forEach(function(g){ g.l.forEach(function(x){ maxS = Math.max(maxS, svTam(z, x) * x.t); }); });
+      SV.forEach(function(g){
+        h += '<tr class="sec" style="--c:' + g.c + '"><th colspan="4">' + g.gr + '</th></tr>';
+        g.l.forEach(function(x){
+          var tam = svTam(z, x), sam = tam * x.t;
+          h += '<tr class="sub" style="--c:' + g.c + '"><th>' + x.n + '<span class="chip ' + x.f + '">' + x.f + '</span><small>' + x.b + '</small></th><td class="n">' + fmtB(tam) + '</td><td class="n p">' + dec(x.t * 100, 0) + ' %</td><td class="n">' + fmtMM(sam) + '<i class="bar" style="width:' + Math.max(2, sam / maxS * 100) + '%;transform:scaleX(' + (visto ? 1 : 0) + ')"></i></td></tr>';
+        });
+      });
+      h += '</tbody><tfoot><tr><th>Total</th><td class="n">' + fmtB(z.tam) + '</td><td class="n p">' + dec(z.sam / z.tam * 100, 1) + ' %</td><td class="n">' + fmtMM(z.sam) + '</td></tr></tfoot>';
+      $('svT').innerHTML = h;
+      $('svTam').textContent = fmtB(z.tam);
+      $('svSam').textContent = fmtMM(z.sam);
+      $('svGeo').textContent = z.n + ' · ' + ent(z.car) + ' dueños de carro · ' + ent(z.moto) + ' de moto';
+    }
+    [].forEach.call(document.querySelectorAll('#svFase button'), function(btn){
+      btn.addEventListener('click', function(){
+        geo = +btn.dataset.g - 1;
+        [].forEach.call(document.querySelectorAll('#svFase button'), function(o){ o.setAttribute('aria-pressed', o === btn ? 'true' : 'false'); });
+        pintar();
+      });
+    });
+    pintar();
+    alVer($('svT'), function(){
+      visto = true;
+      [].forEach.call($('svT').querySelectorAll('.bar'), function(b, i){ b.style.transform = 'scaleX(1)'; anim(b, [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:700, delay:i * 60}); });
+    }, 0.2);
+  })();
   (function(){
     var svg = $('cuadros'), h = '', max = GEO[3].car + GEO[3].moto;
     GEO.slice().reverse().forEach(function(z){
@@ -254,7 +317,7 @@
   }
   function mxIngreso(z, o){
     var uc = z.car * o.pen, um = o.motos ? z.moto * o.pen : 0;
-    var ing = o.m === 'arriba' ? uc * 105000 + um * 42000 : (uc + um) * ARPU[o.m] * 12;
+    var ing = o.m === 'arriba' ? uc * ARPU_A.car + um * ARPU_A.moto : (uc + um) * ARPU[o.m] * 12;
     return {ing:ing, us:uc + um};
   }
   function mxPintar(){
@@ -273,10 +336,75 @@
     });
     $('mxGraf').innerHTML = h;
   }
+  $('mxArribaTxt').textContent = 'Arriba-abajo · $ ' + ent(Math.round(ARPU_A.car / 12 / 50) * 50) + ' carro / $ ' + ent(Math.round(ARPU_A.moto / 12 / 50) * 50) + ' moto al mes';
+  (function(){
+    var o = {pen:.3, motos:true}, z = GEO[3];
+    var bajo = mxIngreso(z, Object.assign({m:'C'}, o)).ing, alto = Math.max(mxIngreso(z, Object.assign({m:'arriba'}, o)).ing, mxIngreso(z, Object.assign({m:'F'}, o)).ing);
+    $('mxTecho').textContent = 'Techo con 30 % de penetración en Colombia: ' + fmtMM(bajo).replace(' mil M', '') + '–' + fmtMM(alto).replace('$ ', '') + ' al año (abajo-arriba conservador a ' + (alto === mxIngreso(z, Object.assign({m:'F'}, o)).ing ? 'favorable' : 'arriba-abajo') + ').';
+  })();
   [].forEach.call(document.querySelectorAll('input[name="mxf"],input[name="mxm"],#mxMotos'), function(el){ el.addEventListener('change', mxPintar); });
   $('mxPen').addEventListener('input', mxPintar);
   mxPintar();
   alVer($('mxGraf'), function(){ [].forEach.call($('mxGraf').querySelectorAll('.mxb'), function(r, i){ r.style.transformOrigin = '230px 0'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:700, delay:i * 120}); }); }, 0.4);
+
+  /* ================= Costos operativos ================= */
+  /* [concepto, detalle, hasta 1.000 activos, ~10.000 activos] en COP al mes */
+  var COSTOS = [
+    {g:'Software', c:'var(--ser-1)', l:[
+      ['Claude Max 5x', 'Desarrollo continuo', 330000, 330000],
+      ['Supabase', 'Base de datos, autenticación, archivos', 82500, 247500],
+      ['Expo EAS', 'Compilación y actualizaciones', 0, 178000],
+      ['Apple Developer', 'App Store, prorrateado', 27200, 27200],
+      ['Google Maps', 'Mapa, lugares, rutas (E)', 0, 247500],
+      ['Correo y monitoreo', 'Comprobantes y alertas', 0, 152000],
+      ['Dominio', 'Prorrateado', 11000, 11000],
+      ['Panel web, notificaciones, GitHub, DIAN', 'Planes gratis', 0, 0]]},
+    {g:'Adquisición', c:'var(--ser-3)', l:[
+      ['Pauta', 'Meta y TikTok', 3000000, 3000000],
+      ['Firma de comercios', 'Transporte, material y soporte', 500000, 500000]]},
+    {g:'Equipo', c:'var(--warn)', n:true, l:[
+      ['Nómina', 'Supuesto del tablero', 10000000, 10000000]]},
+    {g:'Administración', c:'var(--pos)', l:[
+      ['Contabilidad y legal', 'Desde el mes 9', 800000, 800000]]},
+    {g:'Variables (E)', c:'var(--neg)', l:[
+      ['Pasarela de pagos', '2,65 % + $ 700 + IVA por pago', 382700, 3826700],
+      ['ICA', '9,66 por mil de los ingresos', 10100, 100800]]}
+  ];
+  (function(){
+    var esc = 0, visto = QUIETO, $t = $('cosT'), $b = $('cosBarra');
+    var suma = function(l, e){ return l.reduce(function(x, r){ return x + r[2 + e]; }, 0); };
+    $b.innerHTML = COSTOS.map(function(g){ return '<i style="background:' + g.c + ';flex-grow:0"></i>'; }).join('');
+    $('cosLey').innerHTML = COSTOS.map(function(g){ return '<span><i style="background:' + g.c + '"></i>' + g.g + '</span>'; }).join('');
+    function pintar(){
+      var tot = COSTOS.reduce(function(x, g){ return x + suma(g.l, esc); }, 0);
+      var nom = COSTOS.filter(function(g){ return g.n; }).reduce(function(x, g){ return x + suma(g.l, esc); }, 0);
+      var k = function(v){ return dec(v / 1000, v % 1000 ? 1 : 0); };
+      var pc = function(v){ return v ? dec(v / tot * 100, 1) + ' %' : '—'; };
+      var h = '<thead><tr><th>Miles de COP</th><th class="n">Mensual</th><th class="n">Anual</th><th class="n">% del total</th></tr></thead><tbody>';
+      COSTOS.forEach(function(g){
+        var st = suma(g.l, esc);
+        h += '<tr class="sec" style="--c:' + g.c + '"><th colspan="4">' + g.g + '</th></tr>';
+        g.l.forEach(function(r){ h += '<tr class="sub"><th>' + r[0] + '<small>' + r[1] + '</small></th><td class="n">' + k(r[2 + esc]) + '</td><td class="n">' + k(r[2 + esc] * 12) + '</td><td class="n p">' + pc(r[2 + esc]) + '</td></tr>'; });
+        if (g.l.length > 1) h += '<tr class="tot" style="--c:' + g.c + '"><th>Subtotal ' + g.g.replace(' (E)', '').toLowerCase() + '</th><td class="n">' + k(st) + '</td><td class="n">' + k(st * 12) + '</td><td class="n">' + pc(st) + '</td></tr>';
+      });
+      h += '</tbody><tfoot><tr><th>Total</th><td class="n">' + k(tot) + '</td><td class="n">' + k(tot * 12) + '</td><td class="n">100 %</td></tr>';
+      h += '<tr><th>Total sin nómina</th><td class="n">' + k(tot - nom) + '</td><td class="n">' + k((tot - nom) * 12) + '</td><td class="n">' + pc(tot - nom) + '</td></tr></tfoot>';
+      $t.innerHTML = h;
+      $('cosMes').textContent = '$ ' + dec(tot / 1e6, 1) + ' M';
+      $('cosAnio').textContent = '$ ' + dec(tot * 12 / 1e6, 1) + ' M';
+      $('cosSinN').textContent = '$ ' + dec((tot - nom) * 12 / 1e6, 1) + ' M';
+      if (visto) [].forEach.call($b.children, function(i, k){ i.style.flexGrow = suma(COSTOS[k].l, esc) / tot; });
+    }
+    [].forEach.call(document.querySelectorAll('#cosEsc button'), function(btn){
+      btn.addEventListener('click', function(){
+        esc = +btn.dataset.e;
+        [].forEach.call(document.querySelectorAll('#cosEsc button'), function(o){ o.setAttribute('aria-pressed', o === btn ? 'true' : 'false'); });
+        pintar();
+      });
+    });
+    pintar();
+    alVer($b, function(){ visto = true; pintar(); }, 0.5);
+  })();
 
   /* ================= Fuentes de ingreso ================= */
   var ING = [
