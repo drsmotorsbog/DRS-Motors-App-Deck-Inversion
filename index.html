@@ -561,6 +561,80 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
   .fase,.fase + .fase{padding-left:0;border-left:0}
   .seg button span,.seg label span{padding:15px 7.5px}
 }
+
+/* ---------- v3: color con intención ---------- */
+/* Fases: rampa de serie, de lo que sale primero (claro) a lo último (profundo). */
+:root{--f1:var(--ser-1);--f2:var(--ser-2);--f3:var(--ser-3);--f4:var(--ser-4)}
+.eyebrow{color:var(--acc-2)}
+h3.luz,.ico.luz{color:var(--acc-2)}
+.chip.V1{border-color:var(--f1);color:var(--f1)}
+.chip.V2{border-color:var(--f2);color:var(--f2)}
+.chip.V3{border-color:var(--f3);color:var(--f3)}
+.chip.V4{border-color:var(--f4);color:var(--f4)}
+.filtro.f-V1[aria-pressed="true"]{border-color:var(--f1)}
+.filtro.f-V2[aria-pressed="true"]{border-color:var(--f2)}
+.filtro.f-V3[aria-pressed="true"]{border-color:var(--f3)}
+.filtro.f-V4[aria-pressed="true"]{border-color:var(--f4)}
+.cal-fila.lav .cal-dias i.on{background:var(--ser-1)}
+.prob .tacha{left:0;right:0}
+.orbita .anillo.v1{stroke:var(--f1);opacity:.7}
+.orbita .anillo.v2{stroke:var(--f2);opacity:.55}
+.orbita .anillo.v3{stroke:var(--f3);opacity:.55}
+.orbita .anillo.v4{stroke:var(--f4);opacity:.55}
+.orbita .nodo[data-f="V1"] circle{stroke:var(--f1)}
+.orbita .nodo[data-f="V2"] circle{stroke:var(--f2)}
+.orbita .nodo[data-f="V3"] circle{stroke:var(--f3)}
+.orbita .nodo[data-f="V4"] circle{stroke:var(--f4)}
+.orbita .nodo[aria-pressed="true"] circle{stroke:var(--txt-1);stroke-width:2.5;fill:var(--sup-2)}
+.fase[data-f="V1"]::before{background:var(--f1)}
+.fase[data-f="V2"]::before{background:var(--f2)}
+.fase[data-f="V3"]::before{background:var(--f3)}
+.fase[data-f="V4"]::before{background:var(--f4)}
+.fase[data-f="V1"][aria-pressed="true"] .vn{color:var(--f1)}
+.fase[data-f="V2"][aria-pressed="true"] .vn{color:var(--f2)}
+.fase[data-f="V3"][aria-pressed="true"] .vn{color:var(--f3)}
+.fase[data-f="V4"][aria-pressed="true"] .vn{color:var(--f4)}
+
+/* Metas por tipo: una fila por tipo, un color por tipo */
+.tabla-env.sin-borde{border:0}
+.metas-m{display:grid;grid-template-columns:minmax(170px,1.3fr) repeat(5,minmax(124px,1fr));min-width:860px;border-top:1px solid var(--linea)}
+.metas-m > div{padding:15px;border-bottom:1px solid var(--linea);min-width:0}
+.mm-cab{display:grid;gap:4px;align-content:end}
+.mm-tipo{display:flex;align-items:center;border-left:4px solid var(--c);background:var(--sup-2)}
+.mm-v{display:grid;gap:7.5px;align-content:start}
+.mm-v b{font-family:var(--fd);font-weight:400;font-size:44px;line-height:1;color:var(--c);letter-spacing:.02em}
+.mm-b{display:block;height:4px;background:var(--c);width:var(--w);min-width:4px;transform-origin:left center}
+.mm-s{display:grid;gap:7.5px;align-content:start;color:var(--txt-2)}
+.mm-s .chip{justify-self:start}
+.mm-cum{display:flex !important;gap:4px;align-items:center}
+.cu{width:24px;height:24px;display:grid;place-items:center;font-family:var(--fl);font-weight:700;font-size:11px;border:2px solid}
+.cu.si{background:var(--pos);border-color:var(--pos);color:var(--sup-1)}
+.cu.no{border-color:var(--neg);color:var(--neg)}
+
+/* Métricas de corte v3: casos arriba con su vástago, umbrales abajo */
+.pista{position:relative;height:72px}
+.pista .zonas{top:30px;height:8px}
+.pista .umbral{top:46px}
+.pista .mk{top:0;background:var(--txt-1);color:var(--sup-1)}
+.pista .vas{position:absolute;top:15px;width:2px;height:23px;background:var(--txt-1);transform:translateX(-50%)}
+
+/* Mercado potencial y roadmap geográfico */
+.pot{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:38px;align-items:center}
+.cuadros{width:100%;max-width:400px;display:block;margin-inline:auto}
+.pot-t tr[data-g="1"] .pt-g{background:var(--f1)} .pot-t tr[data-g="2"] .pt-g{background:var(--f2)}
+.pot-t tr[data-g="3"] .pt-g{background:var(--f3)} .pot-t tr[data-g="4"] .pt-g{background:var(--f4)}
+.pt-g{display:inline-block;width:11px;height:11px;margin-right:7.5px;vertical-align:0}
+.maxr{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px;align-items:start}
+.seg-v{flex-direction:column}
+.seg-v label + label{border-left:0;border-top:1px solid var(--n-3)}
+.seg-v span{text-align:left !important}
+.geo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.g-paso{display:grid;gap:7.5px;align-content:start;border-top:4px solid var(--c);padding-top:15px;min-width:0}
+.g-paso .vn{font-family:var(--fd);font-size:44px;line-height:1;color:var(--c)}
+.g-num{color:var(--txt-1)}
+.g-num b{font-weight:600}
+@media (max-width: 960px){ .pot,.maxr{grid-template-columns:minmax(0,1fr)} .geo{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width: 480px){ .geo{grid-template-columns:minmax(0,1fr)} }
 </style>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -659,11 +733,12 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
         <li><a href="#vision">Visión</a></li>
         <li><a href="#producto">Producto</a></li>
         <li><a href="#mercado">Mercado</a></li>
+        <li><a href="#potencial">Potencial</a></li>
         <li><a href="#modelo">Modelo</a></li>
-        <li><a href="#ruta">Hoja de ruta</a></li>
+        <li><a href="#ruta">Roadmap</a></li>
         <li><a href="#metas">Metas</a></li>
         <li><a href="#proyecciones">Proyecciones</a></li>
-        <li><a href="#inversion">Inversión</a></li>
+        <li><a href="#inversion">Fondos</a></li>
         <li><a href="#riesgos">Riesgos</a></li>
         <li><a href="#equipo">Equipo</a></li>
       </ul>
@@ -678,33 +753,33 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section class="portada" id="inicio">
   <div class="envoltura heroe">
     <div class="texto">
-      <p class="eyebrow">DRS Motors App · Documento para inversionistas · Octubre de 2026</p>
-      <h1 id="titular"><span class="linea">Todo lo de tu carro</span><span class="linea">o tu moto,</span><span class="linea">en una sola app.</span></h1>
-      <p class="lead">Empieza por lo que se usa cada semana: parqueadero, lavado y taller con pago en la app, y Mi garaje para tener al día el SOAT, la tecnomecánica y las multas. La financiación, los seguros y la compraventa entre personas llegan a medida que se firman los aliados. Se construye y se opera con inteligencia artificial para gastar poco.</p>
+      <p class="eyebrow">Deck de inversión · Octubre de 2026</p>
+      <h1 id="titular"><span class="linea">DRS Motors</span><span class="linea">App</span></h1>
+      <p class="lead">Marketplace de servicios para propietarios de carros y motos: parqueadero, lavado, taller y documentos del vehículo, con pago en la app. Financiación, seguros y compraventa entran por fases. Lanzamiento en Bogotá.</p>
       <div class="acciones">
-        <a class="btn prim" href="#proyecciones">Ver las proyecciones <svg class="ico peq" aria-hidden="true"><use href="#ico-flecha"/></svg></a>
-        <a class="btn" href="https://drsmotorsbog.github.io/DRS-Motors-App-Demo_1-/" target="_blank" rel="noopener">Abrir la demo <svg class="ico peq" aria-hidden="true"><use href="#ico-enlace-externo"/></svg></a>
+        <a class="btn prim" href="#proyecciones">Proyecciones <svg class="ico peq" aria-hidden="true"><use href="#ico-flecha"/></svg></a>
+        <a class="btn" href="https://drsmotorsbog.github.io/DRS-Motors-App-Demo_1-/" target="_blank" rel="noopener">Demo <svg class="ico peq" aria-hidden="true"><use href="#ico-enlace-externo"/></svg></a>
       </div>
     </div>
     <div class="ranura" aria-label="Servicios de la app">
-      <p class="eyebrow">En la app</p>
+      <p class="eyebrow">Servicios</p>
       <div class="ventana" aria-hidden="true">
         <div class="carrete" id="carrete"></div>
         <i class="velo arr"></i><i class="velo aba"></i>
       </div>
       <div class="pie-r">
-        <p class="etq luz fase-r" id="ranuraFase" aria-live="polite">V1 · al lanzar</p>
+        <p class="etq luz fase-r" id="ranuraFase" aria-live="polite">V1</p>
         <p class="etq suave num" id="ranuraN">01 / 15</p>
       </div>
     </div>
   </div>
   <div class="envoltura">
     <div class="cifras">
-      <div class="cifra"><b class="cifra-d num" data-odo>21,3 M</b><span>vehículos activos en el RUNT al cierre de 2025. El mercado son sus dueños.</span></div>
-      <div class="cifra"><b class="cifra-d num" data-odo>$ 22,7 M</b><span>para construir la app y lanzarla en Bogotá en 8 meses, sin auxilio de ingenieros.</span></div>
-      <div class="cifra"><b class="cifra-d num" data-odo>15</b><span>comercios aliados firmados el día del lanzamiento: la primera meta, H0.</span></div>
+      <div class="cifra"><b class="cifra-d num" data-odo>21,3 M</b><span>Parque automotor activo en Colombia (RUNT, 2025).</span></div>
+      <div class="cifra"><b class="cifra-d num" data-odo>$ 22,7 M</b><span>Ronda de desarrollo y lanzamiento: 8 meses, sin auxilio de ingenieros.</span></div>
+      <div class="cifra"><b class="cifra-d num" data-odo>15</b><span>Comercios aliados al lanzamiento (meta H0).</span></div>
     </div>
-    <p class="fuente" style="margin-top:15px">Fuentes: RUNT vía El Colombiano (parque automotor 2025) · presupuesto de la DRS Motors App, octubre de 2026. Cifras en pesos colombianos; US$1 = $ 3.300.</p>
+    <p class="fuente" style="margin-top:15px">Cifras en COP. US$1 = $ 3.300.</p>
   </div>
 </section>
 
@@ -712,22 +787,19 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="vision">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Visión y misión</p>
-      <h2 data-cota>Una app para todo lo que implica tener vehículo</h2>
+      <p class="eyebrow">01</p>
+      <h2 data-cota>Visión y misión</h2>
     </div>
-    <div class="mision">
-      <p class="eyebrow">Visión de largo plazo</p>
-      <p class="grande" data-sube>Que cada persona con carro o moto en Colombia tenga la app de DRS y sepa que <em>todo servicio automotriz que necesite está ahí.</em></p>
-    </div>
-    <div class="rej rej-2">
-      <div class="bloque raya" data-sube><h3>Misión</h3><p>Darle al dueño del vehículo un solo lugar para reservar, pagar, mantener al día, comprar, financiar y vender, con precios a la vista y procesos claros. Y darle a cada comercio del sector un canal digital que le llene las horas vacías.</p></div>
-      <div class="bloque raya" data-sube><h3>Ambición</h3><p>La ambición es construir desde Bogotá una compañía de escala unicornio. Es una meta de largo plazo, no una proyección: este documento solo pide lo de los primeros 8 meses. El camino va por etapas: los servicios de uso frecuente en una ciudad, después los servicios financieros y los clasificados, y después el resto del país y la región.</p></div>
+    <div class="rej rej-3">
+      <div class="bloque raya" data-sube><h3>Visión</h3><p>Ser la app de referencia de todo propietario de vehículo en Colombia.</p></div>
+      <div class="bloque raya" data-sube><h3>Misión</h3><p>Centralizar reserva, pago, mantenimiento, documentos, financiación y compraventa del vehículo, y dar a los comercios del sector un canal digital de demanda.</p></div>
+      <div class="bloque raya" data-sube><h3>Ambición</h3><p>Escala unicornio en el largo plazo. Es una meta, no una proyección: esta ronda cubre 8 meses.</p></div>
     </div>
     <div class="rej rej-4" style="margin-top:38px">
-      <div class="bloque" data-sube><h3>Transparencia</h3><p>Precio final antes de reservar, sin letra pequeña, como en la operación de DRS.</p></div>
-      <div class="bloque" data-sube><h3>Curaduría</h3><p>Cada comercio aliado entra revisado: estar en la app significa que alguien de DRS ya lo miró.</p></div>
-      <div class="bloque" data-sube><h3>Comunidad</h3><p>La app nace de una marca que ya convoca en redes.</p></div>
-      <div class="bloque" data-sube><h3>IA en el centro</h3><p>Se construye y se opera con inteligencia artificial: equipo pequeño, costos bajos, mejoras rápidas.</p></div>
+      <div class="bloque" data-sube><h3 class="luz">Precio visible</h3><p>Precio final antes de reservar.</p></div>
+      <div class="bloque" data-sube><h3 class="luz">Comercios verificados</h3><p>Cada aliado entra revisado por DRS.</p></div>
+      <div class="bloque" data-sube><h3 class="luz">Comunidad existente</h3><p>Audiencia propia en Instagram y TikTok.</p></div>
+      <div class="bloque" data-sube><h3 class="luz">Desarrollo con IA</h3><p>Equipo pequeño, costo bajo, iteración rápida.</p></div>
     </div>
   </div>
 </section>
@@ -738,21 +810,21 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="producto">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">El problema</p>
-      <h2 data-cota>Tener vehículo en Bogotá es una cadena de vueltas sueltas</h2>
+      <p class="eyebrow">02</p>
+      <h2 data-cota>Problema</h2>
     </div>
     <div class="rej rej-4" id="problemas">
-      <div class="bloque raya prob"><h3>Un canal distinto para cada vuelta<i class="tacha"></i></h3><p>Parquear, lavar, ir al taller o comprar el SOAT se resuelve en lugares distintos, o por WhatsApp y llamadas.</p></div>
-      <div class="bloque raya prob"><h3>Fechas que se olvidan<i class="tacha"></i></h3><p>SOAT, tecnomecánica, pico y placa, multas, cambio de aceite. Cuando se olvidan, cuestan.</p></div>
-      <div class="bloque raya prob"><h3>Comercios sin canal digital<i class="tacha"></i></h3><p>Parqueaderos, lavaderos y talleres de barrio tienen horas vacías y ninguna forma de llenarlas.</p></div>
-      <div class="bloque raya prob"><h3>Comprar un usado da miedo<i class="tacha"></i></h3><p>Traspaso, plata y papeles: el riesgo de quedar con un problema hace que la gente no compre, o compre mal.</p></div>
+      <div class="bloque raya prob"><h3>Canales dispersos<i class="tacha"></i></h3><p>Cada servicio se resuelve por separado: otra app, WhatsApp o llamada.</p></div>
+      <div class="bloque raya prob"><h3>Vencimientos sin control<i class="tacha"></i></h3><p>SOAT, tecnomecánica, multas y mantenimiento sin recordatorio.</p></div>
+      <div class="bloque raya prob"><h3>Capacidad ociosa<i class="tacha"></i></h3><p>Parqueaderos, lavaderos y talleres sin canal digital para sus horas valle.</p></div>
+      <div class="bloque raya prob"><h3>Riesgo en usados<i class="tacha"></i></h3><p>Traspaso, pago y papeles sin garantía.</p></div>
     </div>
-    <div class="resuelve"><p class="grande" id="resuelve">La DRS Motors App las junta en un solo lugar.</p></div>
+    <div class="resuelve"><p class="grande" id="resuelve">Solución: una app, un pago y un historial por vehículo.</p></div>
 
     <div class="cab" style="margin-top:60px">
-      <p class="eyebrow">La solución · el ecosistema</p>
-      <h2 data-cota>Toca un servicio para ver cómo funciona</h2>
-      <p>Cada anillo es una fase. El anillo interior es lo que se lanza primero; los de afuera entran cuando se cumple su condición.</p>
+      <p class="eyebrow">03</p>
+      <h2 data-cota>Producto · ecosistema</h2>
+      <p>15 servicios en 4 fases. Cada anillo es una fase.</p>
     </div>
     <div class="eco">
       <svg class="orbita" id="orbita" viewBox="-20 -20 640 640" role="group" aria-label="Servicios de la app por fase"></svg>
@@ -763,13 +835,12 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 
 <div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
 
-<!-- ================= MERCADO ================= -->
+<!-- ================= ESTUDIO DE MERCADO ================= -->
 <section id="mercado">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Mercado</p>
-      <h2 data-cota>El cliente es el dueño del vehículo, y son millones</h2>
-      <p>Cada vehículo genera gasto todos los meses en parqueo, lavado y mantenimiento, y todos los años en SOAT y tecnomecánica. La app se queda con la relación con el dueño, y cada servicio la refuerza.</p>
+      <p class="eyebrow">04</p>
+      <h2 data-cota>Estudio de mercado</h2>
     </div>
     <div class="mercado">
       <div>
@@ -780,19 +851,102 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
         <div class="ley-m">
           <div><i style="background:var(--ser-2)"></i><span>Motos</span><b class="num">13,5 M · 63 %</b></div>
           <div><i style="background:var(--ser-4)"></i><span>Carros, camionetas y demás</span><b class="num">7,6 M · 36 %</b></div>
-          <div><i style="background:var(--n-3)"></i><span>Maquinaria y remolques</span><b class="num">0,2 M · 1 %</b></div>
+          <div><i style="background:var(--warn)"></i><span>Maquinaria y remolques</span><b class="num">0,2 M · 1 %</b></div>
         </div>
       </div>
       <div class="rej rej-2">
-        <div class="dato clave" data-sube><b class="cifra-d num" data-odo>2,6 M</b><span>vehículos en el Registro Distrital Automotor de Bogotá en 2024, 400.000 más que en 2016.</span></div>
-        <div class="dato" data-sube><b class="cifra-d num" data-odo>80 %</b><span>de los registrados en Bogotá son carros, camperos y camionetas; las motos son el 18 %. En la ciudad la proporción nacional se invierte.</span></div>
-        <div class="dato" data-sube><b class="cifra-d num">≈ 30 %</b><span>de los vehículos que circulan habitualmente en Bogotá están matriculados fuera de la ciudad (estimación de la Secretaría Distrital de Movilidad).</span></div>
-        <div class="dato" data-sube><b class="cifra-d num" data-odo>70.947</b><span>vehículos nuevos matriculados en Bogotá entre enero y septiembre de 2026, un 88,4 % más que en el mismo periodo de 2025.</span></div>
+        <div class="dato clave" data-sube><b class="cifra-d num" data-odo>2,6 M</b><span>Vehículos registrados en Bogotá (2024); 80 % carros.</span></div>
+        <div class="dato" data-sube><b class="cifra-d num" data-odo>991.972</b><span>Autos en hogares de Bogotá + 551.405 motos (EM2023). 133 autos por 1.000 habitantes.</span></div>
+        <div class="dato" data-sube><b class="cifra-d num" data-odo>46 %</b><span>De los autos de Bogotá está en estratos 4–6, que son el 18 % de los hogares.</span></div>
+        <div class="dato" data-sube><b class="cifra-d num" data-odo>70.947</b><span>Matrículas nuevas en Bogotá, enero–septiembre de 2026 (+88,4 %).</span></div>
       </div>
     </div>
-    <p class="fuente" style="margin-top:24px">Fuentes: RUNT, cierre de 2025, vía El Colombiano · Secretaría Distrital de Hacienda, Notas de Hacienda Distrital (diciembre de 2025) · Fenalco y Andi, vía Minuto60.</p>
+    <p class="fuente" style="margin-top:24px">Fuentes: RUNT, Boletín 001-2026 · Secretaría Distrital de Hacienda (2025) · Encuesta de Movilidad de Bogotá 2023 · Fenalco y Andi vía Minuto60.</p>
   </div>
 </section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= MERCADO POTENCIAL ================= -->
+<section id="potencial">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">05</p>
+      <h2 data-cota>Mercado potencial · TAM, SAM, SOM</h2>
+      <p>Base: propietarios personas naturales (encuestas de hogares), no matrícula. TAM: gasto anual en servicios intermediables. SAM: comisiones si todo ese gasto pasara por la app. SOM: penetración alcanzable.</p>
+    </div>
+    <div class="pot">
+      <svg class="cuadros" id="cuadros" viewBox="0 0 400 400" role="img" aria-label="Propietarios por fase geográfica, área proporcional"></svg>
+      <div class="tabla-env">
+        <table class="pot-t">
+          <thead><tr><th>Fase geográfica</th><th class="n">Dueños carro</th><th class="n">Dueños moto</th><th class="n">TAM / año</th><th class="n">SAM / año</th></tr></thead>
+          <tbody>
+            <tr data-g="1"><th><i class="pt-g"></i>F1 · Zonas iniciales de Bogotá</th><td class="n">240 mil</td><td class="n">43 mil</td><td class="n">$ 1,2 billones</td><td class="n">$ 106 mil M</td></tr>
+            <tr data-g="2"><th><i class="pt-g"></i>F2 · Bogotá</th><td class="n">860 mil</td><td class="n">525 mil</td><td class="n">$ 4,7 billones</td><td class="n">$ 424 mil M</td></tr>
+            <tr data-g="3"><th><i class="pt-g"></i>F3 · Bogotá-Región + 7 áreas metropolitanas</th><td class="n">2,4 M</td><td class="n">3,4 M</td><td class="n">$ 14 billones</td><td class="n">$ 1.235 mil M</td></tr>
+            <tr data-g="4"><th><i class="pt-g"></i>F4 · Colombia</th><td class="n">4,1 M</td><td class="n">5,0 M</td><td class="n">$ 23 billones</td><td class="n">$ 2.020 mil M</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="fuente" style="margin-top:15px">Gasto intermediable por dueño y año (E): carro en Bogotá $ 4,61 M (parqueo 1,2 · taller 1,5 · SOAT 0,7 · todo riesgo 0,66 · lavado 0,3 · tecnomecánica 0,25); carro en otras ciudades $ 4,01 M; moto $ 1,3–1,4 M. Comisiones del SAM: 10 % en parqueo, lavado, taller, tecnomecánica y todo riesgo; 4 % en SOAT. Dueños: EM2023 Bogotá, RUNT 2025 y ANDI; estimaciones propias marcadas (E).</p>
+
+    <div class="rej rej-4" style="margin-top:38px">
+      <div class="dato" data-sube><b class="cifra-d num">47 % · 56 %</b><span>Evasión de SOAT y de tecnomecánica (RUNT). Mercado de las alertas de Mi garaje.</span></div>
+      <div class="dato" data-sube><b class="cifra-d num" data-odo>1.787.268</b><span>Traspasos en 2025, +16,3 % (RUNT). Mercado de trámites y compraventa.</span></div>
+      <div class="dato" data-sube><b class="cifra-d num">$ 3,6 billones</b><span>Primas de SOAT en 2025; 11,3 M de vehículos asegurados (Fasecolda).</span></div>
+      <div class="dato" data-sube><b class="cifra-d num">2,48 M</b><span>Vehículos con seguro todo riesgo en 2025 (Fasecolda).</span></div>
+    </div>
+
+    <div class="cab" style="margin-top:60px">
+      <p class="eyebrow">Revenue máximo</p>
+      <h2 data-cota>Ingreso potencial anual</h2>
+      <p>Ingreso = usuarios activos × ingreso por usuario. Elige fase, penetración y método.</p>
+    </div>
+    <div class="maxr">
+      <div class="controles">
+        <fieldset class="control">
+          <legend>Fase geográfica</legend>
+          <div class="seg" id="mxFase">
+            <label><input type="radio" name="mxf" value="1"><span>F1</span></label>
+            <label><input type="radio" name="mxf" value="2"><span>F2</span></label>
+            <label><input type="radio" name="mxf" value="3"><span>F3</span></label>
+            <label><input type="radio" name="mxf" value="4" checked><span>F4</span></label>
+          </div>
+        </fieldset>
+        <div class="pal">
+          <div class="top"><label for="mxPen">Penetración: dueños activos en la app</label><output id="mxPenO"></output></div>
+          <input type="range" id="mxPen" min="0.01" max="0.4" step="0.01" value="0.15">
+          <p class="fuente">Referencias: Flypass ≈ 5 % de los carros (2024) · Waze ≈ 43 % (2018).</p>
+        </div>
+        <fieldset class="control">
+          <legend>Método</legend>
+          <div class="seg seg-v" id="mxMet">
+            <label><input type="radio" name="mxm" value="arriba" checked><span>Arriba-abajo · $ 8.750 carro / $ 3.500 moto al mes</span></label>
+            <label><input type="radio" name="mxm" value="P"><span>Abajo-arriba · pesimista · $ 1.200 al mes</span></label>
+            <label><input type="radio" name="mxm" value="C"><span>Abajo-arriba · conservador · $ 3.650 al mes</span></label>
+            <label><input type="radio" name="mxm" value="F"><span>Abajo-arriba · favorable · $ 5.500 al mes</span></label>
+          </div>
+        </fieldset>
+        <label class="check" for="mxMotos"><input type="checkbox" id="mxMotos" checked> Incluir dueños de moto</label>
+      </div>
+      <div class="grafica">
+        <div class="total">
+          <b class="cifra-d num" id="mxTotal">—</b>
+          <span id="mxTxt"></span>
+        </div>
+        <div class="tramos">
+          <div class="tramo"><span class="etq suave">Usuarios activos</span><b class="cifra-d num" id="mxUs">—</b></div>
+          <div class="tramo"><span class="etq suave">Captura del SAM</span><b class="cifra-d num" id="mxSam">—</b></div>
+        </div>
+        <p class="etq suave">Ingreso anual por fase con la penetración y el método elegidos · mil M COP</p>
+        <svg id="mxGraf" viewBox="0 0 640 230" role="img" aria-label="Ingreso anual potencial por fase geográfica"></svg>
+      </div>
+    </div>
+    <p class="fuente" style="margin-top:15px">Arriba-abajo (E): por usuario activo pasa por la app el 30 % de su gasto en parqueo, lavado, SOAT y tecnomecánica, 15 % del taller y 10 % del todo riesgo, + $ 15.000 al año de publicidad y crédito; excluye mensualidades de comercios. Abajo-arriba: ingreso por usuario activo del tablero de proyecciones (año 3–5). Techo con 30 % de penetración en Colombia: $ 120–192 mil M al año (abajo-arriba conservador a arriba-abajo).</p>
+  </div>
+</section>
+
 
 <div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
 
@@ -800,40 +954,40 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="modelo">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Modelo de negocio</p>
-      <h2 data-cota>El usuario paga en la app; el comercio paga por estar y por vender</h2>
-      <p>Cada comercio aliado paga una mensualidad por aparecer en la app y una comisión por cada reserva. Sobre esa base se suman, por fases, los servicios financieros, la publicidad y los clasificados. Los precios y porcentajes se definen con los primeros comercios.</p>
+      <p class="eyebrow">06</p>
+      <h2 data-cota>Modelo de negocio</h2>
+      <p>Marketplace transaccional. El usuario paga en la app; el comercio paga mensualidad + comisión por reserva. Precios y porcentajes se definen con los primeros aliados.</p>
     </div>
     <div class="filtros" role="group" aria-label="Filtrar fuentes de ingreso por quién paga">
-      <span class="etq">Quién paga</span>
+      <span class="etq">Pagador</span>
       <button class="filtro" data-f="pagador" data-v="todos" aria-pressed="true">Todos</button>
       <button class="filtro" data-f="pagador" data-v="comercio" aria-pressed="false">Comercios</button>
       <button class="filtro" data-f="pagador" data-v="usuario" aria-pressed="false">Usuarios</button>
       <button class="filtro" data-f="pagador" data-v="financiero" aria-pressed="false">Bancos y aseguradoras</button>
-      <button class="filtro" data-f="pagador" data-v="marcas" aria-pressed="false">Marcas y concesionarios</button>
+      <button class="filtro" data-f="pagador" data-v="marcas" aria-pressed="false">Marcas</button>
       <button class="filtro" data-f="pagador" data-v="vendedor" aria-pressed="false">Vendedores</button>
     </div>
     <div class="filtros" role="group" aria-label="Filtrar fuentes de ingreso por fase">
       <span class="etq">Fase</span>
       <button class="filtro" data-f="fase" data-v="todas" aria-pressed="true">Todas</button>
-      <button class="filtro" data-f="fase" data-v="V1" aria-pressed="false">V1 · Lanzamiento</button>
-      <button class="filtro" data-f="fase" data-v="V2" aria-pressed="false">V2 · Retención</button>
-      <button class="filtro" data-f="fase" data-v="V3" aria-pressed="false">V3 · Financiero</button>
-      <button class="filtro" data-f="fase" data-v="V4" aria-pressed="false">V4 · Plataforma</button>
+      <button class="filtro f-V1" data-f="fase" data-v="V1" aria-pressed="false">V1 · Lanzamiento</button>
+      <button class="filtro f-V2" data-f="fase" data-v="V2" aria-pressed="false">V2 · Retención</button>
+      <button class="filtro f-V3" data-f="fase" data-v="V3" aria-pressed="false">V3 · Financiero</button>
+      <button class="filtro f-V4" data-f="fase" data-v="V4" aria-pressed="false">V4 · Plataforma</button>
     </div>
     <div class="ingresos" id="ingresos" aria-live="polite"></div>
     <p class="fuente" style="margin-top:15px" id="conteo"></p>
 
     <div class="frec">
       <div class="bloque">
-        <p class="eyebrow">Por qué empezamos por el parqueadero</p>
-        <p class="grande" style="max-width:none">El servicio que se usa día de por medio</p>
-        <p>Quien parquea día de por medio abre la app unas 15 veces al mes. Lavado y taller se piden pocas veces al año, según la operación de los fundadores. Esa frecuencia mantiene vivos los demás servicios: cada vez que el usuario parquea, la app le recuerda el SOAT, el lavado o el cambio de aceite.</p>
+        <p class="eyebrow">Servicio ancla</p>
+        <p class="grande" style="max-width:none">Parqueadero</p>
+        <p>Mayor frecuencia de uso: un usuario frecuente parquea unas 15 veces al mes; lavado y taller, pocas veces al año. Cada parqueo abre la app y activa recordatorios de los demás servicios.</p>
       </div>
       <div class="cal" id="cal" role="img" aria-label="Un mes de un usuario frecuente: 15 parqueos, 1 lavado, ninguna visita al taller">
-        <p class="etq suave">Un mes de un usuario frecuente (supuesto)</p>
+        <p class="etq suave">Uso en un mes · usuario frecuente (supuesto)</p>
         <div class="cal-fila parq"><span class="etq">Parqueadero</span><div class="cal-dias" data-dias="parq"></div><b class="num">15</b></div>
-        <div class="cal-fila"><span class="etq">Lavado</span><div class="cal-dias" data-dias="lav"></div><b class="num">1</b></div>
+        <div class="cal-fila lav"><span class="etq">Lavado</span><div class="cal-dias" data-dias="lav"></div><b class="num">1</b></div>
         <div class="cal-fila"><span class="etq">Taller</span><div class="cal-dias" data-dias="tal"></div><b class="num">0</b></div>
         <div class="cal-eje"><span></span><span class="fuente"><span>Día 1</span><span>Día 15</span><span>Día 30</span></span><span></span></div>
       </div>
@@ -842,13 +996,12 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
     <div class="frec">
       <div class="panel bloque">
         <p class="etq luz">Horas valle</p>
-        <h3>Promociones donde el comercio tiene cupos vacíos</h3>
-        <p>El parqueadero, el lavadero o el taller programa descuentos en sus franjas flojas, por ejemplo de 10 a. m. a 3 p. m. La app se los muestra a los usuarios cercanos. El comercio llena capacidad que hoy pierde y el usuario paga menos.</p>
+        <p>Descuentos programados por el comercio en sus franjas de baja ocupación (p. ej., 10 a. m. a 3 p. m.), mostrados a usuarios cercanos. Incluidos en la mensualidad.</p>
       </div>
       <div class="valle bloque">
-        <p class="etq suave">Ocupación ilustrativa de un parqueadero en un día hábil</p>
+        <p class="etq suave">Ocupación ilustrativa de un parqueadero · día hábil</p>
         <svg id="valle" viewBox="0 0 640 230" role="img" aria-label="Ocupación por hora de 6 a. m. a 9 p. m.: picos en la mañana y la tarde, valle entre 10 a. m. y 3 p. m. que se llena con promociones"></svg>
-        <div class="ley"><span><i style="background:var(--n-3)"></i>Ocupación sin la app</span><span><i style="background:var(--acc-2)"></i>Cupos que llenan las promociones</span></div>
+        <div class="ley"><span><i style="background:var(--ser-4)"></i>Ocupación base</span><span><i style="background:var(--ser-1)"></i>Ocupación por promociones</span></div>
       </div>
     </div>
   </div>
@@ -860,18 +1013,18 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="comercios">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Comercios aliados</p>
-      <h2 data-cota>Lo que gana un parqueadero, un lavadero o un taller</h2>
+      <p class="eyebrow">07</p>
+      <h2 data-cota>Propuesta de valor al comercio</h2>
     </div>
     <div class="rej rej-4">
-      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-horario"/></svg><h3>Horas llenas</h3><p>Promociones en horas valle que llegan a usuarios cercanos, incluidas en la mensualidad.</p></div>
-      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-pago"/></svg><h3>Pago asegurado</h3><p>El cliente paga en la app al reservar. Menos citas perdidas.</p></div>
-      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-documento"/></svg><h3>Panel de gestión</h3><p>Agenda, reservas, servicios, promociones, reseñas y pagos en un panel web.</p></div>
-      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-buscar"/></svg><h3>Clientes nuevos</h3><p>Visibilidad ante una comunidad automotriz que hoy no lo conoce.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico luz" aria-hidden="true"><use href="#ico-horario"/></svg><h3>Ocupación</h3><p>Promociones en horas valle.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico luz" aria-hidden="true"><use href="#ico-pago"/></svg><h3>Pago anticipado</h3><p>Cobro en la app al reservar.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico luz" aria-hidden="true"><use href="#ico-documento"/></svg><h3>Panel de gestión</h3><p>Agenda, reservas, promociones, reseñas y pagos.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico luz" aria-hidden="true"><use href="#ico-buscar"/></svg><h3>Adquisición</h3><p>Visibilidad ante usuarios cercanos.</p></div>
     </div>
     <div class="panel" style="margin-top:38px;display:grid;gap:7.5px">
-      <p class="etq luz">Cómo se cobra al comercio</p>
-      <p><b style="color:var(--txt-1);font-weight:600">Mensualidad por aparecer + comisión por reserva.</b> Para arrancar, los primeros 30 comercios tienen dos meses sin mensualidad; la comisión sí se cobra desde el primer día. Al comienzo nadie paga por estar en una app sin usuarios. Cuando la app le manda clientes al comercio, el comercio sí paga.</p>
+      <p class="etq luz">Esquema de cobro</p>
+      <p>Mensualidad + comisión por reserva. Primeros 30 comercios: 2 meses sin mensualidad; la comisión aplica desde el día 1.</p>
     </div>
   </div>
 </section>
@@ -879,20 +1032,20 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="ia">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Construida y operada con IA</p>
-      <h2 data-cota>Un equipo pequeño que trabaja como uno grande</h2>
-      <p>Los ingenieros fundadores desarrollan con Claude Code. Eso cambia la estructura de costos: construir y lanzar cuesta $ 22,7 M, y desde el mes 9 el software de toda la operación cuesta cerca de $ 451.000 al mes. La IA también entra al producto, en este orden:</p>
+      <p class="eyebrow">08</p>
+      <h2 data-cota>Desarrollo y operación con IA</h2>
+      <p>Ingenieros fundadores con Claude Code. Software desde el mes 9: ≈ $ 451.000 al mes.</p>
     </div>
     <div class="tabla-env">
       <table>
-        <thead><tr><th>Dónde entra la IA</th><th>Qué hace</th><th>Fase</th></tr></thead>
+        <thead><tr><th>Aplicación</th><th>Función</th><th>Fase</th></tr></thead>
         <tbody>
-          <tr><th>Desarrollo</th><td>Escribe, prueba y corrige código con el equipo fundador. Menos personas, más velocidad.</td><td>Desde el día 1</td></tr>
-          <tr><th>Registro del vehículo</th><td>Lee la tarjeta de propiedad, el SOAT y la tecnomecánica a partir de una foto y llena Mi garaje.</td><td>V2</td></tr>
-          <tr><th>Horas valle</th><td>Le sugiere a cada comercio cuándo y cuánto descontar según la demanda de su zona.</td><td>V2</td></tr>
-          <tr><th>Asistente de trámites</th><td>Responde a cualquier hora qué papeles se necesitan y cuánto cuesta un trámite en Bogotá.</td><td>V2</td></tr>
-          <tr><th>Soporte</th><td>Atiende el primer nivel de usuarios y comercios, y escala a una persona solo lo necesario.</td><td>V2 en adelante</td></tr>
-          <tr><th>Clasificados</th><td>Revisa publicaciones, detecta fraudes y estima el precio de mercado de un vehículo.</td><td>V4</td></tr>
+          <tr><th>Desarrollo</th><td>Escritura, pruebas y corrección de código.</td><td>Día 1</td></tr>
+          <tr><th>Registro del vehículo</th><td>Lectura de tarjeta de propiedad, SOAT y tecnomecánica desde una foto.</td><td><span class="chip V2">V2</span></td></tr>
+          <tr><th>Horas valle</th><td>Sugerencia de descuento por zona y demanda.</td><td><span class="chip V2">V2</span></td></tr>
+          <tr><th>Asistente de trámites</th><td>Requisitos y costos de trámites en Bogotá.</td><td><span class="chip V2">V2</span></td></tr>
+          <tr><th>Soporte</th><td>Primer nivel para usuarios y comercios.</td><td><span class="chip V2">V2</span></td></tr>
+          <tr><th>Clasificados</th><td>Revisión de publicaciones, fraude y precio de mercado.</td><td><span class="chip V4">V4</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -901,22 +1054,27 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 
 <div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
 
-<!-- ================= HOJA DE RUTA ================= -->
+<!-- ================= ROADMAP ================= -->
 <section id="ruta">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Hoja de ruta</p>
-      <h2 data-cota>Se lanza con lo básico y cada servicio entra cuando se cumple su condición</h2>
-      <p>Lanzar con pocas funciones acorta el desarrollo y concentra la pauta. Los servicios financieros y los clasificados abiertos entran cuando se firman los aliados y hay usuarios suficientes. Las metas dicen cuándo esperamos llegar; si la condición no se cumple, el servicio espera.</p>
+      <p class="eyebrow">09</p>
+      <h2 data-cota>Roadmap de producto</h2>
+      <p>Cada fase entra cuando se cumple su condición.</p>
     </div>
     <svg class="ruta-svg" id="rutaSvg" viewBox="0 0 1000 110" aria-hidden="true"></svg>
     <div class="fases" role="group" aria-label="Fases de la app" id="fases"></div>
     <div class="fase-det" id="faseDet" aria-live="polite"></div>
-    <div class="etapas">
-      <div class="etapa" data-sube><span class="n">1</span><h3>Bogotá</h3><p>Servicios de uso frecuente y comercios aliados en la ciudad.</p></div>
-      <div class="etapa" data-sube><span class="n">2</span><h3>Servicios financieros y clasificados</h3><p>Crédito, seguros, publicidad, clasificados y repuestos sobre una base de usuarios activa.</p></div>
-      <div class="etapa" data-sube><span class="n">3</span><h3>Colombia</h3><p>Las principales ciudades del país, con el mismo modelo de comercios aliados.</p></div>
-      <div class="etapa" data-sube><span class="n">4</span><h3>La región</h3><p>Llevar la plataforma a otros mercados de América Latina.</p></div>
+    <div class="cab" style="margin-top:60px">
+      <p class="eyebrow">10</p>
+      <h2 data-cota>Roadmap geográfico</h2>
+      <p>Expansión por densidad de propietarios y demanda de parqueo pago.</p>
+    </div>
+    <div class="geo">
+      <div class="g-paso" data-sube style="--c:var(--f1)"><span class="vn">F1</span><h3>Zonas iniciales de Bogotá</h3><p>Usaquén, Chapinero, Teusaquillo, Barrios Unidos; norte de Suba como F1b.</p><p class="g-num"><b class="num">240 mil</b> dueños de carro · <b class="num">43 mil</b> de moto</p><p class="fuente">Estratos 4–6: 46 % de los autos con 18 % de los hogares. Destinos de viaje en auto. Entrada: H0 (V1–V2).</p></div>
+      <div class="g-paso" data-sube style="--c:var(--f2)"><span class="vn">F2</span><h3>Bogotá</h3><p>Suba, Engativá, Kennedy y el resto de localidades.</p><p class="g-num"><b class="num">860 mil</b> carro · <b class="num">525 mil</b> moto</p><p class="fuente">991.972 autos y 551.405 motos en hogares (EM2023). Entrada: H3 (V3).</p></div>
+      <div class="g-paso" data-sube style="--c:var(--f3)"><span class="vn">F3</span><h3>Áreas metropolitanas</h3><p>Valle de Aburrá, Cali, Barranquilla, Bucaramanga, Cartagena, Pereira, Manizales y Bogotá-Región.</p><p class="g-num"><b class="num">2,4 M</b> carro · <b class="num">3,4 M</b> moto</p><p class="fuente">Valle de Aburrá: 779.923 carros y 1.356.661 motos. Entrada: H4, segunda ciudad (V4).</p></div>
+      <div class="g-paso" data-sube style="--c:var(--f4)"><span class="vn">F4</span><h3>Colombia</h3><p>Cobertura nacional.</p><p class="g-num"><b class="num">4,1 M</b> carro · <b class="num">5,0 M</b> moto</p><p class="fuente">21,3 M vehículos activos; 11,2 M con SOAT vigente (RUNT 2025). Entrada: año 3 en adelante.</p></div>
     </div>
   </div>
 </section>
@@ -927,30 +1085,64 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="metas">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Metas</p>
-      <h2 data-cota>Metas de usuarios, comercios y servicios que se pueden verificar</h2>
-      <p>Se miden desde el lanzamiento. Esta ronda cubre hasta H1, los 4 meses de lanzamiento. De H2 en adelante, las metas suponen que el lanzamiento pasó las métricas de corte y que la pauta se sostiene con ingresos o con una nueva ronda. En el tablero de proyecciones, el caso favorable las cumple todas, el conservador cumple H1 y H2 y llega a los activos y comercios de H3, y el pesimista no las alcanza.</p>
+      <p class="eyebrow">11</p>
+      <h2 data-cota>Metas</h2>
+      <p>Medidas desde el lanzamiento. La ronda cubre hasta H1; H2 a H4 requieren pasar las métricas de corte y financiar la pauta con ingresos o una nueva ronda.</p>
     </div>
-    <div class="tabla-env">
-      <table id="tablaMetas">
-        <thead><tr><th>Hito</th><th class="n">Registrados</th><th class="n">Activos al mes</th><th class="n">Comercios aliados</th><th>Servicios lanzados, si se cumple la condición</th></tr></thead>
-        <tbody>
-          <tr><th><span class="hito">H0</span>Lanzamiento · mes 5 del plan</th><td class="n">—</td><td class="n">—</td><td class="n"><span class="num">15</span><span class="barrita" style="width:5%;margin-left:auto"></span></td><td>V1 completa. 15 comercios firmados: 6 parqueaderos, 6 lavaderos y 3 talleres, en 1 o 2 zonas.</td></tr>
-          <tr><th><span class="hito">H1</span>Mes 3 en el mercado · mes 7 del plan</th><td class="n"><span class="num">1.000</span><span class="barrita" style="width:5%;margin-left:auto"></span></td><td class="n"><span class="num">400</span><span class="barrita" style="width:6.7%;margin-left:auto"></span></td><td class="n"><span class="num">30</span><span class="barrita" style="width:10%;margin-left:auto"></span></td><td>Solo V1. Se miden las métricas de corte.</td></tr>
-          <tr><th><span class="hito">H2</span>Mes 6 en el mercado · mes 10 del plan</th><td class="n"><span class="num">2.500</span><span class="barrita" style="width:12.5%;margin-left:auto"></span></td><td class="n"><span class="num">900</span><span class="barrita" style="width:15%;margin-left:auto"></span></td><td class="n"><span class="num">50</span><span class="barrita" style="width:16.7%;margin-left:auto"></span></td><td>Puntos y fidelización, renovación de SOAT y tecnomecánica, informe vehicular.</td></tr>
-          <tr><th><span class="hito">H3</span>Mes 12 en el mercado · mes 16 del plan</th><td class="n"><span class="num">6.000</span><span class="barrita" style="width:30%;margin-left:auto"></span></td><td class="n"><span class="num">2.000</span><span class="barrita" style="width:33.3%;margin-left:auto"></span></td><td class="n"><span class="num">100</span><span class="barrita" style="width:33.3%;margin-left:auto"></span></td><td>Primer banco o aseguradora: crédito o todo riesgo. Pantalla de entrada patrocinada.</td></tr>
-          <tr><th><span class="hito">H4</span>Mes 24 en el mercado · mes 28 del plan</th><td class="n"><span class="num">20.000</span><span class="barrita" style="width:100%;margin-left:auto"></span></td><td class="n"><span class="num">6.000</span><span class="barrita" style="width:100%;margin-left:auto"></span></td><td class="n"><span class="num">300</span><span class="barrita" style="width:100%;margin-left:auto"></span></td><td>Clasificados abiertos, tienda de repuestos, compraventa protegida, segunda ciudad.</td></tr>
-        </tbody>
-      </table>
+    <div class="tabla-env sin-borde">
+      <div class="metas-m" id="metasM">
+        <div class="mm-cab"></div>
+        <div class="mm-cab"><span class="hito">H0</span><span class="etq suave">Lanzamiento · mes 5</span></div>
+        <div class="mm-cab"><span class="hito">H1</span><span class="etq suave">Mes 3 en mercado · mes 7</span></div>
+        <div class="mm-cab"><span class="hito">H2</span><span class="etq suave">Mes 6 · mes 10</span></div>
+        <div class="mm-cab"><span class="hito">H3</span><span class="etq suave">Mes 12 · mes 16</span></div>
+        <div class="mm-cab"><span class="hito">H4</span><span class="etq suave">Mes 24 · mes 28</span></div>
+
+        <div class="mm-tipo" style="--c:var(--ser-1)"><i></i><span class="etq">Usuarios registrados</span></div>
+        <div class="mm-v" style="--c:var(--ser-1)"><b>—</b></div>
+        <div class="mm-v" style="--c:var(--ser-1)"><b class="num">1.000</b><span class="mm-b" style="--w:5%"></span></div>
+        <div class="mm-v" style="--c:var(--ser-1)"><b class="num">2.500</b><span class="mm-b" style="--w:12.5%"></span></div>
+        <div class="mm-v" style="--c:var(--ser-1)"><b class="num">6.000</b><span class="mm-b" style="--w:30%"></span></div>
+        <div class="mm-v" style="--c:var(--ser-1)"><b class="num">20.000</b><span class="mm-b" style="--w:100%"></span></div>
+
+        <div class="mm-tipo" style="--c:var(--acc-2)"><i></i><span class="etq">Usuarios activos al mes</span></div>
+        <div class="mm-v" style="--c:var(--acc-2)"><b>—</b></div>
+        <div class="mm-v" style="--c:var(--acc-2)"><b class="num">400</b><span class="mm-b" style="--w:6.7%"></span></div>
+        <div class="mm-v" style="--c:var(--acc-2)"><b class="num">900</b><span class="mm-b" style="--w:15%"></span></div>
+        <div class="mm-v" style="--c:var(--acc-2)"><b class="num">2.000</b><span class="mm-b" style="--w:33.3%"></span></div>
+        <div class="mm-v" style="--c:var(--acc-2)"><b class="num">6.000</b><span class="mm-b" style="--w:100%"></span></div>
+
+        <div class="mm-tipo" style="--c:var(--pos)"><i></i><span class="etq">Comercios aliados</span></div>
+        <div class="mm-v" style="--c:var(--pos)"><b class="num">15</b><span class="mm-b" style="--w:5%"></span></div>
+        <div class="mm-v" style="--c:var(--pos)"><b class="num">30</b><span class="mm-b" style="--w:10%"></span></div>
+        <div class="mm-v" style="--c:var(--pos)"><b class="num">50</b><span class="mm-b" style="--w:16.7%"></span></div>
+        <div class="mm-v" style="--c:var(--pos)"><b class="num">100</b><span class="mm-b" style="--w:33.3%"></span></div>
+        <div class="mm-v" style="--c:var(--pos)"><b class="num">300</b><span class="mm-b" style="--w:100%"></span></div>
+
+        <div class="mm-tipo" style="--c:var(--txt-1)"><i></i><span class="etq">Producto</span></div>
+        <div class="mm-s"><span class="chip V1">V1</span><span>6 parqueaderos, 6 lavaderos, 3 talleres; 1–2 zonas</span></div>
+        <div class="mm-s"><span class="chip V1">V1</span><span>Medición de métricas de corte</span></div>
+        <div class="mm-s"><span class="chip V2">V2</span><span>Puntos, SOAT y tecnomecánica, informe vehicular</span></div>
+        <div class="mm-s"><span class="chip V3">V3</span><span>Primer banco o aseguradora; pantalla patrocinada</span></div>
+        <div class="mm-s"><span class="chip V4">V4</span><span>Clasificados, repuestos, compraventa protegida, 2.ª ciudad</span></div>
+
+        <div class="mm-tipo" style="--c:var(--warn)"><i></i><span class="etq">Cumplimiento en el tablero</span></div>
+        <div class="mm-s mm-cum" data-h="H0"><span class="fuente">—</span></div>
+        <div class="mm-s mm-cum" data-h="H1"></div>
+        <div class="mm-s mm-cum" data-h="H2"></div>
+        <div class="mm-s mm-cum" data-h="H3"></div>
+        <div class="mm-s mm-cum" data-h="H4"></div>
+      </div>
     </div>
+    <p class="fuente" style="margin-top:15px">Cumplimiento: P pesimista, C conservador, F favorable. Verde: el caso cumple registrados, activos y comercios del hito. Rojo: no cumple.</p>
 
     <div class="cab" style="margin-top:60px">
-      <p class="eyebrow">Métricas de corte</p>
-      <h2 data-cota>Al final del lanzamiento se decide con datos reales</h2>
-      <p>Los 4 meses de lanzamiento son un experimento. Al cierre del mes 8 del plan, estas cinco métricas dicen si se escala, se ajusta o se replantea. Los cuadros marcan dónde queda cada caso del tablero: P pesimista, C conservador, F favorable. El cuadro azul sigue lo que muevas en el tablero.</p>
+      <p class="eyebrow">Mes 8 del plan</p>
+      <h2 data-cota>Métricas de corte</h2>
+      <p>Cinco métricas al cierre del lanzamiento: escalar, ajustar o replantear.</p>
     </div>
     <div class="corte" id="corte"></div>
-    <div class="ley" style="margin-top:15px"><span><i class="z-rep"></i>Se replantea</span><span><i class="z-aju"></i>Se ajusta</span><span><i class="z-esc"></i>Se escala</span></div>
+    <div class="ley" style="margin-top:15px"><span><i class="z-rep"></i>Replantear</span><span><i class="z-aju"></i>Ajustar</span><span><i class="z-esc"></i>Escalar</span><span><i style="background:var(--txt-1)"></i>P · C · F: casos del tablero</span></div>
   </div>
 </section>
 
@@ -960,9 +1152,9 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="proyecciones">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Proyecciones a 5 años · tablero</p>
-      <h2 data-cota>Mueve los supuestos y mira qué pasa con el negocio</h2>
-      <p>Tres casos armados con supuestos explícitos. El pesimista es el punto de partida. Cualquier palanca se puede mover, y los ingresos, los costos, el estado de resultados y la caja se recalculan mes a mes desde el primer mes de desarrollo. Son proyecciones ilustrativas con supuestos de los fundadores, no una promesa de resultados.</p>
+      <p class="eyebrow">12</p>
+      <h2 data-cota>Proyecciones financieras · 5 años</h2>
+      <p>Tres casos con supuestos explícitos; el pesimista es la base. Cada palanca recalcula ingresos, costos, P y G y caja mes a mes. Proyecciones ilustrativas, no promesa de resultados.</p>
     </div>
     <div class="tablero">
       <div class="casos">
@@ -973,32 +1165,32 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
         </div>
         <div class="estado-caso">
           <span class="chip pend" id="chipPers" hidden>Personalizado</span>
-          <label class="check" for="corteOn"><input type="checkbox" id="corteOn"> Aplicar las métricas de corte</label>
-          <button type="button" class="btn" id="restablecer">Restablecer el caso</button>
+          <label class="check" for="corteOn"><input type="checkbox" id="corteOn"> Aplicar métricas de corte</label>
+          <button type="button" class="btn" id="restablecer">Restablecer</button>
         </div>
       </div>
       <p class="fuente" id="casoTxt"></p>
 
       <div class="kpis" id="kpis">
-        <div class="kpi"><span class="etq suave">Ingresos año 5</span><b class="cifra-d num" id="kIng">—</b><span>en los meses 49 a 60</span></div>
+        <div class="kpi"><span class="etq suave">Ingresos año 5</span><b class="cifra-d num" id="kIng">—</b><span>meses 49 a 60</span></div>
         <div class="kpi"><span class="etq suave">EBITDA año 5</span><b class="cifra-d num" id="kEb">—</b><span id="kEbTxt">margen</span></div>
-        <div class="kpi"><span class="etq suave">Equilibrio</span><b class="cifra-d num" id="kEq">—</b><span id="kEqTxt">primer mes con 3 meses seguidos en positivo</span></div>
-        <div class="kpi"><span class="etq suave">Capital necesario</span><b class="cifra-d num" id="kCap">—</b><span id="kCapTxt">la caja más baja</span></div>
-        <div class="kpi"><span class="etq suave">Usuarios activos</span><b class="cifra-d num" id="kAct">—</b><span>al mes 60</span></div>
-        <div class="kpi"><span class="etq suave">Comercios aliados</span><b class="cifra-d num" id="kCom">—</b><span>al mes 60</span></div>
+        <div class="kpi"><span class="etq suave">Punto de equilibrio</span><b class="cifra-d num" id="kEq">—</b><span id="kEqTxt"></span></div>
+        <div class="kpi"><span class="etq suave">Capital necesario</span><b class="cifra-d num" id="kCap">—</b><span id="kCapTxt"></span></div>
+        <div class="kpi"><span class="etq suave">Usuarios activos</span><b class="cifra-d num" id="kAct">—</b><span>mes 60</span></div>
+        <div class="kpi"><span class="etq suave">Comercios aliados</span><b class="cifra-d num" id="kCom">—</b><span>mes 60</span></div>
       </div>
 
       <div class="tab-cuerpo">
         <div class="palancas" id="palancas" aria-label="Supuestos"></div>
         <div class="vistas">
           <div class="pestanas" role="tablist" aria-label="Vista" id="pestanas">
-            <button role="tab" id="tab-pyg" aria-selected="true" data-v="pyg">Ingresos y costos</button>
-            <button role="tab" id="tab-ing" aria-selected="false" data-v="ing">Ingresos por fuente</button>
-            <button role="tab" id="tab-cos" aria-selected="false" data-v="cos">Costos por rubro</button>
+            <button role="tab" id="tab-pyg" aria-selected="true" data-v="pyg">P y G</button>
+            <button role="tab" id="tab-ing" aria-selected="false" data-v="ing">Ingresos</button>
+            <button role="tab" id="tab-cos" aria-selected="false" data-v="cos">Costos</button>
             <button role="tab" id="tab-caja" aria-selected="false" data-v="caja">Caja</button>
             <button role="tab" id="tab-us" aria-selected="false" data-v="us">Usuarios y comercios</button>
           </div>
-          <p class="etq suave" id="vistaTit">Ingresos, costos y EBITDA por mes, en millones de COP</p>
+          <p class="etq suave" id="vistaTit"></p>
           <div class="lienzo" id="lienzo">
             <svg id="graf" viewBox="0 0 760 360" role="img" aria-label="Gráfica del tablero"></svg>
             <div class="lectura" id="lectura"></div>
@@ -1011,23 +1203,24 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
       </div>
 
       <div class="cab" style="margin:24px 0 0">
-        <p class="eyebrow">Estado de resultados por año</p>
-        <h2 data-cota>Pérdidas y ganancias, en millones de COP</h2>
+        <p class="eyebrow">Estado de resultados</p>
+        <h2 data-cota>P y G anual · M COP</h2>
       </div>
       <div class="tabla-env">
         <table class="pyg" id="pyg"></table>
       </div>
+      <div class="cab" style="margin:24px 0 0"><p class="eyebrow">Unit economics · año 3</p></div>
       <div class="unidad" id="unidad"></div>
-      <p class="fuente">EBITDA antes de impuesto de renta, depreciación e intereses. Incluye la pasarela (2,65 % + $ 700 + IVA por pago), ICA de 9,66 por mil sobre los ingresos, el software fijo del plan ($ 541.200 al mes, +10 % al año), $ 80 por usuario activo de infraestructura, contabilidad y legal desde el mes 9 y la nómina que definas. La operación actual de DRS Motors (consignación y trámites) no se suma. US$1 = $ 3.300; inflación de precios del 4 % al año.</p>
+      <p class="fuente">EBITDA antes de renta, depreciación e intereses. Incluye pasarela (2,65 % + $ 700 + IVA), ICA (9,66 por mil), software fijo ($ 541.200 al mes, +10 % anual), $ 80 por usuario activo de infraestructura, contabilidad y legal desde el mes 9 y la nómina definida. Excluye la operación actual de DRS Motors (consignación y trámites). Inflación de precios: 4 % anual.</p>
 
       <div class="cab" style="margin:38px 0 0">
-        <p class="eyebrow">Los tres casos, lado a lado</p>
+        <p class="eyebrow">Comparativo de casos</p>
       </div>
       <div class="tabla-env">
         <table id="comparar"></table>
       </div>
       <details class="avanz" style="margin-top:15px">
-        <summary>Ver todos los supuestos de los tres casos</summary>
+        <summary>Supuestos de los tres casos</summary>
         <div class="tabla-env" style="border:0"><table id="supuestos"></table></div>
       </details>
     </div>
@@ -1036,13 +1229,13 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 
 <div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
 
-<!-- ================= INVERSIÓN ================= -->
+<!-- ================= USO DE FONDOS ================= -->
 <section id="inversion">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Inversión · uso de los fondos</p>
-      <h2 data-cota>Lo que cuesta construir y lanzar, mes a mes</h2>
-      <p>El dinero no se necesita de una vez. El primer tramo paga el desarrollo; el segundo, el lanzamiento y la pauta. Mueve los controles para ver cómo cambia el total.</p>
+      <p class="eyebrow">13</p>
+      <h2 data-cota>Uso de fondos</h2>
+      <p>Desembolso por tramos: tramo 1, desarrollo; tramo 2, lanzamiento y pauta.</p>
     </div>
     <div class="inv">
       <div class="controles">
@@ -1054,7 +1247,7 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
           </div>
         </fieldset>
         <div class="control">
-          <label for="pauta">Pauta mensual en Meta y TikTok</label>
+          <label for="pauta">Pauta mensual · Meta y TikTok</label>
           <select id="pauta">
             <option value="2000000">$ 2.000.000</option>
             <option value="3000000" selected>$ 3.000.000</option>
@@ -1062,9 +1255,9 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
           </select>
         </div>
         <div class="control">
-          <label for="auxilio">Auxilio mensual por ingeniero fundador</label>
+          <label for="auxilio">Auxilio mensual por ingeniero</label>
           <input type="text" id="auxilio" value="$ 0" inputmode="numeric" autocomplete="off">
-          <p class="fuente">Por definir. Los ingenieros son parte de los fundadores y reciben acciones. Hasta $ 10.000.000.</p>
+          <p class="fuente">Por definir. Máximo $ 10.000.000.</p>
         </div>
         <fieldset class="control">
           <legend>Ingenieros con auxilio</legend>
@@ -1073,27 +1266,27 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
             <label><input type="radio" name="ing" id="ing3" value="3"><span>3</span></label>
           </div>
         </fieldset>
-        <label class="check" for="cloudflare"><input type="checkbox" id="cloudflare"> Alojar el panel del comercio en Cloudflare Pages (gratis) en lugar de Vercel Pro</label>
+        <label class="check" for="cloudflare"><input type="checkbox" id="cloudflare"> Panel del comercio en Cloudflare Pages (gratis) en lugar de Vercel Pro</label>
       </div>
       <div class="grafica">
         <div class="total">
           <b class="cifra-d num" id="total">$ 22.712.500</b>
-          <span id="totalTxt">Total del plan: 4 meses de desarrollo + 4 de lanzamiento.</span>
+          <span id="totalTxt"></span>
         </div>
         <div class="tramos">
           <div class="tramo"><span class="etq suave">Tramo 1 · Desarrollo</span><b class="cifra-d num" id="t1">—</b><span id="t1Txt"></span></div>
           <div class="tramo"><span class="etq suave">Tramo 2 · Lanzamiento</span><b class="cifra-d num" id="t2">—</b><span id="t2Txt"></span></div>
         </div>
-        <p class="etq suave">Desembolsos mensuales del plan, en millones de COP</p>
+        <p class="etq suave">Desembolso mensual · M COP</p>
         <div class="ley" id="leyenda"></div>
-        <svg id="grafica" viewBox="0 0 640 300" role="img" aria-label="Desembolsos mensuales del plan, en millones de COP, con el acumulado"></svg>
+        <svg id="grafica" viewBox="0 0 640 300" role="img" aria-label="Desembolso mensual del plan, en millones de COP, con el acumulado"></svg>
         <p class="tip" id="tip">Pasa el cursor o toca una barra para ver el detalle del mes.</p>
       </div>
     </div>
 
     <div class="cab" style="margin:60px 0 24px">
-      <p class="eyebrow">Desglose por rubro</p>
-      <h3 id="desgloseTit">Total del plan por rubro, 8 meses, en COP</h3>
+      <p class="eyebrow">Desglose</p>
+      <h3 id="desgloseTit">Total por rubro · COP</h3>
     </div>
     <div class="tabla-env">
       <table id="desglose">
@@ -1102,38 +1295,37 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
         <tfoot><tr><th colspan="2">Total</th><td class="n" id="desgloseTotal"></td></tr></tfoot>
       </table>
     </div>
-    <p class="fuente" style="margin-top:15px">Precios de octubre de 2026 en las páginas de cada proveedor. La constitución de la S.A.S., el registro de marca y las salidas a firmar comercios son estimados de los fundadores. US$1 = $ 3.300.</p>
+    <p class="fuente" style="margin-top:15px">Precios de proveedores, octubre de 2026. S.A.S., marca y salidas a comercios: estimados de los fundadores.</p>
   </div>
 </section>
 
 <section id="funcionamiento">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Funcionamiento desde el mes 9</p>
-      <h2 data-cota>El software cuesta menos que la pauta</h2>
-      <p>Casi todas las herramientas funcionan con planes gratis o de pocos dólares al mes. El costo crece con los usuarios, no con el tamaño del equipo. Durante los meses 5 a 8 el plan paga Vercel Pro y Expo Starter por prudencia: $ 541.200 al mes.</p>
+      <p class="eyebrow">14</p>
+      <h2 data-cota>Costos operativos · desde el mes 9</h2>
+      <p>Meses 5 a 8: $ 541.200 al mes de software (incluye Vercel Pro y Expo Starter).</p>
     </div>
     <div class="tabla-env">
       <table>
-        <thead><tr><th>Servicio</th><th>Para qué</th><th class="n">Al terminar el plan · hasta 1.000 activos</th><th class="n">Con ~10.000 usuarios activos al mes</th></tr></thead>
+        <thead><tr><th>Servicio</th><th>Uso</th><th class="n">Hasta 1.000 activos</th><th class="n">~10.000 activos</th></tr></thead>
         <tbody>
-          <tr><th>Claude Max 5x</th><td>Seguir desarrollando y corrigiendo</td><td class="n">330.000</td><td class="n">330.000</td></tr>
-          <tr><th>Supabase</th><td>Base de datos, ingreso de usuarios, archivos, tiempo real</td><td class="n">82.500</td><td class="n">≈ 247.500</td></tr>
-          <tr><th>Expo EAS</th><td>Compilar y actualizar la app sin pasar por las tiendas</td><td class="n">0 (plan gratis)</td><td class="n">≈ 178.000</td></tr>
-          <tr><th>Apple Developer</th><td>Publicar en el App Store (US$99 al año, prorrateado)</td><td class="n">27.200</td><td class="n">27.200</td></tr>
-          <tr><th>Google Maps</th><td>Mapa, búsqueda de lugares y rutas</td><td class="n">0</td><td class="n">≈ 247.500 (estimado)</td></tr>
-          <tr><th>Correo y monitoreo de errores</th><td>Comprobantes, confirmaciones y alertas de fallas</td><td class="n">0</td><td class="n">≈ 152.000</td></tr>
-          <tr><th>Dominio</th><td>Página y correos de la app (prorrateado)</td><td class="n">11.000</td><td class="n">11.000</td></tr>
-          <tr><th>Panel web, notificaciones, GitHub, facturación DIAN</th><td>Planes gratis; el panel en Cloudflare Pages (66.000 con Vercel Pro)</td><td class="n">0</td><td class="n">0</td></tr>
+          <tr><th>Claude Max 5x</th><td>Desarrollo continuo</td><td class="n">330.000</td><td class="n">330.000</td></tr>
+          <tr><th>Supabase</th><td>Base de datos, autenticación, archivos</td><td class="n">82.500</td><td class="n">≈ 247.500</td></tr>
+          <tr><th>Expo EAS</th><td>Compilación y actualizaciones</td><td class="n">0</td><td class="n">≈ 178.000</td></tr>
+          <tr><th>Apple Developer</th><td>App Store (prorrateado)</td><td class="n">27.200</td><td class="n">27.200</td></tr>
+          <tr><th>Google Maps</th><td>Mapa, lugares, rutas</td><td class="n">0</td><td class="n">≈ 247.500 (est.)</td></tr>
+          <tr><th>Correo y monitoreo</th><td>Comprobantes y alertas</td><td class="n">0</td><td class="n">≈ 152.000</td></tr>
+          <tr><th>Dominio</th><td>Prorrateado</td><td class="n">11.000</td><td class="n">11.000</td></tr>
+          <tr><th>Panel web, notificaciones, GitHub, DIAN</th><td>Planes gratis (Vercel Pro: 66.000)</td><td class="n">0</td><td class="n">0</td></tr>
         </tbody>
-        <tfoot><tr><th colspan="2">Total software al mes</th><td class="n">≈ 451.000</td><td class="n">≈ 1.193.000</td></tr></tfoot>
+        <tfoot><tr><th colspan="2">Software al mes</th><td class="n">≈ 451.000</td><td class="n">≈ 1.193.000</td></tr></tfoot>
       </table>
     </div>
-    <p class="fuente" style="margin-top:15px">Apple y el dominio van prorrateados al mes; en el plan se pagan en el mes 1.</p>
     <div class="rej rej-3" style="margin-top:38px">
-      <div class="dato"><b class="cifra-d num">≈ $ 3,95 M</b><span>al mes de funcionamiento desde el mes 9: software, $ 3 M de pauta y $ 500.000 de salidas a firmar comercios. Sin auxilio de ingenieros ni contador; el tablero de proyecciones sí los incluye.</span></div>
-      <div class="dato"><b class="cifra-d num">2,65 % + $ 700</b><span>más IVA por cada pago con Wompi. Es costo variable: sale de cada reserva.</span></div>
-      <div class="dato"><b class="cifra-d num">$ 0</b><span>de comisión de Apple y Google por servicios que se consumen fuera de la app, como parqueadero, lavado o taller. El informe vehicular y el plan premium, que son digitales, sí pagarían entre 15 % y 30 % a las tiendas.</span></div>
+      <div class="dato"><b class="cifra-d num">≈ $ 3,95 M</b><span>Opex mensual: software + $ 3 M de pauta + $ 500.000 de comercial. Sin nómina ni contador.</span></div>
+      <div class="dato"><b class="cifra-d num">2,65 % + $ 700</b><span>+ IVA por transacción (Wompi). Costo variable.</span></div>
+      <div class="dato"><b class="cifra-d num">$ 0</b><span>Comisión de Apple y Google en servicios consumidos fuera de la app. Contenido digital (informe, premium): 15–30 %.</span></div>
     </div>
   </div>
 </section>
@@ -1144,33 +1336,33 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="riesgos">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Riesgos</p>
-      <h2 data-cota>Lo que puede salir mal y cómo se responde</h2>
+      <p class="eyebrow">15</p>
+      <h2 data-cota>Riesgos y mitigación</h2>
     </div>
     <div class="tabla-env">
       <table>
         <thead><tr><th>Riesgo</th><th>Mitigación</th></tr></thead>
         <tbody>
-          <tr><th>Los usuarios no adoptan la app al ritmo esperado</th><td>Lanzamiento como experimento con métricas de corte. Si fallan, se para con una pérdida acotada al plan de 8 meses. La pauta se ajusta mes a mes y la comunidad de DRS en redes baja el costo de adquisición.</td></tr>
-          <tr><th>Los comercios no pagan la mensualidad</th><td>Dos meses sin mensualidad para los primeros 30. El panel de gestión y las horas valle deben mostrar valor medible antes del primer cobro.</td></tr>
-          <tr><th>La pasarela de pagos se come el margen de las reservas de bajo valor</th><td>Pagos divididos entre la S.A.S. de la app y el comercio, y evaluación de una tarifa de servicio por reserva.</td></tr>
-          <tr><th>Se bloquean las consultas automatizadas al RUNT</th><td>Proveedores de datos vehiculares como respaldo, con costo por consulta.</td></tr>
-          <tr><th>El alcance crece más rápido que el negocio</th><td>Cada servicio nuevo entra solo cuando se cumple su condición de la hoja de ruta.</td></tr>
-          <tr><th>Competidores con más capital</th><td>Foco en una ciudad y en los servicios de uso frecuente, con una marca y una comunidad que ya existen.</td></tr>
+          <tr><th>Adopción lenta</th><td>Métricas de corte al mes 8; pérdida acotada al plan. Pauta ajustable mes a mes.</td></tr>
+          <tr><th>Comercios que no pagan la mensualidad</th><td>2 meses sin mensualidad; valor medible antes del primer cobro.</td></tr>
+          <tr><th>Margen comprimido por la pasarela</th><td>Pagos divididos S.A.S.–comercio; tarifa de servicio en evaluación.</td></tr>
+          <tr><th>Bloqueo de consultas al RUNT</th><td>Proveedores de datos vehiculares de respaldo.</td></tr>
+          <tr><th>Crecimiento de alcance</th><td>Servicios condicionados al roadmap.</td></tr>
+          <tr><th>Competencia con más capital</th><td>Foco geográfico y en servicios de alta frecuencia.</td></tr>
         </tbody>
       </table>
     </div>
     <div class="juridico" style="margin-top:38px">
       <p class="etq">Comentario jurídico</p>
-      <h3>Opinión de los fundadores, pendiente de concepto de un abogado externo</h3>
+      <h3>Opinión de los fundadores, pendiente de concepto externo</h3>
       <ul>
-        <li><b>Estructura.</b> DRS Motors opera hoy como sociedad de hecho entre sus dos socios (arts. 498–501 C. de Co.). La inversión entraría a una S.A.S. que se constituirá para la app. La relación comercial entre la sociedad de hecho y la S.A.S. (qué cobra cada una por consignación y trámites) se define por contrato antes de la ronda.</li>
-        <li><b>Pagos de terceros.</b> El dinero de los comercios no debe quedar en cuentas de los socios. Recibir y retener de forma habitual dinero de terceros puede configurar captación masiva y habitual (art. 316 C.P.; Decreto 1981 de 1988, hoy art. 2.18.2.1 del Decreto 1068 de 2015). Por eso se usará una pasarela con pagos divididos y, para la compraventa protegida, un encargo fiduciario o custodia regulada.</li>
-        <li><b>Seguros y SOAT.</b> Cobrar comisión por pólizas es intermediación de seguros (Decreto 663 de 1993, arts. 40–41): se hará con una agencia habilitada como aliada.</li>
-        <li><b>Crédito.</b> Referir clientes a bancos es posible. Las condiciones de crédito que muestre la app deben venir del banco aliado, que responde ante el consumidor financiero (Ley 1328 de 2009, art. 9), y la publicidad de la app debe ser veraz y suficiente (Ley 1480 de 2011, arts. 23, 29 y 30).</li>
-        <li><b>Retracto y reservas.</b> Las reservas pagadas en la app son ventas a distancia: aplica el derecho de retracto (Ley 1480 de 2011, art. 47), salvo servicios ya iniciados con acuerdo del usuario. La política de cancelación debe decirlo antes del pago.</li>
-        <li><b>Datos personales.</b> Placas, documentos y ubicación exigen autorización previa y expresa y un responsable del tratamiento (Ley 1581 de 2012). El informe vehicular y los datos del mercado se entregan sin datos personales de terceros.</li>
-        <li><b>Parqueaderos.</b> Las tarifas fuera de vía en Bogotá tienen tope (Decreto Distrital 026 de 2026). Las promociones en horas valle siempre van por debajo del tope vigente, y cualquier tarifa de servicio de la app que se sume al parqueo se revisa frente a ese tope.</li>
+        <li><b>Estructura.</b> DRS Motors es sociedad de hecho (arts. 498–501 C. de Co.). La inversión entra a una S.A.S. por constituir. La relación entre ambas se define por contrato antes de la ronda.</li>
+        <li><b>Dinero de terceros.</b> Retenerlo de forma habitual puede ser captación (art. 316 C.P.; art. 2.18.2.1 del Decreto 1068 de 2015). Pasarela con pagos divididos y fiducia o custodia regulada para la compraventa protegida.</li>
+        <li><b>Seguros.</b> Comisión por pólizas = intermediación (Decreto 663 de 1993, arts. 40–41): vía agencia habilitada.</li>
+        <li><b>Crédito.</b> Condiciones informadas por el banco aliado (Ley 1328 de 2009, art. 9); publicidad veraz (Ley 1480 de 2011, arts. 23, 29 y 30).</li>
+        <li><b>Retracto.</b> Reservas pagadas = venta a distancia (Ley 1480 de 2011, art. 47), salvo servicios ya iniciados.</li>
+        <li><b>Datos personales.</b> Autorización previa y expresa (Ley 1581 de 2012); informes sin datos personales de terceros.</li>
+        <li><b>Parqueaderos.</b> Tarifas con tope (Decreto Distrital 026 de 2026); promociones y tarifa de servicio por debajo del tope.</li>
       </ul>
     </div>
   </div>
@@ -1182,31 +1374,31 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
 <section id="equipo">
   <div class="envoltura">
     <div class="cab">
-      <p class="eyebrow">Equipo</p>
-      <h2 data-cota>Quiénes lo construyen</h2>
-      <p>DRS Motors ya consigna y comercializa carros y motos en Bogotá, hace trámites ante tránsito y tiene comunidad en redes: 5.427 seguidores en Instagram (agosto de 2026) y unos 2.000 en TikTok, según los fundadores.</p>
+      <p class="eyebrow">16</p>
+      <h2 data-cota>Equipo</h2>
+      <p>DRS Motors opera hoy consignación y trámites en Bogotá. Redes: 5.427 seguidores en Instagram (agosto de 2026) y ≈ 2.000 en TikTok.</p>
     </div>
     <div class="rej rej-3">
-      <div class="persona" data-sube><p class="etq suave">CEO · cofundador</p><p class="quien">Miguel Ángel Guerrero Vizcaíno</p><p>Economista y abogado de la Universidad de los Andes. Estructura, producto y asuntos legales. Cara visible de DRS.</p></div>
-      <div class="persona" data-sube><p class="etq suave">Cofundador · comercial</p><p class="quien">Santiago Rojas Celis</p><p>Prospección, ventas y alianzas con comercios. Cara visible de DRS.</p></div>
-      <div class="persona" data-sube><p class="etq suave">Ingeniería · cofundadores</p><p class="quien">Ingenieros fundadores</p><p>Desarrollan la app con IA, casi tiempo completo, a cambio de acciones. El auxilio mensual está por definir y no está incluido en el total. <span class="chip pend">Nombres por confirmar</span></p></div>
-      <div class="persona" data-sube><p class="etq suave">Alianzas</p><p class="quien">Mateo</p><p>Firma de comercios aliados junto con Santiago. <span class="chip pend">Rol por confirmar</span></p></div>
-      <div class="persona" data-sube><p class="etq suave">Inversionistas</p><p class="quien">Inversionistas estratégicos</p><p>Además del capital, pueden aportar relaciones públicas y contactos con bancos, aseguradoras y concesionarios.</p></div>
+      <div class="persona" data-sube><p class="etq luz">CEO · cofundador</p><p class="quien">Miguel Ángel Guerrero Vizcaíno</p><p>Economista y abogado, Universidad de los Andes. Estructura, producto y legal.</p></div>
+      <div class="persona" data-sube><p class="etq luz">Cofundador · comercial</p><p class="quien">Santiago Rojas Celis</p><p>Ventas y alianzas con comercios.</p></div>
+      <div class="persona" data-sube><p class="etq luz">Ingeniería · cofundadores</p><p class="quien">Ingenieros fundadores</p><p>Desarrollo con IA, dedicación casi completa, remuneración en acciones; auxilio por definir. <span class="chip pend">Nombres por confirmar</span></p></div>
+      <div class="persona" data-sube><p class="etq luz">Alianzas</p><p class="quien">Mateo</p><p>Afiliación de comercios. <span class="chip pend">Rol por confirmar</span></p></div>
+      <div class="persona" data-sube><p class="etq luz">Inversionistas</p><p class="quien">Inversionistas estratégicos</p><p>Capital, relaciones públicas y acceso a bancos, aseguradoras y concesionarios.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ================= CIERRE ================= -->
+<!-- ================= RONDA ================= -->
 <section class="cierre" id="ronda">
   <div class="envoltura">
     <svg class="taco" id="taco" viewBox="0 0 320 210" aria-hidden="true"></svg>
     <div class="lado">
-      <p class="eyebrow">La ronda</p>
-      <h2>Confianza a toda velocidad.</h2>
+      <p class="eyebrow">17</p>
+      <h2>Ronda de inversión</h2>
       <div class="rej rej-3">
-        <div class="bloque"><h3>Uso de los fondos</h3><p><b class="num" style="color:var(--txt-1);font-weight:600" id="cierreTotal">$ 22.712.500</b> en <span id="cierreMeses">8</span> meses, en dos tramos: desarrollo y lanzamiento.</p></div>
-        <div class="bloque"><h3>Lo que compra</h3><p>La app en las tiendas, 15 comercios firmados el día del lanzamiento y 4 meses de pauta para medir las métricas de corte.</p></div>
-        <div class="bloque"><h3>Por definir</h3><p>Monto final de la ronda, instrumento (SAFE, que es un acuerdo de capital futuro; nota convertible o acciones) y participación.</p></div>
+        <div class="bloque"><h3>Uso de fondos</h3><p><b class="num" style="color:var(--txt-1);font-weight:600" id="cierreTotal">$ 22.712.500</b> · <span id="cierreMeses">8</span> meses · 2 tramos.</p></div>
+        <div class="bloque"><h3>Entregables</h3><p>App en tiendas, 15 comercios firmados y 4 meses de pauta medidos contra las métricas de corte.</p></div>
+        <div class="bloque"><h3>Por definir</h3><p>Monto, instrumento (SAFE, nota convertible o acciones) y participación.</p></div>
       </div>
       <div class="contacto">
         <span>drsmotorsbog@gmail.com</span>
@@ -1222,14 +1414,19 @@ select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-
   <div class="envoltura">
     <svg class="logo-cierre" viewBox="0 0 420 150" aria-label="DRS Motors"><use href="#logo-h-oscuro"/></svg>
     <div class="cab" style="margin-bottom:15px"><p class="eyebrow">Fuentes</p></div>
-    <ol>
-      <li>Parque automotor de Colombia al cierre de 2025 (RUNT): <a href="https://www.elcolombiano.com/negocios/parque-automotor-colombia-2025-NP33968207" target="_blank" rel="noopener">El Colombiano</a>.</li>
-      <li>Parque automotor de Bogotá en 2024, composición y vehículos matriculados fuera de la ciudad: <a href="https://observatoriofiscal.shd.gov.co/sites/default/files/documentos_informacion_destacada/Primera%20Nota%20de%20Hacienda%20Distrital.pdf" target="_blank" rel="noopener">Secretaría Distrital de Hacienda, Notas de Hacienda Distrital</a>.</li>
-      <li>Matrículas nuevas en Bogotá, enero a septiembre de 2026 (Fenalco y Andi): <a href="https://minuto60.com/bogota/bogota-registro-carros-nuevos-septiembre-los-mas-vendidos-andi-fenalco/16411" target="_blank" rel="noopener">Minuto60</a>.</li>
-      <li>Precios: <a href="https://support.claude.com/en/articles/11049741" target="_blank" rel="noopener">Claude Max</a> · <a href="https://supabase.com/pricing" target="_blank" rel="noopener">Supabase</a> · <a href="https://vercel.com/pricing" target="_blank" rel="noopener">Vercel</a> · <a href="https://expo.dev/pricing" target="_blank" rel="noopener">Expo</a> · <a href="https://developers.google.com/maps/billing/overview/" target="_blank" rel="noopener">Google Maps</a> · <a href="https://wompi.com/es/co/planes-tarifas/" target="_blank" rel="noopener">Wompi, plan avanzado</a>.</li>
-      <li>Servicios que se consumen fuera de la app: <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">App Store Review Guidelines, norma 3.1.3(e)</a> · <a href="https://support.google.com/googleplay/android-developer/answer/9858738" target="_blank" rel="noopener">política de pagos de Google Play</a>.</li>
+    <ol id="listaFuentes">
+      <li>Parque automotor de Colombia, cierre de 2025 (RUNT): <a href="https://www.elcolombiano.com/negocios/parque-automotor-colombia-2025-NP33968207" target="_blank" rel="noopener">El Colombiano</a>.</li>
+      <li>Parque automotor de Bogotá 2024, composición y vehículos matriculados fuera: <a href="https://observatoriofiscal.shd.gov.co/sites/default/files/documentos_informacion_destacada/Primera%20Nota%20de%20Hacienda%20Distrital.pdf" target="_blank" rel="noopener">Secretaría Distrital de Hacienda</a>.</li>
+      <li>Matrículas nuevas en Bogotá, enero a septiembre de 2026: <a href="https://minuto60.com/bogota/bogota-registro-carros-nuevos-septiembre-los-mas-vendidos-andi-fenalco/16411" target="_blank" rel="noopener">Minuto60</a>.</li>
+      <li>Precios: <a href="https://support.claude.com/en/articles/11049741" target="_blank" rel="noopener">Claude Max</a> · <a href="https://supabase.com/pricing" target="_blank" rel="noopener">Supabase</a> · <a href="https://vercel.com/pricing" target="_blank" rel="noopener">Vercel</a> · <a href="https://expo.dev/pricing" target="_blank" rel="noopener">Expo</a> · <a href="https://developers.google.com/maps/billing/overview/" target="_blank" rel="noopener">Google Maps</a> · <a href="https://wompi.com/es/co/planes-tarifas/" target="_blank" rel="noopener">Wompi</a>.</li>
+      <li>Servicios consumidos fuera de la app: <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">Apple, norma 3.1.3(e)</a> · <a href="https://support.google.com/googleplay/android-developer/answer/9858738" target="_blank" rel="noopener">Google Play</a>.</li>
       <li>Topes de parqueaderos en Bogotá, 2026: <a href="https://bogota.gov.co/mi-ciudad/movilidad/tarifas-de-parqueaderos-y-parqueo-en-que-regiran-en-bogota-en-2026" target="_blank" rel="noopener">Alcaldía de Bogotá</a>.</li>
-      <li>TRM de octubre de 2026: <a href="https://www.portafolio.co/economia/finanzas/dolar-hoy-en-colombia-arranca-octubre-cerca-de-3-300-y-acumula-caida-de-11-38-en-503720" target="_blank" rel="noopener">Portafolio</a>.</li>
+      <li>TRM, octubre de 2026: <a href="https://www.portafolio.co/economia/finanzas/dolar-hoy-en-colombia-arranca-octubre-cerca-de-3-300-y-acumula-caida-de-11-38-en-503720" target="_blank" rel="noopener">Portafolio</a>.</li>
+      <li>RUNT: <a href="https://www.runt.gov.co/sites/default/files/Bolet%C3%ADn%20001%20de%202026.pdf" target="_blank" rel="noopener">Boletín 001 de 2026</a> · <a href="https://www.runt.gov.co/sites/default/files/documentos/Balance%20del%20Sector%20Tr%C3%A1nsito%20y%20Transporte%202025%20%281%29_0.pdf" target="_blank" rel="noopener">Balance del sector 2025</a> (SOAT vigente, traspasos, evasión).</li>
+      <li>Encuesta de Movilidad de Bogotá 2023: <a href="https://observatorio.movilidadbogota.gov.co/publicaciones/resultados/encuesta-de-movilidad-2023" target="_blank" rel="noopener">Observatorio de Movilidad</a> · autos por localidad: <a href="https://www.portafolio.co/economia/regiones/en-transporte-publico-y-a-pie-asi-se-transportaron-los-bogotanos-en-2023-606118" target="_blank" rel="noopener">Portafolio</a> · hogares por localidad: <a href="https://camacolbyc.co/images/asamblea/2025/Documentos%20memorias/GuillermoHerreraCamacolasamblea2025.pdf" target="_blank" rel="noopener">Camacol</a>.</li>
+      <li>Valle de Aburrá: <a href="https://www.elcolombiano.com/medellin/motos-60-parque-automotor-del-valle-de-aburra-LA37734971" target="_blank" rel="noopener">El Colombiano</a> · Bucaramanga: <a href="https://www.vanguardia.com/area-metropolitana/bucaramanga/2025/04/12/ya-hay-467-motos-por-cada-100-habitantes-en-el-area-metropolitana-de-bucaramanga/" target="_blank" rel="noopener">Vanguardia</a> · Cartagena: <a href="https://cartagenacomovamos.org/wp-content/uploads/2025/02/comovamosen-movilidad-ICV2023-cartagenacomovamos.pdf" target="_blank" rel="noopener">Cartagena Cómo Vamos</a> · hogares con moto: <a href="https://www.bluradio.com/motor/uno-de-cada-cuatro-hogares-en-colombia-tiene-motocicleta-segun-estudio-so35" target="_blank" rel="noopener">ANDI vía Blu Radio</a>.</li>
+      <li>SOAT 2026 y seguros: <a href="https://www.fasecolda.com/wp-content/uploads/Tarifas-SOAT-2026-referencia.pdf" target="_blank" rel="noopener">tarifas Fasecolda</a> · <a href="https://www.fasecolda.com/wp-content/uploads/COMUNICADO-2026-CIFRAS-FINAL.pdf" target="_blank" rel="noopener">cifras Fasecolda 2025</a> · tecnomecánica 2026: <a href="https://www.grupor5.com/tecnomecanica/2026" target="_blank" rel="noopener">Grupo R5</a> · taller: <a href="https://www.portafolio.co/economia/finanzas/tener-carro-en-colombia-ahora-cuesta-mas-mantenimiento-y-reparacion-subieron-mas-que-la-inflacion-502447" target="_blank" rel="noopener">Portafolio</a>.</li>
+      <li>Penetración de referencia: <a href="https://lanotaeconomica.com.co/movidas-empresarial/flypass-primera-empresa-en-colombia-en-crear-pago-electronico-de-peajes-y-parqueaderos" target="_blank" rel="noopener">Flypass</a> · <a href="https://www.portafolio.co/negocios/empresas/colombia-entre-las-tres-plazas-claves-de-la-region-para-waze-514978" target="_blank" rel="noopener">Waze</a>.</li>
     </ol>
   </div>
 </section>
@@ -1436,10 +1633,10 @@ var CASOS = {
 
   /* ================= Ranura de servicios ================= */
   var SERV = [
-    ['Parqueadero','V1 · al lanzar'],['Lavado','V1 · al lanzar'],['Taller','V1 · al lanzar'],['Mi garaje','V1 · al lanzar'],
-    ['Vehículos DRS','V1 · al lanzar'],['Trámites','V1 · al lanzar'],['SOAT','V2 · con aliados'],['Tecnomecánica','V2 · con aliados'],
-    ['Informe vehicular','V2 · con aliados'],['Puntos','V2 · con aliados'],['Financiación','V3 · con un banco'],['Seguros','V3 · con una aseguradora'],
-    ['Clasificados','V4 · plataforma'],['Repuestos','V4 · plataforma'],['Compraventa','V4 · plataforma']
+    ['Parqueadero','V1 · Lanzamiento'],['Lavado','V1 · Lanzamiento'],['Taller','V1 · Lanzamiento'],['Mi garaje','V1 · Lanzamiento'],
+    ['Vehículos DRS','V1 · Lanzamiento'],['Trámites','V1 · Lanzamiento'],['SOAT','V2 · Retención'],['Tecnomecánica','V2 · Retención'],
+    ['Informe vehicular','V2 · Retención'],['Puntos','V2 · Retención'],['Financiación','V3 · Financiero'],['Seguros','V3 · Financiero'],
+    ['Clasificados','V4 · Plataforma'],['Repuestos','V4 · Plataforma'],['Compraventa','V4 · Plataforma']
   ];
   var carrete = $('carrete'), N = SERV.length, rIdx = N, rTimer = null, rVisible = true;
   carrete.innerHTML = [0,1,2].map(function(){ return SERV.map(function(s){ return '<span>' + s[0] + '</span>'; }).join(''); }).join('');
@@ -1505,21 +1702,21 @@ var CASOS = {
   /* ================= Ecosistema en órbita ================= */
   var FASEN = {V1:'Lanzamiento', V2:'Retención', V3:'Financiero', V4:'Plataforma'};
   var ECO = [
-    {n:'Parqueaderos', g:'ico-ubicacion', f:'V1', a:-90, hace:'Ve en el mapa los parqueaderos cercanos con su precio y la promoción si es hora valle, reserva y paga en la app.', paga:'El usuario paga el servicio en la app; el parqueadero paga mensualidad y comisión por reserva.', mas:['Es el servicio de mayor frecuencia: quien parquea día de por medio abre la app unas 15 veces al mes (supuesto).','Al lanzar, el parqueadero confirma cada reserva desde su panel. La integración con talanqueras viene después.']},
-    {n:'Lavado y detallado', g:'ico-detailing', f:'V1', a:-30, hace:'Elige lavadero, servicio y hora, paga en la app y recibe un recordatorio.', paga:'El usuario en la app; el lavadero con mensualidad y comisión.', mas:['Promociones en horas valle para llenar las franjas flojas.','Puntos y fidelización desde V2.']},
-    {n:'Taller y mantenimiento', g:'ico-taller', f:'V1', a:30, hace:'Pide cita o cotización en talleres aliados y registra el próximo cambio de aceite y las revisiones.', paga:'El usuario en la app; el taller con mensualidad y comisión.', mas:['El historial de mantenimiento queda en Mi garaje y sube el valor del vehículo al venderlo.']},
-    {n:'Mi garaje', g:'ico-alerta', f:'V1', a:90, hace:'Registra el vehículo por placa y recibe alertas de SOAT, tecnomecánica, pico y placa, multas y cambio de aceite.', paga:'La versión básica es gratis: es lo que trae y retiene usuarios.', mas:['Desde V2, la alerta de vencimiento lleva a renovar el SOAT o la tecnomecánica con aliados.']},
-    {n:'Vehículos DRS', g:'ico-consignacion', f:'V1', a:150, hace:'Mira el catálogo de carros y motos que DRS tiene en consignación, con fotos y video profesionales.', paga:'Es un servicio de DRS Motors (sociedad de hecho). Cómo se reparte ese ingreso con la S.A.S. de la app está por definir.', mas:['En V1 solo aparecen vehículos de DRS. Los clasificados abiertos a terceros llegan en V4.']},
-    {n:'Trámites DRS', g:'ico-traspaso', f:'V1', a:210, hace:'Cotiza y solicita traspasos, levantamientos de prenda y demás trámites ante tránsito en Bogotá.', paga:'Honorarios de tramitación de DRS Motors (sociedad de hecho), con el mismo reparto por definir.', mas:['Solo en Bogotá. La actualización de datos en el RUNT la hace el titular en persona.']},
-    {n:'Renovación de SOAT y tecnomecánica', g:'ico-certificado', f:'V2', a:-60, hace:'Desde la alerta de vencimiento, renueva el SOAT con una agencia aliada o agenda la tecnomecánica en un CDA.', paga:'La agencia de seguros o el CDA aliado paga por cada cliente referido.', mas:['Entra cuando se firmen una agencia de seguros habilitada y un CDA (hito H2).']},
-    {n:'Informe vehicular', g:'ico-runt', f:'V2', a:60, hace:'Compra un reporte de cualquier placa: número de propietarios anteriores, prendas, multas y estado de papeles.', paga:'El usuario que va a comprar un usado. Al ser digital, pagaría la comisión de las tiendas.', mas:['Se entrega sin datos personales de terceros.']},
-    {n:'Puntos y fidelización', g:'PTS', f:'V2', a:180, hace:'Acumula puntos con cada reserva y los cambia por descuentos en comercios aliados.', paga:'Los comercios financian los descuentos.', mas:['Sale en H2, después de pasar las métricas de corte.']},
-    {n:'Financiación', g:'FIN', f:'V3', a:-30, hace:'Solicita crédito para comprar o cambiar de vehículo con bancos y financieras aliados.', paga:'El banco paga una comisión por cada crédito desembolsado.', mas:['Entra cuando se firme el primer aliado financiero (hito H3).']},
-    {n:'Seguros', g:'SEG', f:'V3', a:90, hace:'Cotiza y contrata pólizas todo riesgo con aseguradoras aliadas.', paga:'La aseguradora o la agencia aliada paga por cada póliza.', mas:['Se hace con una agencia de seguros habilitada.','La renovación del SOAT entra antes, en V2.']},
-    {n:'Publicidad', g:'PUB', f:'V3', a:210, hace:'Ve una pantalla de entrada patrocinada al abrir la app, como en las apps bancarias, y anuncios de marcas del sector.', paga:'Marcas, concesionarios y comercios.', mas:['Tiene sentido con una base activa que interese a las marcas (hito H3).']},
-    {n:'Clasificados de vehículos', g:'ico-precio', f:'V4', a:-120, hace:'Publica tu carro o moto en venta, como en un portal de clasificados, dentro de la misma app.', paga:'Publicación básica gratis; destacados y planes para vendedores profesionales.', mas:['Desde V4, concesionarios y marcas también pueden pagar para que sus vehículos aparezcan primero.']},
-    {n:'Repuestos', g:'ico-carrito', f:'V4', a:15, hace:'Compra repuestos y accesorios de vendedores aliados.', paga:'El vendedor paga una comisión por cada venta.', mas:['Se cruza con el taller: el repuesto llega al taller donde se reservó la cita.']},
-    {n:'Compraventa protegida', g:'ico-verificado', f:'V4', a:135, hace:'El comprador paga a una custodia, se hace el traspaso y, al terminar, el dinero llega al vendedor y el vehículo al comprador.', paga:'Tarifa por transacción, más los honorarios del traspaso.', mas:['Requiere un encargo fiduciario o custodia regulada: el dinero nunca queda en cuentas de los socios.']}
+    {n:'Parqueaderos', g:'ico-ubicacion', f:'V1', a:-90, hace:'Mapa de parqueaderos con precio y promoción en hora valle; reserva y pago en la app.', paga:'Usuario: el servicio. Parqueadero: mensualidad + comisión.', mas:['Servicio ancla: ≈ 15 usos al mes por usuario frecuente (supuesto).','V1: confirmación manual desde el panel; integración con talanqueras después.']},
+    {n:'Lavado y detallado', g:'ico-detailing', f:'V1', a:-30, hace:'Selección de lavadero, servicio y hora; pago en la app.', paga:'Usuario: el servicio. Lavadero: mensualidad + comisión.', mas:['Promociones en horas valle.']},
+    {n:'Taller y mantenimiento', g:'ico-taller', f:'V1', a:30, hace:'Cita o cotización en talleres aliados; registro de mantenimientos.', paga:'Usuario: el servicio. Taller: mensualidad + comisión.', mas:['Historial de mantenimiento en Mi garaje.']},
+    {n:'Mi garaje', g:'ico-alerta', f:'V1', a:90, hace:'Registro por placa; alertas de SOAT, tecnomecánica, pico y placa, multas y cambio de aceite.', paga:'Gratis (versión básica). Motor de retención.', mas:['Desde V2, la alerta enlaza la renovación con aliados.']},
+    {n:'Vehículos DRS', g:'ico-consignacion', f:'V1', a:150, hace:'Catálogo de vehículos en consignación de DRS.', paga:'DRS Motors (sociedad de hecho). Reparto con la S.A.S. por definir.', mas:['V1: solo inventario DRS. Clasificados abiertos en V4.']},
+    {n:'Trámites DRS', g:'ico-traspaso', f:'V1', a:210, hace:'Cotización y solicitud de traspasos y levantamientos de prenda.', paga:'Honorarios de DRS Motors. Reparto por definir.', mas:['Solo Bogotá. La actualización en el RUNT la hace el titular.']},
+    {n:'SOAT y tecnomecánica', g:'ico-certificado', f:'V2', a:-60, hace:'Renovación desde la alerta de vencimiento con agencia aliada o CDA.', paga:'Agencia de seguros o CDA: comisión por referido.', mas:['Requiere agencia habilitada y CDA firmados (H2).']},
+    {n:'Informe vehicular', g:'ico-runt', f:'V2', a:60, hace:'Reporte de cualquier placa: propietarios anteriores, prendas, multas, papeles.', paga:'Usuario. Contenido digital: comisión de tiendas 15–30 %.', mas:['Sin datos personales de terceros.']},
+    {n:'Puntos y fidelización', g:'PTS', f:'V2', a:180, hace:'Puntos por reserva, canjeables en comercios aliados.', paga:'Comercios financian los descuentos.', mas:['Sale en H2.']},
+    {n:'Financiación', g:'FIN', f:'V3', a:-30, hace:'Solicitud de crédito vehicular con bancos aliados.', paga:'Banco: comisión por crédito desembolsado.', mas:['Primer aliado financiero: H3.']},
+    {n:'Seguros', g:'SEG', f:'V3', a:90, hace:'Cotización y contratación de pólizas todo riesgo.', paga:'Aseguradora o agencia: comisión por póliza.', mas:['Vía agencia habilitada.']},
+    {n:'Publicidad', g:'PUB', f:'V3', a:210, hace:'Pantalla de entrada patrocinada y anuncios de marcas del sector.', paga:'Marcas, concesionarios, comercios.', mas:['Requiere base activa (H3).']},
+    {n:'Clasificados', g:'ico-precio', f:'V4', a:-120, hace:'Publicación de vehículos en venta por cualquier usuario.', paga:'Publicación básica gratis; destacados y planes pagos.', mas:['Posiciones pagas para concesionarios.']},
+    {n:'Repuestos', g:'ico-carrito', f:'V4', a:15, hace:'Compra de repuestos y accesorios a vendedores aliados.', paga:'Vendedor: comisión por venta.', mas:['Entrega en el taller de la cita.']},
+    {n:'Compraventa protegida', g:'ico-verificado', f:'V4', a:135, hace:'Pago en custodia, traspaso y liberación de fondos al cierre.', paga:'Tarifa por transacción + honorarios de traspaso.', mas:['Fiducia o custodia regulada.']}
   ];
   var RADIO = {V1:122, V2:184, V3:240, V4:292}, C0 = 300, orb = $('orbita'), ecoSel = 0;
   (function(){
@@ -1532,7 +1729,7 @@ var CASOS = {
     h += '<circle class="centro" cx="300" cy="300" r="64"/><text class="centro-t" x="300" y="294" text-anchor="middle">TU</text><text class="centro-t" x="300" y="322" text-anchor="middle">VEHÍCULO</text>';
     ['V1','V2','V3','V4'].forEach(function(v){
       var r = RADIO[v];
-      h += '<g aria-hidden="true"><rect x="' + (300 + r - 15) + '" y="291" width="30" height="18" fill="var(--sup-1)"/><text class="rot-et" x="' + (300 + r) + '" y="304" text-anchor="middle">' + v + '</text></g>';
+      h += '<g aria-hidden="true"><rect x="' + (300 + r - 15) + '" y="291" width="30" height="18" fill="var(--sup-1)"/><text class="rot-et" x="' + (300 + r) + '" y="304" text-anchor="middle" style="fill:var(--f' + v[1] + ')">' + v + '</text></g>';
     });
     ECO.forEach(function(s, i){
       var r = RADIO[s.f], a = s.a * Math.PI / 180, x = C0 + r * Math.cos(a), y = C0 + r * Math.sin(a);
@@ -1540,7 +1737,7 @@ var CASOS = {
       var dentro = s.g.indexOf('ico-') === 0
         ? '<svg x="' + (x - 12) + '" y="' + (y - 12) + '" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"><use href="#' + s.g + '"/></svg>'
         : '<text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle">' + s.g + '</text>';
-      h += '<g class="nodo" data-i="' + i + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + s.n + ', fase ' + s.f + '"><circle cx="' + x + '" cy="' + y + '" r="24"/>' + dentro + '</g>';
+      h += '<g class="nodo" data-f="' + s.f + '" data-i="' + i + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + s.n + ', fase ' + s.f + '"><circle cx="' + x + '" cy="' + y + '" r="24"/>' + dentro + '</g>';
     });
     orb.innerHTML = h;
   })();
@@ -1550,7 +1747,7 @@ var CASOS = {
     var s = ECO[ecoSel];
     nodos.forEach(function(n, j){ n.setAttribute('aria-pressed', j === ecoSel ? 'true' : 'false'); });
     var det = $('ecoDet');
-    det.innerHTML = '<p class="etq luz">Fase ' + s.f + ' · ' + FASEN[s.f] + '</p><p class="nombre">' + s.n + '</p>' +
+    det.innerHTML = '<p class="etq" style="color:var(--f' + s.f[1] + ')">Fase ' + s.f + ' · ' + FASEN[s.f] + '</p><p class="nombre">' + s.n + '</p>' +
       '<dl><dt class="etq suave">Qué hace el usuario</dt><dd>' + s.hace + '</dd><dt class="etq suave">Quién paga</dt><dd>' + s.paga + '</dd></dl>' +
       '<ul>' + s.mas.map(function(m){ return '<li>' + m + '</li>'; }).join('') + '</ul>' +
       '<div class="eco-nav"><button type="button" id="ecoAnt">Anterior</button><button type="button" id="ecoSig">Siguiente</button><span class="etq suave" style="align-self:center;margin-left:auto">' + String(ecoSel + 1).padStart(2, '0') + ' / ' + ECO.length + '</span></div>';
@@ -1598,33 +1795,85 @@ var CASOS = {
     }, 0.4);
   })();
 
+
+  /* ================= Mercado potencial ================= */
+  var GEO = [
+    {g:1, n:'F1 · Zonas iniciales de Bogotá', car:240e3, moto:43e3, sam:106e9},
+    {g:2, n:'F2 · Bogotá', car:860e3, moto:525e3, sam:424e9},
+    {g:3, n:'F3 · Áreas metropolitanas', car:2.4e6, moto:3.4e6, sam:1235e9},
+    {g:4, n:'F4 · Colombia', car:4.1e6, moto:5.0e6, sam:2020e9}
+  ];
+  var fmtMM = function(v){ var m = v / 1e9; return '$ ' + (m >= 100 ? ent(m) : dec(m, 1)) + ' mil M'; };
+  (function(){
+    var svg = $('cuadros'), h = '', max = GEO[3].car + GEO[3].moto;
+    GEO.slice().reverse().forEach(function(z){
+      var lado = 380 * Math.sqrt((z.car + z.moto) / max);
+      h += '<rect class="cq" x="10" y="' + (390 - lado) + '" width="' + lado + '" height="' + lado + '" fill="var(--f' + z.g + ')" opacity="' + (z.g === 4 ? .35 : z.g === 3 ? .5 : z.g === 2 ? .75 : 1) + '"/>';
+      h += '<text x="' + (10 + lado - 7.5) + '" y="' + (390 - lado + 20) + '" text-anchor="end" fill="var(--sup-1)" font-family="Bebas Neue, Impact, sans-serif" font-size="' + (z.g === 1 ? 13 : 20) + '">F' + z.g + '</text>';
+    });
+    svg.innerHTML = h;
+    alVer(svg, function(){
+      [].forEach.call(svg.querySelectorAll('.cq'), function(r, i){ r.style.transformOrigin = '10px 390px'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scale(0)'}, {transform:'scale(1)'}], {d:800, delay:i * 220, e:'cubic-bezier(.3,1.2,.5,1)'}); });
+    }, 0.4);
+  })();
+  var ARPU = {P:1200, C:3650, F:5500};
+  function mxLeer(){
+    var f = +document.querySelector('input[name="mxf"]:checked').value, m = document.querySelector('input[name="mxm"]:checked').value;
+    return {f:f, m:m, pen:+$('mxPen').value, motos:$('mxMotos').checked};
+  }
+  function mxIngreso(z, o){
+    var uc = z.car * o.pen, um = o.motos ? z.moto * o.pen : 0;
+    var ing = o.m === 'arriba' ? uc * 105000 + um * 42000 : (uc + um) * ARPU[o.m] * 12;
+    return {ing:ing, us:uc + um};
+  }
+  function mxPintar(){
+    var o = mxLeer(), z = GEO[o.f - 1], r = mxIngreso(z, o);
+    $('mxPenO').textContent = pct0(o.pen);
+    $('mxTotal').textContent = fmtMM(r.ing);
+    $('mxTxt').textContent = 'Ingreso anual · ' + z.n + ' · ' + pct0(o.pen) + ' de penetración' + (o.motos ? '' : ' · solo carros');
+    $('mxUs').textContent = ent(r.us);
+    $('mxSam').textContent = dec(r.ing / z.sam * 100, 1) + ' %';
+    var W = 640, H = 230, ml = 230, mr = 90, h = '', vals = GEO.map(function(g){ return mxIngreso(g, o).ing; }), mx = Math.max.apply(null, vals), bh = 34;
+    GEO.forEach(function(g, i){
+      var y = 15 + i * 52, w = (W - ml - mr) * vals[i] / mx;
+      h += '<text x="' + (ml - 15) + '" y="' + (y + 22) + '" text-anchor="end" fill="' + (g.g === o.f ? 'var(--txt-1)' : 'var(--txt-3)') + '" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" letter-spacing="1.2">' + g.n.toUpperCase() + '</text>';
+      h += '<rect class="mxb" x="' + ml + '" y="' + y + '" width="' + Math.max(2, w) + '" height="' + bh + '" fill="var(--f' + g.g + ')"' + (g.g === o.f ? '' : ' opacity=".45"') + '/>';
+      h += '<text x="' + (ml + w + 7.5) + '" y="' + (y + 22) + '" fill="var(--txt-1)" font-family="Montserrat, sans-serif" font-size="11" font-weight="600">' + dec(vals[i] / 1e9, vals[i] >= 1e11 ? 0 : 1) + '</text>';
+    });
+    $('mxGraf').innerHTML = h;
+  }
+  [].forEach.call(document.querySelectorAll('input[name="mxf"],input[name="mxm"],#mxMotos'), function(el){ el.addEventListener('change', mxPintar); });
+  $('mxPen').addEventListener('input', mxPintar);
+  mxPintar();
+  alVer($('mxGraf'), function(){ [].forEach.call($('mxGraf').querySelectorAll('.mxb'), function(r, i){ r.style.transformOrigin = '230px 0'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:700, delay:i * 120}); }); }, 0.4);
+
   /* ================= Fuentes de ingreso ================= */
   var ING = [
-    {n:'Comisión por reserva', p:'comercio', pl:'Comercios', f:'V1', d:'Un porcentaje de cada reserva de parqueadero, lavado o taller pagada en la app. Es la fuente principal del plan.'},
-    {n:'Mensualidad por aparecer', p:'comercio', pl:'Comercios', f:'V1', d:'Cada comercio paga por estar en el mapa y usar el panel de gestión. Los primeros 30 tienen dos meses sin mensualidad; la comisión sí se cobra desde el primer día.'},
-    {n:'Tarifa de servicio', p:'usuario', pl:'Usuarios', f:'V1', d:'Un cargo fijo pequeño por reserva para cubrir la pasarela de pagos.', ev:'En evaluación'},
-    {n:'Vehículos y trámites DRS', p:'usuario', pl:'Clientes de DRS', f:'V1', d:'Consignación y trámites ante tránsito en Bogotá, que hoy presta DRS Motors (sociedad de hecho). La app los muestra; cómo se reparte ese ingreso entre DRS y la S.A.S. de la app está por definir.', ev:'Por definir'},
-    {n:'Renovación de SOAT y tecnomecánica', p:'financiero', pl:'Agencia de seguros y CDA', f:'V2', d:'La alerta de vencimiento lleva a renovar con un aliado, que paga por cada cliente referido.'},
-    {n:'Informe vehicular', p:'usuario', pl:'Usuarios', f:'V2', d:'Reporte pagado de cualquier placa: número de propietarios anteriores, prendas, multas y estado de papeles. Lo compra quien va a comprar un usado. Al ser digital, pagaría la comisión de las tiendas.'},
-    {n:'Plan premium de Mi garaje', p:'usuario', pl:'Usuarios', f:'V2', d:'Varios vehículos, documentos digitales y alertas avanzadas.', ev:'En evaluación'},
-    {n:'Destacados en la zona', p:'comercio', pl:'Comercios', f:'V3', d:'El comercio paga por aparecer primero en su zona. Las promociones en horas valle están incluidas en la mensualidad.'},
-    {n:'Pantalla de entrada patrocinada', p:'marcas', pl:'Marcas', f:'V3', d:'Un anuncio al abrir la app, antes de entrar, como en las apps bancarias.'},
-    {n:'Pauta de concesionarios y marcas', p:'marcas', pl:'Concesionarios', f:'V3', d:'Anuncios de lanzamientos y vehículos nuevos en la pantalla de entrada y en Mi garaje. Cuando se abran los clasificados (V4), también posiciones destacadas.'},
-    {n:'Referido de crédito', p:'financiero', pl:'Bancos', f:'V3', d:'Comisión por cada crédito de vehículo desembolsado desde la app.'},
-    {n:'Referido de seguros', p:'financiero', pl:'Aseguradoras', f:'V3', d:'Comisión por cada póliza todo riesgo emitida, con una agencia habilitada.'},
-    {n:'Clasificados de vehículos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Publicación gratis y destacados pagos, con planes mensuales para compraventas y concesionarios.'},
-    {n:'Tienda de repuestos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Comisión por cada repuesto o accesorio vendido en la app.'},
-    {n:'Compraventa protegida', p:'usuario', pl:'Comprador y vendedor', f:'V4', d:'Tarifa por custodiar el pago y hacer el traspaso de principio a fin.'},
-    {n:'Datos del mercado', p:'marcas', pl:'Empresas del sector', f:'V4', d:'Estimador de precios y tendencias con datos anonimizados.'}
+    {n:'Comisión por reserva', p:'comercio', pl:'Comercios', f:'V1', d:'% de cada reserva de parqueadero, lavado o taller. Fuente principal.'},
+    {n:'Mensualidad del comercio', p:'comercio', pl:'Comercios', f:'V1', d:'Presencia en el mapa y panel de gestión. Primeros 30: 2 meses sin mensualidad.'},
+    {n:'Tarifa de servicio', p:'usuario', pl:'Usuarios', f:'V1', d:'Cargo fijo por reserva para cubrir la pasarela.', ev:'En evaluación'},
+    {n:'Vehículos y trámites DRS', p:'usuario', pl:'Clientes DRS', f:'V1', d:'Consignación y trámites de DRS Motors (sociedad de hecho). Reparto con la S.A.S. por definir.', ev:'Por definir'},
+    {n:'Referido SOAT y tecnomecánica', p:'financiero', pl:'Agencia y CDA', f:'V2', d:'Comisión por renovación referida desde la alerta.'},
+    {n:'Informe vehicular', p:'usuario', pl:'Usuarios', f:'V2', d:'Reporte pagado por placa. Comisión de tiendas 15–30 %.'},
+    {n:'Plan premium Mi garaje', p:'usuario', pl:'Usuarios', f:'V2', d:'Varios vehículos, documentos y alertas avanzadas.', ev:'En evaluación'},
+    {n:'Destacados en la zona', p:'comercio', pl:'Comercios', f:'V3', d:'Primera posición en la zona. Horas valle incluidas en la mensualidad.'},
+    {n:'Pantalla patrocinada', p:'marcas', pl:'Marcas', f:'V3', d:'Anuncio al abrir la app.'},
+    {n:'Pauta de concesionarios', p:'marcas', pl:'Concesionarios', f:'V3', d:'Lanzamientos en pantalla de entrada y Mi garaje; destacados en clasificados desde V4.'},
+    {n:'Referido de crédito', p:'financiero', pl:'Bancos', f:'V3', d:'Comisión por crédito desembolsado.'},
+    {n:'Referido de seguros', p:'financiero', pl:'Aseguradoras', f:'V3', d:'Comisión por póliza todo riesgo, vía agencia habilitada.'},
+    {n:'Clasificados', p:'vendedor', pl:'Vendedores', f:'V4', d:'Publicación gratis; destacados y planes para profesionales.'},
+    {n:'Repuestos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Comisión por venta.'},
+    {n:'Compraventa protegida', p:'usuario', pl:'Comprador y vendedor', f:'V4', d:'Tarifa por custodia y traspaso.'},
+    {n:'Datos del mercado', p:'marcas', pl:'Empresas del sector', f:'V4', d:'Precios y tendencias anonimizados.'}
   ];
   var filtro = {pagador:'todos', fase:'todas'};
   function pintarIng(animar){
     var l = ING.filter(function(x){ return (filtro.pagador === 'todos' || x.p === filtro.pagador) && (filtro.fase === 'todas' || x.f === filtro.fase); });
     var cont = $('ingresos');
     cont.innerHTML = l.length ? l.map(function(x){
-      return '<article class="ing"><h3>' + x.n + '</h3><p>' + x.d + '</p><div class="meta"><span class="chip">' + x.f + ' · ' + FASEN[x.f] + '</span><span class="chip">Paga: ' + x.pl + '</span>' + (x.ev ? '<span class="chip pend">' + x.ev + '</span>' : '') + '</div></article>';
+      return '<article class="ing"><h3>' + x.n + '</h3><p>' + x.d + '</p><div class="meta"><span class="chip ' + x.f + '">' + x.f + ' · ' + FASEN[x.f] + '</span><span class="chip">Paga: ' + x.pl + '</span>' + (x.ev ? '<span class="chip pend">' + x.ev + '</span>' : '') + '</div></article>';
     }).join('') : '<p class="vacio">No hay fuentes de ingreso con esos dos filtros. Cambia uno de los dos.</p>';
-    $('conteo').textContent = l.length + ' de ' + ING.length + ' fuentes de ingreso. Precios y porcentajes por definir con los primeros aliados.';
+    $('conteo').textContent = l.length + ' de ' + ING.length + ' fuentes de ingreso.';
     if (animar) [].forEach.call(cont.children, function(c, i){ anim(c, [{opacity:0, transform:'translateY(15px)'}, {opacity:1, transform:'translateY(0)'}], {d:380, delay:i * 40}); });
   }
   [].forEach.call(document.querySelectorAll('.filtro'), function(b){
@@ -1664,8 +1913,8 @@ var CASOS = {
     h += '<rect x="' + ((x0 + x1) / 2 - 52) + '" y="0" width="104" height="15" fill="var(--sup-1)"/><text x="' + ((x0 + x1) / 2) + '" y="11" text-anchor="middle" fill="var(--txt-1)" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" letter-spacing="1.76">HORAS VALLE</text>';
     base.forEach(function(v, i){
       var bx = ml + bw * i + bw * 0.18, w = bw * 0.64;
-      h += '<rect class="vb" x="' + bx + '" y="' + y(v) + '" width="' + w + '" height="' + (y(0) - y(v)) + '" fill="var(--n-3)"/>';
-      if (promo[i]) h += '<rect class="vp" x="' + bx + '" y="' + y(v + promo[i]) + '" width="' + w + '" height="' + (y(v) - y(v + promo[i])) + '" fill="var(--acc-2)"/>';
+      h += '<rect class="vb" x="' + bx + '" y="' + y(v) + '" width="' + w + '" height="' + (y(0) - y(v)) + '" fill="var(--ser-4)"/>';
+      if (promo[i]) h += '<rect class="vp" x="' + bx + '" y="' + y(v + promo[i]) + '" width="' + w + '" height="' + (y(v) - y(v + promo[i])) + '" fill="var(--ser-1)"/>';
       if (i % 3 === 0){
         var hr = 6 + i, et = hr < 12 ? hr + ' a. m.' : hr === 12 ? '12 m.' : (hr - 12) + ' p. m.';
         h += '<text x="' + (bx + w / 2) + '" y="' + (H - 9) + '" text-anchor="middle" fill="var(--txt-3)" font-family="Montserrat, sans-serif" font-size="11">' + et + '</text>';
@@ -1680,18 +1929,18 @@ var CASOS = {
 
   /* ================= Hoja de ruta ================= */
   var FASES = [
-    {v:'V1', n:'Lanzamiento', c:'Al terminar el desarrollo (hito H0)',
+    {v:'V1', n:'Lanzamiento', c:'Fin del desarrollo (H0)',
      s:[['ico-ubicacion','Reservas de parqueadero','con horas valle y pago en la app'],['ico-detailing','Reservas de lavado',''],['ico-taller','Reservas de taller','y recordatorio de cambio de aceite'],['ico-alerta','Mi garaje','SOAT, tecnomecánica, pico y placa y multas'],['ico-consignacion','Vehículos DRS','solo el inventario propio'],['ico-traspaso','Trámites DRS','solo en Bogotá'],['ico-documento','Panel web del comercio','agenda, reservas, servicios, promociones, reseñas y pagos']],
-     p:'Lo que más se usa, lo que más retiene y lo que DRS ya sabe operar. Se deja fuera todo lo que depende de aliados que todavía no están firmados.'},
-    {v:'V2', n:'Retención', c:'Con reservas repetidas, una agencia de seguros habilitada (SOAT) y un CDA firmados (H2)',
+     p:'Alta frecuencia, retención y operación que DRS ya conoce. Nada que dependa de aliados sin firmar.'},
+    {v:'V2', n:'Retención', c:'Reservas recurrentes + agencia de seguros y CDA firmados (H2)',
      s:[['PTS','Puntos y fidelización','financiados por los comercios'],['ico-certificado','Renovación de SOAT y tecnomecánica','desde la alerta de vencimiento'],['ico-runt','Informe vehicular','de cualquier placa'],['ico-horario','Horas valle con IA','sugerencias de descuento por zona'],['ico-chat','Asistente de trámites','responde a cualquier hora']],
-     p:'El objetivo es que el usuario vuelva cada semana y que el comercio vea resultados medibles.'},
-    {v:'V3', n:'Financiero', c:'Al firmar el primer banco o aseguradora, o con una base activa que interese a las marcas (H3)',
+     p:'Uso semanal del usuario y resultados medibles para el comercio.'},
+    {v:'V3', n:'Financiero', c:'Primer banco o aseguradora, o base activa para marcas (H3)',
      s:[['FIN','Crédito para vehículo','con bancos y financieras aliados'],['SEG','Seguro todo riesgo','con una agencia habilitada'],['PUB','Pantalla de entrada patrocinada','y pauta de marcas y concesionarios'],['DST','Destacados en la zona','para comercios aliados']],
-     p:'Con una base activa, la app vale para los aliados financieros y para las marcas.'},
-    {v:'V4', n:'Plataforma', c:'Con base de usuarios suficiente y custodia contratada (H4)',
+     p:'Base activa monetizable para bancos, aseguradoras y marcas.'},
+    {v:'V4', n:'Plataforma', c:'Base suficiente + custodia contratada (H4)',
      s:[['ico-precio','Clasificados de vehículos','abiertos a cualquier vendedor'],['ico-carrito','Tienda de repuestos','conectada con los talleres'],['ico-verificado','Compraventa protegida','pago en custodia y traspaso incluido'],['DAT','Datos del mercado','precios y tendencias anonimizados'],['2.ª','Segunda ciudad','el mismo modelo de comercios aliados']],
-     p:'La app pasa de ser un conjunto de servicios a ser la plataforma donde ocurre todo lo del vehículo.'}
+     p:'Transacciones entre usuarios y expansión geográfica.'}
   ];
   var rutaSvg = $('rutaSvg'), PX = [125, 375, 625, 875], PY = [90, 70, 50, 30], via, viaLen, viaPos = [], faseSel = 0;
   (function(){
@@ -1720,7 +1969,7 @@ var CASOS = {
   var fasesEl = $('fases');
   FASES.forEach(function(f, i){
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'fase'; b.id = 'fase-' + f.v;
+    b.type = 'button'; b.className = 'fase'; b.id = 'fase-' + f.v; b.dataset.f = f.v;
     b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
     b.innerHTML = '<span class="vn">' + f.v + '</span><h3>' + f.n + '</h3><small>' + f.c + '</small>';
     b.addEventListener('click', function(){ verFase(i, true); });
@@ -1730,7 +1979,7 @@ var CASOS = {
     faseSel = i;
     var f = FASES[i];
     [].forEach.call(fasesEl.children, function(b, j){ b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
-    $('faseDet').innerHTML = '<ul class="lista-serv">' + f.s.map(function(s){ return '<li>' + glifo(s[0]) + '<span><b>' + s[1] + '</b>' + (s[2] ? '<br>' + s[2] : '') + '</span></li>'; }).join('') + '</ul><div class="bloque"><h3 style="color:var(--txt-3)">Por qué en esta fase</h3><p>' + f.p + '</p></div>';
+    $('faseDet').innerHTML = '<ul class="lista-serv">' + f.s.map(function(s){ return '<li>' + glifo(s[0]) + '<span><b>' + s[1] + '</b>' + (s[2] ? '<br>' + s[2] : '') + '</span></li>'; }).join('') + '</ul><div class="bloque"><h3 style="color:var(--txt-3)">Criterio</h3><p>' + f.p + '</p></div>';
     if (animar) [].forEach.call($('faseDet').querySelectorAll('li'), function(li, j){ anim(li, [{opacity:0, transform:'translateX(-15px)'}, {opacity:1, transform:'translateX(0)'}], {d:360, delay:j * 50}); });
     moverMarcador(i, animar ? 700 : 0);
   }
@@ -1740,9 +1989,9 @@ var CASOS = {
   /* ================= Tablero de proyecciones ================= */
   var M = MODELO, CASOSN = {pesimista:'Pesimista', conservador:'Conservador', favorable:'Favorable'};
   var CASOTXT = {
-    pesimista:'Pesimista. Adopción lenta, US$2,5 por instalación, 15 % de usuarios que se van cada mes y 3 % que reserva: las cinco métricas de corte quedan en zona de replantear. Con el corte activado, la operación se detiene en el mes 8 y la pérdida se queda en el plan.',
-    conservador:'Conservador. Lo que esperaríamos con una ejecución normal: US$1,6 por instalación, 10 % de abandono, 6 % de usuarios que reservan unas 3 veces al mes y una nómina que crece 25 % al año.',
-    favorable:'Favorable. Si el parqueadero engancha: US$1,5 por instalación, 8 % de abandono, 8 % que reserva 3,5 veces al mes, más pauta y un equipo que crece rápido. No es la proyección base.'
+    pesimista:'Pesimista: CPI US$2,5 · abandono 15 % · 3 % reserva 1,1 veces al mes. Las 5 métricas de corte en replantear; con corte, la operación se detiene en el mes 8.',
+    conservador:'Conservador: CPI US$1,6 · abandono 10 % · 6 % reserva 3 veces al mes · nómina +25 % anual.',
+    favorable:'Favorable: CPI US$1,5 · abandono 8 % · 8 % reserva 3,5 veces al mes · más pauta y equipo. No es la base.'
   };
   var P = [
     {k:'pauta0', g:'Usuarios', n:'Pauta mensual al lanzar', min:1e6, max:15e6, st:5e5, f:function(v){ return fmtM(v); }},
@@ -1859,11 +2108,11 @@ var CASOS = {
   var vista = 'pyg', datosAct = null, datosObj = null, tween = null;
   var G = {W:760, H:360, ml:64, mr:16, mt:28, mb:34};
   var VISTAS = {
-    pyg:{t:'Ingresos, costos y EBITDA por mes, en millones de COP', ley:[['var(--acc-2)','Ingresos'],['var(--txt-2)','Costos'],['var(--pos)','EBITDA positivo'],['var(--neg)','EBITDA negativo']]},
-    ing:{t:'Ingresos por fuente cada mes, en millones de COP', ley:[['var(--ser-1)','Reservas'],['var(--ser-2)','Comercios'],['var(--ser-3)','SOAT, tecnomecánica e informe'],['var(--ser-4)','Publicidad'],['var(--n-2)','Crédito, seguros y clasificados']]},
-    cos:{t:'Costos por rubro cada mes, en millones de COP', ley:[['var(--ser-1)','Equipo'],['var(--ser-3)','Pauta'],['var(--n-2)','Variables: pasarela, infraestructura e ICA'],['var(--ser-4)','Software, comercios, contabilidad y únicos']]},
-    caja:{t:'Caja acumulada, en millones de COP: lo más bajo es el capital que se necesita', ley:[['var(--txt-1)','Caja acumulada'],['var(--neg)','Por debajo de cero'],['var(--pos)','Por encima de cero']]},
-    us:{t:'Usuarios activos y comercios aliados al cierre de cada mes, con las metas H1 a H4', ley:[['var(--acc-2)','Usuarios activos'],['var(--txt-2)','Comercios aliados'],['var(--txt-1)','Meta']]}
+    pyg:{t:'Ingresos, costos y EBITDA mensuales · M COP', ley:[['var(--acc-2)','Ingresos'],['var(--warn)','Costos'],['var(--pos)','EBITDA positivo'],['var(--neg)','EBITDA negativo']]},
+    ing:{t:'Ingresos mensuales por fuente · M COP', ley:[['var(--ser-1)','Reservas'],['var(--ser-3)','Comercios'],['var(--pos)','SOAT, tecnomecánica e informe'],['var(--warn)','Publicidad'],['var(--txt-1)','Crédito, seguros y clasificados']]},
+    cos:{t:'Costos mensuales por rubro · M COP', ley:[['var(--ser-2)','Equipo'],['var(--ser-4)','Pauta'],['var(--warn)','Variables: pasarela, infraestructura, ICA'],['var(--neg)','Software, comercial, contabilidad, únicos']]},
+    caja:{t:'Caja acumulada · M COP · el mínimo es el capital necesario', ley:[['var(--txt-1)','Caja acumulada'],['var(--neg)','Por debajo de cero'],['var(--pos)','Por encima de cero']]},
+    us:{t:'Usuarios activos y comercios aliados vs. metas H1–H4', ley:[['var(--acc-2)','Usuarios activos'],['var(--pos)','Comercios aliados'],['var(--txt-1)','Meta']]}
   };
   function series(rs){
     var g = function(f){ return rs.map(f); };
@@ -1908,7 +2157,7 @@ var CASOS = {
       var bw = (W - ml - mr) / n * 0.6;
       d.eb.forEach(function(v, i){ if (!v) return; var y1 = Y(Math.max(v, 0)), y2 = Y(Math.min(v, 0)); h += '<rect x="' + (X(i) - bw / 2).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(0, y2 - y1).toFixed(1) + '" fill="' + (v > 0 ? 'var(--pos)' : 'var(--neg)') + '" opacity=".75"/>'; });
       h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="var(--txt-3)"/>';
-      h += linea(d.cos, Y, 'var(--txt-2)', 2) + linea(d.ing, Y, 'var(--acc-2)', 2.5);
+      h += linea(d.cos, Y, 'var(--warn)', 2) + linea(d.ing, Y, 'var(--acc-2)', 2.5);
       if (res.equilibrio){ var xe = X(res.equilibrio - 1); h += '<line x1="' + xe + '" x2="' + xe + '" y1="' + mt + '" y2="' + (H - mb) + '" stroke="var(--txt-1)"/><rect x="' + (xe + 4) + '" y="' + (mt + 2) + '" width="150" height="17" fill="var(--sup-1)"/><text x="' + (xe + 7.5) + '" y="' + (mt + 14) + '" fill="var(--txt-1)" ' + TXT + ' font-weight="600" letter-spacing="1.76">EQUILIBRIO · MES ' + res.equilibrio + '</text>'; }
     } else if (vista === 'ing' || vista === 'cos'){
       var ks = vista === 'ing' ? ['i1','i2','i3','i4','i5'] : ['c1','c2','c3','c4'];
@@ -1938,7 +2187,7 @@ var CASOS = {
         h += '<rect x="' + (izq ? xm - 250 : xm + 9) + '" y="' + (ym + 9) + '" width="241" height="17" fill="var(--sup-1)"/><text x="' + (izq ? xm - 12 : xm + 12) + '" y="' + (ym + 21) + '" text-anchor="' + (izq ? 'end' : 'start') + '" fill="var(--txt-1)" ' + TXT + ' font-weight="600" letter-spacing="1.2">CAPITAL NECESARIO ' + fmtM(-d.caja[im]).toUpperCase() + ' · MES ' + (im + 1) + '</text>';
       }
     } else if (vista === 'us'){
-      var mid = (H - mt - mb) / 2, paneles = [['act', 'var(--acc-2)', 'act', mt, mt + mid - 15, 'USUARIOS ACTIVOS'], ['com', 'var(--txt-2)', 'com', mt + mid + 15, H - mb, 'COMERCIOS ALIADOS']];
+      var mid = (H - mt - mb) / 2, paneles = [['act', 'var(--acc-2)', 'act', mt, mt + mid - 15, 'USUARIOS ACTIVOS'], ['com', 'var(--pos)', 'com', mt + mid + 15, H - mb, 'COMERCIOS ALIADOS']];
       var ancla = {act:'act', com:'com'};
       paneles.forEach(function(pn, pi){
         var arr = d[pn[0]], metasV = METAS.map(function(m){ return m[pn[2]]; });
@@ -2080,19 +2329,18 @@ var CASOS = {
   /* --- semáforo de corte (sección Metas) --- */
   var DOM_C = {cpi:[.5, 4, 1.2, 2.5, true, function(v){ return 'US$' + dec(v, 1); }], activacion:[.2, .8, .40, .65, false, pct0], pctReserva:[0, .2, .03, .08, false, pct0], churn:[.03, .25, .08, .15, true, pct0], pctPagan:[.05, .8, .10, .30, false, pct0]};
   var DESC_C = {
-    cpi:'Se replantea con US$2,5 o más (≈ $ 8.250) · se escala con US$1,2 o menos (≈ $ 3.960)',
-    activacion:'Se replantea con 40 % o menos · se escala con 65 % o más',
-    pctReserva:'Se replantea con 3 % o menos · se escala con 8 % o más',
-    churn:'Se replantea con 15 % o más · se escala con 8 % o menos',
-    pctPagan:'Se replantea con 10 % o menos · se escala con 30 % o más'
+    cpi:'Replantear ≥ US$2,5 (≈ $ 8.250) · escalar ≤ US$1,2 (≈ $ 3.960)',
+    activacion:'Replantear ≤ 40 % · escalar ≥ 65 %',
+    pctReserva:'Replantear ≤ 3 % · escalar ≥ 8 %',
+    churn:'Replantear ≥ 15 % · escalar ≤ 8 %',
+    pctPagan:'Replantear ≤ 10 % · escalar ≥ 30 %'
   };
   function marcas(k, pos){
-    var fila = [[], []];
-    return ['pesimista', 'conservador', 'favorable'].map(function(cs){
-      var x = Math.max(0, Math.min(100, pos(CASOS[cs][k]))), r = fila[0].some(function(o){ return Math.abs(o - x) < 4.5; }) ? 1 : 0;
-      fila[r].push(x);
-      return '<i class="mk" data-c="' + cs + '" style="left:' + x + '%;top:' + (r ? 0 : 17) + 'px">' + cs[0].toUpperCase() + '</i>';
-    }).join('');
+    var xs = ['pesimista', 'conservador', 'favorable'].map(function(cs){ return {c:cs, x:Math.max(0, Math.min(100, pos(CASOS[cs][k])))}; });
+    var et = xs.slice().sort(function(a, b){ return a.x - b.x; }), gap = 4.2;
+    et.forEach(function(o, i){ o.l = o.x; if (i && o.l - et[i - 1].l < gap) o.l = et[i - 1].l + gap; });
+    var exceso = et[et.length - 1].l - 98; if (exceso > 0) et.forEach(function(o){ o.l -= exceso; });
+    return xs.map(function(o){ return '<i class="vas" style="left:' + o.x + '%"></i><i class="mk" title="' + CASOSN[o.c] + '" style="left:' + o.l + '%">' + o.c[0].toUpperCase() + '</i>'; }).join('');
   }
   (function(){
     var h = '';
@@ -2101,14 +2349,15 @@ var CASOS = {
       var zonas = d[4] ? '<i class="z-esc" style="width:' + a + '%"></i><i class="z-aju" style="width:' + (b - a) + '%"></i><i class="z-rep" style="flex:1"></i>' : '<i class="z-rep" style="width:' + a + '%"></i><i class="z-aju" style="width:' + (b - a) + '%"></i><i class="z-esc" style="flex:1"></i>';
       h += '<div class="c-fila"><div class="bloque"><h3>' + c.n + '</h3><p class="fuente" style="font-size:16px;color:var(--txt-2)">' + DESC_C[c.k] + '</p></div><div class="pista" data-k="' + c.k + '"><div class="zonas">' + zonas + '</div>' +
         '<span class="umbral" style="left:' + a + '%">' + d[5](d[2]) + '</span><span class="umbral" style="left:' + b + '%">' + d[5](d[3]) + '</span>' +
-        '<i class="mk actual" data-c="actual" style="width:2px;height:60px;top:0"></i>' + marcas(c.k, pos) + '</div></div>';
+        marcas(c.k, pos) + '</div></div>';
     });
     $('corte').innerHTML = h;
   })();
   function pintarCorte(){
-    M.CORTE.forEach(function(c){
-      var d = DOM_C[c.k], v = (par[c.k] - d[0]) / (d[1] - d[0]) * 100, mk = document.querySelector('.pista[data-k="' + c.k + '"] .mk.actual');
-      mk.style.left = Math.max(0, Math.min(100, v)) + '%';
+    var cs = ['pesimista', 'conservador', 'favorable'];
+    METAS.forEach(function(m, i){
+      var cel = document.querySelector('.mm-cum[data-h="' + m.h + '"]');
+      if (cel) cel.innerHTML = cs.map(function(c){ var ok = RES_CASOS[c].metas[i]; return '<span class="cu ' + (ok ? 'si' : 'no') + '" title="' + CASOSN[c] + (ok ? ' cumple' : ' no cumple') + '">' + c[0].toUpperCase() + '</span>'; }).join('');
     });
   }
 
@@ -2118,16 +2367,16 @@ var CASOS = {
     var rs = M.correr(par), s = M.resumen(rs), sem = salidas();
     ultimo = {rs:rs, s:s};
     $('chipPers').hidden = !personal;
-    $('casoTxt').textContent = personal ? 'Personalizado a partir del caso ' + CASOSN[caso].toLowerCase() + '. Restablece el caso para volver a sus supuestos.' : CASOTXT[caso];
+    $('casoTxt').textContent = personal ? 'Personalizado sobre el caso ' + CASOSN[caso].toLowerCase() + '.' : CASOTXT[caso];
     var a5 = s.anios[4], cort = rs[59].cortado;
     contar('kIng', a5.ingT, fmtM);
     contar('kEb', a5.ebitda, fmtM, a5.ebitda < 0 ? 'neg' : 'pos');
     var mg = a5.ingT > 0 ? a5.ebitda / a5.ingT : null;
-    $('kEbTxt').textContent = mg === null ? 'sin ingresos en el año 5' : mg < -1 ? 'las pérdidas superan a los ingresos' : 'margen de ' + Math.round(mg * 100).toLocaleString('es-CO') + ' % sobre ingresos';
+    $('kEbTxt').textContent = mg === null ? 'sin ingresos en el año 5' : mg < -1 ? 'margen menor de −100 %' : 'margen ' + Math.round(mg * 100).toLocaleString('es-CO') + ' %';
     contar('kEq', cort ? 'Corte' : s.equilibrio ? s.equilibrio : 'No llega', function(v){ return 'Mes ' + Math.round(v); });
-    $('kEqTxt').textContent = cort ? 'la operación se detiene en el mes 8' : s.equilibrio ? 'año ' + Math.ceil(s.equilibrio / 12) + ' · primer mes con 3 meses seguidos en positivo' : 'en 60 meses no hay 3 meses seguidos en positivo';
+    $('kEqTxt').textContent = cort ? 'operación detenida en el mes 8' : s.equilibrio ? 'año ' + Math.ceil(s.equilibrio / 12) + ' · 3 meses seguidos con EBITDA positivo' : 'sin 3 meses seguidos en positivo';
     contar('kCap', s.capital, fmtM);
-    $('kCapTxt').textContent = 'la caja más baja, en el mes ' + s.mesMin;
+    $('kCapTxt').textContent = 'caja mínima · mes ' + s.mesMin;
     contar('kAct', rs[59].activos, ent);
     contar('kCom', rs[59].aliados, ent);
     $('semaforo').innerHTML = '<span class="etq suave" style="align-self:center">Métricas de corte</span>' + sem.lista.map(function(x){ return '<span class="chip" title="' + x.n + '"><i style="background:' + ZONA[x.e] + '"></i>' + CORTO[x.k] + ' · ' + x.v + '</span>'; }).join('');
@@ -2145,7 +2394,7 @@ var CASOS = {
     {k:'claude', n:'Claude', c:'var(--ser-4)'},
     {k:'infra', n:'Software y tiendas', c:'var(--ser-1)'},
     {k:'legal', n:'S.A.S. y marca', c:'var(--n-2)'},
-    {k:'comercios', n:'Salidas a firmar comercios', c:'var(--n-3)'},
+    {k:'comercios', n:'Salidas a firmar comercios', c:'var(--warn)'},
     {k:'pauta', n:'Pauta', c:'var(--ser-2)'},
     {k:'auxilio', n:'Auxilio de ingenieros', c:'var(--n-1)'}
   ];
@@ -2177,10 +2426,10 @@ var CASOS = {
     var o = leer(), ms = plan(o), total = ms.reduce(function(a, x){ return a + x.tot; }, 0);
     var t1 = ms.filter(function(x){ return !x.lanz; }).reduce(function(a, x){ return a + x.tot; }, 0);
     $('total').textContent = fmt(total); $('cierreTotal').textContent = fmt(total); $('cierreMeses').textContent = o.d + 4;
-    $('totalTxt').textContent = 'Total del plan: ' + o.d + ' meses de desarrollo + 4 de lanzamiento' + (o.aux > 0 ? ', con auxilio de ' + o.n + ' ingenieros.' : ', sin auxilio de ingenieros.');
+    $('totalTxt').textContent = o.d + ' meses de desarrollo + 4 de lanzamiento' + (o.aux > 0 ? ' · auxilio de ' + o.n + ' ingenieros' : ' · sin auxilio');
     $('t1').textContent = fmt(t1); $('t2').textContent = fmt(total - t1);
-    $('t1Txt').textContent = 'Meses 1 a ' + o.d + ': desarrollo, tiendas, S.A.S., marca y primeras salidas a firmar comercios' + (o.aux > 0 ? ', con auxilio.' : '.');
-    $('t2Txt').textContent = 'Meses ' + (o.d + 1) + ' a ' + (o.d + 4) + ': pauta, software y salidas a firmar comercios' + (o.aux > 0 ? ', con auxilio.' : '.');
+    $('t1Txt').textContent = 'Meses 1–' + o.d + ': desarrollo, tiendas, S.A.S., marca, comercial.';
+    $('t2Txt').textContent = 'Meses ' + (o.d + 1) + '–' + (o.d + 4) + ': pauta, software, comercial.';
     $('leyenda').innerHTML = SERIES.filter(function(s){ return s.k !== 'auxilio' || o.aux > 0; }).map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.n + '</span>'; }).join('') + '<span><i style="background:var(--acc-2);height:2px;vertical-align:3px"></i>Acumulado</span>';
     var W = 640, H = 300, ml = 52, mr = 60, mt = 30, mb = 34;
     var max = Math.max.apply(null, ms.map(function(x){ return x.tot; }));
@@ -2235,7 +2484,7 @@ var CASOS = {
     if (o.aux > 0) filas.push(['Auxilio de ingenieros', fmt(o.aux) + ' × ' + o.n + ' × ' + (dev + 4) + ' meses', o.aux * o.n * (dev + 4)]);
     document.querySelector('#desglose tbody').innerHTML = filas.map(function(f){ return '<tr><th>' + f[0] + '</th><td>' + f[1] + '</td><td class="n">' + fmt(f[2]) + '</td></tr>'; }).join('');
     $('desgloseTotal').textContent = fmt(filas.reduce(function(a, f){ return a + f[2]; }, 0));
-    $('desgloseTit').textContent = 'Total del plan por rubro, ' + (dev + 4) + ' meses, en COP';
+    $('desgloseTit').textContent = 'Total por rubro · ' + (dev + 4) + ' meses · COP';
   }
   ['meses3', 'meses4', 'pauta', 'auxilio', 'ing2', 'ing3', 'cloudflare'].forEach(function(id){
     var el = $(id); el.addEventListener('change', function(){ pintarInv(true); });
@@ -2272,7 +2521,7 @@ var CASOS = {
 
   /* ================= Navegación activa y progreso ================= */
   var enlaces = [].slice.call(document.querySelectorAll('.barra nav a'));
-  var mapa = {comercios:'modelo', ia:'modelo', funcionamiento:'inversion', ronda:'equipo', fuentes:'equipo'};
+  var mapa = {comercios:'modelo', potencial:'potencial', ia:'modelo', funcionamiento:'inversion', ronda:'equipo', fuentes:'equipo'};
   if ('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){

@@ -64,10 +64,10 @@
 
   /* ================= Ranura de servicios ================= */
   var SERV = [
-    ['Parqueadero','V1 · al lanzar'],['Lavado','V1 · al lanzar'],['Taller','V1 · al lanzar'],['Mi garaje','V1 · al lanzar'],
-    ['Vehículos DRS','V1 · al lanzar'],['Trámites','V1 · al lanzar'],['SOAT','V2 · con aliados'],['Tecnomecánica','V2 · con aliados'],
-    ['Informe vehicular','V2 · con aliados'],['Puntos','V2 · con aliados'],['Financiación','V3 · con un banco'],['Seguros','V3 · con una aseguradora'],
-    ['Clasificados','V4 · plataforma'],['Repuestos','V4 · plataforma'],['Compraventa','V4 · plataforma']
+    ['Parqueadero','V1 · Lanzamiento'],['Lavado','V1 · Lanzamiento'],['Taller','V1 · Lanzamiento'],['Mi garaje','V1 · Lanzamiento'],
+    ['Vehículos DRS','V1 · Lanzamiento'],['Trámites','V1 · Lanzamiento'],['SOAT','V2 · Retención'],['Tecnomecánica','V2 · Retención'],
+    ['Informe vehicular','V2 · Retención'],['Puntos','V2 · Retención'],['Financiación','V3 · Financiero'],['Seguros','V3 · Financiero'],
+    ['Clasificados','V4 · Plataforma'],['Repuestos','V4 · Plataforma'],['Compraventa','V4 · Plataforma']
   ];
   var carrete = $('carrete'), N = SERV.length, rIdx = N, rTimer = null, rVisible = true;
   carrete.innerHTML = [0,1,2].map(function(){ return SERV.map(function(s){ return '<span>' + s[0] + '</span>'; }).join(''); }).join('');
@@ -133,21 +133,21 @@
   /* ================= Ecosistema en órbita ================= */
   var FASEN = {V1:'Lanzamiento', V2:'Retención', V3:'Financiero', V4:'Plataforma'};
   var ECO = [
-    {n:'Parqueaderos', g:'ico-ubicacion', f:'V1', a:-90, hace:'Ve en el mapa los parqueaderos cercanos con su precio y la promoción si es hora valle, reserva y paga en la app.', paga:'El usuario paga el servicio en la app; el parqueadero paga mensualidad y comisión por reserva.', mas:['Es el servicio de mayor frecuencia: quien parquea día de por medio abre la app unas 15 veces al mes (supuesto).','Al lanzar, el parqueadero confirma cada reserva desde su panel. La integración con talanqueras viene después.']},
-    {n:'Lavado y detallado', g:'ico-detailing', f:'V1', a:-30, hace:'Elige lavadero, servicio y hora, paga en la app y recibe un recordatorio.', paga:'El usuario en la app; el lavadero con mensualidad y comisión.', mas:['Promociones en horas valle para llenar las franjas flojas.','Puntos y fidelización desde V2.']},
-    {n:'Taller y mantenimiento', g:'ico-taller', f:'V1', a:30, hace:'Pide cita o cotización en talleres aliados y registra el próximo cambio de aceite y las revisiones.', paga:'El usuario en la app; el taller con mensualidad y comisión.', mas:['El historial de mantenimiento queda en Mi garaje y sube el valor del vehículo al venderlo.']},
-    {n:'Mi garaje', g:'ico-alerta', f:'V1', a:90, hace:'Registra el vehículo por placa y recibe alertas de SOAT, tecnomecánica, pico y placa, multas y cambio de aceite.', paga:'La versión básica es gratis: es lo que trae y retiene usuarios.', mas:['Desde V2, la alerta de vencimiento lleva a renovar el SOAT o la tecnomecánica con aliados.']},
-    {n:'Vehículos DRS', g:'ico-consignacion', f:'V1', a:150, hace:'Mira el catálogo de carros y motos que DRS tiene en consignación, con fotos y video profesionales.', paga:'Es un servicio de DRS Motors (sociedad de hecho). Cómo se reparte ese ingreso con la S.A.S. de la app está por definir.', mas:['En V1 solo aparecen vehículos de DRS. Los clasificados abiertos a terceros llegan en V4.']},
-    {n:'Trámites DRS', g:'ico-traspaso', f:'V1', a:210, hace:'Cotiza y solicita traspasos, levantamientos de prenda y demás trámites ante tránsito en Bogotá.', paga:'Honorarios de tramitación de DRS Motors (sociedad de hecho), con el mismo reparto por definir.', mas:['Solo en Bogotá. La actualización de datos en el RUNT la hace el titular en persona.']},
-    {n:'Renovación de SOAT y tecnomecánica', g:'ico-certificado', f:'V2', a:-60, hace:'Desde la alerta de vencimiento, renueva el SOAT con una agencia aliada o agenda la tecnomecánica en un CDA.', paga:'La agencia de seguros o el CDA aliado paga por cada cliente referido.', mas:['Entra cuando se firmen una agencia de seguros habilitada y un CDA (hito H2).']},
-    {n:'Informe vehicular', g:'ico-runt', f:'V2', a:60, hace:'Compra un reporte de cualquier placa: número de propietarios anteriores, prendas, multas y estado de papeles.', paga:'El usuario que va a comprar un usado. Al ser digital, pagaría la comisión de las tiendas.', mas:['Se entrega sin datos personales de terceros.']},
-    {n:'Puntos y fidelización', g:'PTS', f:'V2', a:180, hace:'Acumula puntos con cada reserva y los cambia por descuentos en comercios aliados.', paga:'Los comercios financian los descuentos.', mas:['Sale en H2, después de pasar las métricas de corte.']},
-    {n:'Financiación', g:'FIN', f:'V3', a:-30, hace:'Solicita crédito para comprar o cambiar de vehículo con bancos y financieras aliados.', paga:'El banco paga una comisión por cada crédito desembolsado.', mas:['Entra cuando se firme el primer aliado financiero (hito H3).']},
-    {n:'Seguros', g:'SEG', f:'V3', a:90, hace:'Cotiza y contrata pólizas todo riesgo con aseguradoras aliadas.', paga:'La aseguradora o la agencia aliada paga por cada póliza.', mas:['Se hace con una agencia de seguros habilitada.','La renovación del SOAT entra antes, en V2.']},
-    {n:'Publicidad', g:'PUB', f:'V3', a:210, hace:'Ve una pantalla de entrada patrocinada al abrir la app, como en las apps bancarias, y anuncios de marcas del sector.', paga:'Marcas, concesionarios y comercios.', mas:['Tiene sentido con una base activa que interese a las marcas (hito H3).']},
-    {n:'Clasificados de vehículos', g:'ico-precio', f:'V4', a:-120, hace:'Publica tu carro o moto en venta, como en un portal de clasificados, dentro de la misma app.', paga:'Publicación básica gratis; destacados y planes para vendedores profesionales.', mas:['Desde V4, concesionarios y marcas también pueden pagar para que sus vehículos aparezcan primero.']},
-    {n:'Repuestos', g:'ico-carrito', f:'V4', a:15, hace:'Compra repuestos y accesorios de vendedores aliados.', paga:'El vendedor paga una comisión por cada venta.', mas:['Se cruza con el taller: el repuesto llega al taller donde se reservó la cita.']},
-    {n:'Compraventa protegida', g:'ico-verificado', f:'V4', a:135, hace:'El comprador paga a una custodia, se hace el traspaso y, al terminar, el dinero llega al vendedor y el vehículo al comprador.', paga:'Tarifa por transacción, más los honorarios del traspaso.', mas:['Requiere un encargo fiduciario o custodia regulada: el dinero nunca queda en cuentas de los socios.']}
+    {n:'Parqueaderos', g:'ico-ubicacion', f:'V1', a:-90, hace:'Mapa de parqueaderos con precio y promoción en hora valle; reserva y pago en la app.', paga:'Usuario: el servicio. Parqueadero: mensualidad + comisión.', mas:['Servicio ancla: ≈ 15 usos al mes por usuario frecuente (supuesto).','V1: confirmación manual desde el panel; integración con talanqueras después.']},
+    {n:'Lavado y detallado', g:'ico-detailing', f:'V1', a:-30, hace:'Selección de lavadero, servicio y hora; pago en la app.', paga:'Usuario: el servicio. Lavadero: mensualidad + comisión.', mas:['Promociones en horas valle.']},
+    {n:'Taller y mantenimiento', g:'ico-taller', f:'V1', a:30, hace:'Cita o cotización en talleres aliados; registro de mantenimientos.', paga:'Usuario: el servicio. Taller: mensualidad + comisión.', mas:['Historial de mantenimiento en Mi garaje.']},
+    {n:'Mi garaje', g:'ico-alerta', f:'V1', a:90, hace:'Registro por placa; alertas de SOAT, tecnomecánica, pico y placa, multas y cambio de aceite.', paga:'Gratis (versión básica). Motor de retención.', mas:['Desde V2, la alerta enlaza la renovación con aliados.']},
+    {n:'Vehículos DRS', g:'ico-consignacion', f:'V1', a:150, hace:'Catálogo de vehículos en consignación de DRS.', paga:'DRS Motors (sociedad de hecho). Reparto con la S.A.S. por definir.', mas:['V1: solo inventario DRS. Clasificados abiertos en V4.']},
+    {n:'Trámites DRS', g:'ico-traspaso', f:'V1', a:210, hace:'Cotización y solicitud de traspasos y levantamientos de prenda.', paga:'Honorarios de DRS Motors. Reparto por definir.', mas:['Solo Bogotá. La actualización en el RUNT la hace el titular.']},
+    {n:'SOAT y tecnomecánica', g:'ico-certificado', f:'V2', a:-60, hace:'Renovación desde la alerta de vencimiento con agencia aliada o CDA.', paga:'Agencia de seguros o CDA: comisión por referido.', mas:['Requiere agencia habilitada y CDA firmados (H2).']},
+    {n:'Informe vehicular', g:'ico-runt', f:'V2', a:60, hace:'Reporte de cualquier placa: propietarios anteriores, prendas, multas, papeles.', paga:'Usuario. Contenido digital: comisión de tiendas 15–30 %.', mas:['Sin datos personales de terceros.']},
+    {n:'Puntos y fidelización', g:'PTS', f:'V2', a:180, hace:'Puntos por reserva, canjeables en comercios aliados.', paga:'Comercios financian los descuentos.', mas:['Sale en H2.']},
+    {n:'Financiación', g:'FIN', f:'V3', a:-30, hace:'Solicitud de crédito vehicular con bancos aliados.', paga:'Banco: comisión por crédito desembolsado.', mas:['Primer aliado financiero: H3.']},
+    {n:'Seguros', g:'SEG', f:'V3', a:90, hace:'Cotización y contratación de pólizas todo riesgo.', paga:'Aseguradora o agencia: comisión por póliza.', mas:['Vía agencia habilitada.']},
+    {n:'Publicidad', g:'PUB', f:'V3', a:210, hace:'Pantalla de entrada patrocinada y anuncios de marcas del sector.', paga:'Marcas, concesionarios, comercios.', mas:['Requiere base activa (H3).']},
+    {n:'Clasificados', g:'ico-precio', f:'V4', a:-120, hace:'Publicación de vehículos en venta por cualquier usuario.', paga:'Publicación básica gratis; destacados y planes pagos.', mas:['Posiciones pagas para concesionarios.']},
+    {n:'Repuestos', g:'ico-carrito', f:'V4', a:15, hace:'Compra de repuestos y accesorios a vendedores aliados.', paga:'Vendedor: comisión por venta.', mas:['Entrega en el taller de la cita.']},
+    {n:'Compraventa protegida', g:'ico-verificado', f:'V4', a:135, hace:'Pago en custodia, traspaso y liberación de fondos al cierre.', paga:'Tarifa por transacción + honorarios de traspaso.', mas:['Fiducia o custodia regulada.']}
   ];
   var RADIO = {V1:122, V2:184, V3:240, V4:292}, C0 = 300, orb = $('orbita'), ecoSel = 0;
   (function(){
@@ -160,7 +160,7 @@
     h += '<circle class="centro" cx="300" cy="300" r="64"/><text class="centro-t" x="300" y="294" text-anchor="middle">TU</text><text class="centro-t" x="300" y="322" text-anchor="middle">VEHÍCULO</text>';
     ['V1','V2','V3','V4'].forEach(function(v){
       var r = RADIO[v];
-      h += '<g aria-hidden="true"><rect x="' + (300 + r - 15) + '" y="291" width="30" height="18" fill="var(--sup-1)"/><text class="rot-et" x="' + (300 + r) + '" y="304" text-anchor="middle">' + v + '</text></g>';
+      h += '<g aria-hidden="true"><rect x="' + (300 + r - 15) + '" y="291" width="30" height="18" fill="var(--sup-1)"/><text class="rot-et" x="' + (300 + r) + '" y="304" text-anchor="middle" style="fill:var(--f' + v[1] + ')">' + v + '</text></g>';
     });
     ECO.forEach(function(s, i){
       var r = RADIO[s.f], a = s.a * Math.PI / 180, x = C0 + r * Math.cos(a), y = C0 + r * Math.sin(a);
@@ -168,7 +168,7 @@
       var dentro = s.g.indexOf('ico-') === 0
         ? '<svg x="' + (x - 12) + '" y="' + (y - 12) + '" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"><use href="#' + s.g + '"/></svg>'
         : '<text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle">' + s.g + '</text>';
-      h += '<g class="nodo" data-i="' + i + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + s.n + ', fase ' + s.f + '"><circle cx="' + x + '" cy="' + y + '" r="24"/>' + dentro + '</g>';
+      h += '<g class="nodo" data-f="' + s.f + '" data-i="' + i + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + s.n + ', fase ' + s.f + '"><circle cx="' + x + '" cy="' + y + '" r="24"/>' + dentro + '</g>';
     });
     orb.innerHTML = h;
   })();
@@ -178,7 +178,7 @@
     var s = ECO[ecoSel];
     nodos.forEach(function(n, j){ n.setAttribute('aria-pressed', j === ecoSel ? 'true' : 'false'); });
     var det = $('ecoDet');
-    det.innerHTML = '<p class="etq luz">Fase ' + s.f + ' · ' + FASEN[s.f] + '</p><p class="nombre">' + s.n + '</p>' +
+    det.innerHTML = '<p class="etq" style="color:var(--f' + s.f[1] + ')">Fase ' + s.f + ' · ' + FASEN[s.f] + '</p><p class="nombre">' + s.n + '</p>' +
       '<dl><dt class="etq suave">Qué hace el usuario</dt><dd>' + s.hace + '</dd><dt class="etq suave">Quién paga</dt><dd>' + s.paga + '</dd></dl>' +
       '<ul>' + s.mas.map(function(m){ return '<li>' + m + '</li>'; }).join('') + '</ul>' +
       '<div class="eco-nav"><button type="button" id="ecoAnt">Anterior</button><button type="button" id="ecoSig">Siguiente</button><span class="etq suave" style="align-self:center;margin-left:auto">' + String(ecoSel + 1).padStart(2, '0') + ' / ' + ECO.length + '</span></div>';
@@ -226,33 +226,85 @@
     }, 0.4);
   })();
 
+
+  /* ================= Mercado potencial ================= */
+  var GEO = [
+    {g:1, n:'F1 · Zonas iniciales de Bogotá', car:240e3, moto:43e3, sam:106e9},
+    {g:2, n:'F2 · Bogotá', car:860e3, moto:525e3, sam:424e9},
+    {g:3, n:'F3 · Áreas metropolitanas', car:2.4e6, moto:3.4e6, sam:1235e9},
+    {g:4, n:'F4 · Colombia', car:4.1e6, moto:5.0e6, sam:2020e9}
+  ];
+  var fmtMM = function(v){ var m = v / 1e9; return '$ ' + (m >= 100 ? ent(m) : dec(m, 1)) + ' mil M'; };
+  (function(){
+    var svg = $('cuadros'), h = '', max = GEO[3].car + GEO[3].moto;
+    GEO.slice().reverse().forEach(function(z){
+      var lado = 380 * Math.sqrt((z.car + z.moto) / max);
+      h += '<rect class="cq" x="10" y="' + (390 - lado) + '" width="' + lado + '" height="' + lado + '" fill="var(--f' + z.g + ')" opacity="' + (z.g === 4 ? .35 : z.g === 3 ? .5 : z.g === 2 ? .75 : 1) + '"/>';
+      h += '<text x="' + (10 + lado - 7.5) + '" y="' + (390 - lado + 20) + '" text-anchor="end" fill="var(--sup-1)" font-family="Bebas Neue, Impact, sans-serif" font-size="' + (z.g === 1 ? 13 : 20) + '">F' + z.g + '</text>';
+    });
+    svg.innerHTML = h;
+    alVer(svg, function(){
+      [].forEach.call(svg.querySelectorAll('.cq'), function(r, i){ r.style.transformOrigin = '10px 390px'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scale(0)'}, {transform:'scale(1)'}], {d:800, delay:i * 220, e:'cubic-bezier(.3,1.2,.5,1)'}); });
+    }, 0.4);
+  })();
+  var ARPU = {P:1200, C:3650, F:5500};
+  function mxLeer(){
+    var f = +document.querySelector('input[name="mxf"]:checked').value, m = document.querySelector('input[name="mxm"]:checked').value;
+    return {f:f, m:m, pen:+$('mxPen').value, motos:$('mxMotos').checked};
+  }
+  function mxIngreso(z, o){
+    var uc = z.car * o.pen, um = o.motos ? z.moto * o.pen : 0;
+    var ing = o.m === 'arriba' ? uc * 105000 + um * 42000 : (uc + um) * ARPU[o.m] * 12;
+    return {ing:ing, us:uc + um};
+  }
+  function mxPintar(){
+    var o = mxLeer(), z = GEO[o.f - 1], r = mxIngreso(z, o);
+    $('mxPenO').textContent = pct0(o.pen);
+    $('mxTotal').textContent = fmtMM(r.ing);
+    $('mxTxt').textContent = 'Ingreso anual · ' + z.n + ' · ' + pct0(o.pen) + ' de penetración' + (o.motos ? '' : ' · solo carros');
+    $('mxUs').textContent = ent(r.us);
+    $('mxSam').textContent = dec(r.ing / z.sam * 100, 1) + ' %';
+    var W = 640, H = 230, ml = 230, mr = 90, h = '', vals = GEO.map(function(g){ return mxIngreso(g, o).ing; }), mx = Math.max.apply(null, vals), bh = 34;
+    GEO.forEach(function(g, i){
+      var y = 15 + i * 52, w = (W - ml - mr) * vals[i] / mx;
+      h += '<text x="' + (ml - 15) + '" y="' + (y + 22) + '" text-anchor="end" fill="' + (g.g === o.f ? 'var(--txt-1)' : 'var(--txt-3)') + '" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" letter-spacing="1.2">' + g.n.toUpperCase() + '</text>';
+      h += '<rect class="mxb" x="' + ml + '" y="' + y + '" width="' + Math.max(2, w) + '" height="' + bh + '" fill="var(--f' + g.g + ')"' + (g.g === o.f ? '' : ' opacity=".45"') + '/>';
+      h += '<text x="' + (ml + w + 7.5) + '" y="' + (y + 22) + '" fill="var(--txt-1)" font-family="Montserrat, sans-serif" font-size="11" font-weight="600">' + dec(vals[i] / 1e9, vals[i] >= 1e11 ? 0 : 1) + '</text>';
+    });
+    $('mxGraf').innerHTML = h;
+  }
+  [].forEach.call(document.querySelectorAll('input[name="mxf"],input[name="mxm"],#mxMotos'), function(el){ el.addEventListener('change', mxPintar); });
+  $('mxPen').addEventListener('input', mxPintar);
+  mxPintar();
+  alVer($('mxGraf'), function(){ [].forEach.call($('mxGraf').querySelectorAll('.mxb'), function(r, i){ r.style.transformOrigin = '230px 0'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:700, delay:i * 120}); }); }, 0.4);
+
   /* ================= Fuentes de ingreso ================= */
   var ING = [
-    {n:'Comisión por reserva', p:'comercio', pl:'Comercios', f:'V1', d:'Un porcentaje de cada reserva de parqueadero, lavado o taller pagada en la app. Es la fuente principal del plan.'},
-    {n:'Mensualidad por aparecer', p:'comercio', pl:'Comercios', f:'V1', d:'Cada comercio paga por estar en el mapa y usar el panel de gestión. Los primeros 30 tienen dos meses sin mensualidad; la comisión sí se cobra desde el primer día.'},
-    {n:'Tarifa de servicio', p:'usuario', pl:'Usuarios', f:'V1', d:'Un cargo fijo pequeño por reserva para cubrir la pasarela de pagos.', ev:'En evaluación'},
-    {n:'Vehículos y trámites DRS', p:'usuario', pl:'Clientes de DRS', f:'V1', d:'Consignación y trámites ante tránsito en Bogotá, que hoy presta DRS Motors (sociedad de hecho). La app los muestra; cómo se reparte ese ingreso entre DRS y la S.A.S. de la app está por definir.', ev:'Por definir'},
-    {n:'Renovación de SOAT y tecnomecánica', p:'financiero', pl:'Agencia de seguros y CDA', f:'V2', d:'La alerta de vencimiento lleva a renovar con un aliado, que paga por cada cliente referido.'},
-    {n:'Informe vehicular', p:'usuario', pl:'Usuarios', f:'V2', d:'Reporte pagado de cualquier placa: número de propietarios anteriores, prendas, multas y estado de papeles. Lo compra quien va a comprar un usado. Al ser digital, pagaría la comisión de las tiendas.'},
-    {n:'Plan premium de Mi garaje', p:'usuario', pl:'Usuarios', f:'V2', d:'Varios vehículos, documentos digitales y alertas avanzadas.', ev:'En evaluación'},
-    {n:'Destacados en la zona', p:'comercio', pl:'Comercios', f:'V3', d:'El comercio paga por aparecer primero en su zona. Las promociones en horas valle están incluidas en la mensualidad.'},
-    {n:'Pantalla de entrada patrocinada', p:'marcas', pl:'Marcas', f:'V3', d:'Un anuncio al abrir la app, antes de entrar, como en las apps bancarias.'},
-    {n:'Pauta de concesionarios y marcas', p:'marcas', pl:'Concesionarios', f:'V3', d:'Anuncios de lanzamientos y vehículos nuevos en la pantalla de entrada y en Mi garaje. Cuando se abran los clasificados (V4), también posiciones destacadas.'},
-    {n:'Referido de crédito', p:'financiero', pl:'Bancos', f:'V3', d:'Comisión por cada crédito de vehículo desembolsado desde la app.'},
-    {n:'Referido de seguros', p:'financiero', pl:'Aseguradoras', f:'V3', d:'Comisión por cada póliza todo riesgo emitida, con una agencia habilitada.'},
-    {n:'Clasificados de vehículos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Publicación gratis y destacados pagos, con planes mensuales para compraventas y concesionarios.'},
-    {n:'Tienda de repuestos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Comisión por cada repuesto o accesorio vendido en la app.'},
-    {n:'Compraventa protegida', p:'usuario', pl:'Comprador y vendedor', f:'V4', d:'Tarifa por custodiar el pago y hacer el traspaso de principio a fin.'},
-    {n:'Datos del mercado', p:'marcas', pl:'Empresas del sector', f:'V4', d:'Estimador de precios y tendencias con datos anonimizados.'}
+    {n:'Comisión por reserva', p:'comercio', pl:'Comercios', f:'V1', d:'% de cada reserva de parqueadero, lavado o taller. Fuente principal.'},
+    {n:'Mensualidad del comercio', p:'comercio', pl:'Comercios', f:'V1', d:'Presencia en el mapa y panel de gestión. Primeros 30: 2 meses sin mensualidad.'},
+    {n:'Tarifa de servicio', p:'usuario', pl:'Usuarios', f:'V1', d:'Cargo fijo por reserva para cubrir la pasarela.', ev:'En evaluación'},
+    {n:'Vehículos y trámites DRS', p:'usuario', pl:'Clientes DRS', f:'V1', d:'Consignación y trámites de DRS Motors (sociedad de hecho). Reparto con la S.A.S. por definir.', ev:'Por definir'},
+    {n:'Referido SOAT y tecnomecánica', p:'financiero', pl:'Agencia y CDA', f:'V2', d:'Comisión por renovación referida desde la alerta.'},
+    {n:'Informe vehicular', p:'usuario', pl:'Usuarios', f:'V2', d:'Reporte pagado por placa. Comisión de tiendas 15–30 %.'},
+    {n:'Plan premium Mi garaje', p:'usuario', pl:'Usuarios', f:'V2', d:'Varios vehículos, documentos y alertas avanzadas.', ev:'En evaluación'},
+    {n:'Destacados en la zona', p:'comercio', pl:'Comercios', f:'V3', d:'Primera posición en la zona. Horas valle incluidas en la mensualidad.'},
+    {n:'Pantalla patrocinada', p:'marcas', pl:'Marcas', f:'V3', d:'Anuncio al abrir la app.'},
+    {n:'Pauta de concesionarios', p:'marcas', pl:'Concesionarios', f:'V3', d:'Lanzamientos en pantalla de entrada y Mi garaje; destacados en clasificados desde V4.'},
+    {n:'Referido de crédito', p:'financiero', pl:'Bancos', f:'V3', d:'Comisión por crédito desembolsado.'},
+    {n:'Referido de seguros', p:'financiero', pl:'Aseguradoras', f:'V3', d:'Comisión por póliza todo riesgo, vía agencia habilitada.'},
+    {n:'Clasificados', p:'vendedor', pl:'Vendedores', f:'V4', d:'Publicación gratis; destacados y planes para profesionales.'},
+    {n:'Repuestos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Comisión por venta.'},
+    {n:'Compraventa protegida', p:'usuario', pl:'Comprador y vendedor', f:'V4', d:'Tarifa por custodia y traspaso.'},
+    {n:'Datos del mercado', p:'marcas', pl:'Empresas del sector', f:'V4', d:'Precios y tendencias anonimizados.'}
   ];
   var filtro = {pagador:'todos', fase:'todas'};
   function pintarIng(animar){
     var l = ING.filter(function(x){ return (filtro.pagador === 'todos' || x.p === filtro.pagador) && (filtro.fase === 'todas' || x.f === filtro.fase); });
     var cont = $('ingresos');
     cont.innerHTML = l.length ? l.map(function(x){
-      return '<article class="ing"><h3>' + x.n + '</h3><p>' + x.d + '</p><div class="meta"><span class="chip">' + x.f + ' · ' + FASEN[x.f] + '</span><span class="chip">Paga: ' + x.pl + '</span>' + (x.ev ? '<span class="chip pend">' + x.ev + '</span>' : '') + '</div></article>';
+      return '<article class="ing"><h3>' + x.n + '</h3><p>' + x.d + '</p><div class="meta"><span class="chip ' + x.f + '">' + x.f + ' · ' + FASEN[x.f] + '</span><span class="chip">Paga: ' + x.pl + '</span>' + (x.ev ? '<span class="chip pend">' + x.ev + '</span>' : '') + '</div></article>';
     }).join('') : '<p class="vacio">No hay fuentes de ingreso con esos dos filtros. Cambia uno de los dos.</p>';
-    $('conteo').textContent = l.length + ' de ' + ING.length + ' fuentes de ingreso. Precios y porcentajes por definir con los primeros aliados.';
+    $('conteo').textContent = l.length + ' de ' + ING.length + ' fuentes de ingreso.';
     if (animar) [].forEach.call(cont.children, function(c, i){ anim(c, [{opacity:0, transform:'translateY(15px)'}, {opacity:1, transform:'translateY(0)'}], {d:380, delay:i * 40}); });
   }
   [].forEach.call(document.querySelectorAll('.filtro'), function(b){
@@ -292,8 +344,8 @@
     h += '<rect x="' + ((x0 + x1) / 2 - 52) + '" y="0" width="104" height="15" fill="var(--sup-1)"/><text x="' + ((x0 + x1) / 2) + '" y="11" text-anchor="middle" fill="var(--txt-1)" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" letter-spacing="1.76">HORAS VALLE</text>';
     base.forEach(function(v, i){
       var bx = ml + bw * i + bw * 0.18, w = bw * 0.64;
-      h += '<rect class="vb" x="' + bx + '" y="' + y(v) + '" width="' + w + '" height="' + (y(0) - y(v)) + '" fill="var(--n-3)"/>';
-      if (promo[i]) h += '<rect class="vp" x="' + bx + '" y="' + y(v + promo[i]) + '" width="' + w + '" height="' + (y(v) - y(v + promo[i])) + '" fill="var(--acc-2)"/>';
+      h += '<rect class="vb" x="' + bx + '" y="' + y(v) + '" width="' + w + '" height="' + (y(0) - y(v)) + '" fill="var(--ser-4)"/>';
+      if (promo[i]) h += '<rect class="vp" x="' + bx + '" y="' + y(v + promo[i]) + '" width="' + w + '" height="' + (y(v) - y(v + promo[i])) + '" fill="var(--ser-1)"/>';
       if (i % 3 === 0){
         var hr = 6 + i, et = hr < 12 ? hr + ' a. m.' : hr === 12 ? '12 m.' : (hr - 12) + ' p. m.';
         h += '<text x="' + (bx + w / 2) + '" y="' + (H - 9) + '" text-anchor="middle" fill="var(--txt-3)" font-family="Montserrat, sans-serif" font-size="11">' + et + '</text>';
@@ -308,18 +360,18 @@
 
   /* ================= Hoja de ruta ================= */
   var FASES = [
-    {v:'V1', n:'Lanzamiento', c:'Al terminar el desarrollo (hito H0)',
+    {v:'V1', n:'Lanzamiento', c:'Fin del desarrollo (H0)',
      s:[['ico-ubicacion','Reservas de parqueadero','con horas valle y pago en la app'],['ico-detailing','Reservas de lavado',''],['ico-taller','Reservas de taller','y recordatorio de cambio de aceite'],['ico-alerta','Mi garaje','SOAT, tecnomecánica, pico y placa y multas'],['ico-consignacion','Vehículos DRS','solo el inventario propio'],['ico-traspaso','Trámites DRS','solo en Bogotá'],['ico-documento','Panel web del comercio','agenda, reservas, servicios, promociones, reseñas y pagos']],
-     p:'Lo que más se usa, lo que más retiene y lo que DRS ya sabe operar. Se deja fuera todo lo que depende de aliados que todavía no están firmados.'},
-    {v:'V2', n:'Retención', c:'Con reservas repetidas, una agencia de seguros habilitada (SOAT) y un CDA firmados (H2)',
+     p:'Alta frecuencia, retención y operación que DRS ya conoce. Nada que dependa de aliados sin firmar.'},
+    {v:'V2', n:'Retención', c:'Reservas recurrentes + agencia de seguros y CDA firmados (H2)',
      s:[['PTS','Puntos y fidelización','financiados por los comercios'],['ico-certificado','Renovación de SOAT y tecnomecánica','desde la alerta de vencimiento'],['ico-runt','Informe vehicular','de cualquier placa'],['ico-horario','Horas valle con IA','sugerencias de descuento por zona'],['ico-chat','Asistente de trámites','responde a cualquier hora']],
-     p:'El objetivo es que el usuario vuelva cada semana y que el comercio vea resultados medibles.'},
-    {v:'V3', n:'Financiero', c:'Al firmar el primer banco o aseguradora, o con una base activa que interese a las marcas (H3)',
+     p:'Uso semanal del usuario y resultados medibles para el comercio.'},
+    {v:'V3', n:'Financiero', c:'Primer banco o aseguradora, o base activa para marcas (H3)',
      s:[['FIN','Crédito para vehículo','con bancos y financieras aliados'],['SEG','Seguro todo riesgo','con una agencia habilitada'],['PUB','Pantalla de entrada patrocinada','y pauta de marcas y concesionarios'],['DST','Destacados en la zona','para comercios aliados']],
-     p:'Con una base activa, la app vale para los aliados financieros y para las marcas.'},
-    {v:'V4', n:'Plataforma', c:'Con base de usuarios suficiente y custodia contratada (H4)',
+     p:'Base activa monetizable para bancos, aseguradoras y marcas.'},
+    {v:'V4', n:'Plataforma', c:'Base suficiente + custodia contratada (H4)',
      s:[['ico-precio','Clasificados de vehículos','abiertos a cualquier vendedor'],['ico-carrito','Tienda de repuestos','conectada con los talleres'],['ico-verificado','Compraventa protegida','pago en custodia y traspaso incluido'],['DAT','Datos del mercado','precios y tendencias anonimizados'],['2.ª','Segunda ciudad','el mismo modelo de comercios aliados']],
-     p:'La app pasa de ser un conjunto de servicios a ser la plataforma donde ocurre todo lo del vehículo.'}
+     p:'Transacciones entre usuarios y expansión geográfica.'}
   ];
   var rutaSvg = $('rutaSvg'), PX = [125, 375, 625, 875], PY = [90, 70, 50, 30], via, viaLen, viaPos = [], faseSel = 0;
   (function(){
@@ -348,7 +400,7 @@
   var fasesEl = $('fases');
   FASES.forEach(function(f, i){
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'fase'; b.id = 'fase-' + f.v;
+    b.type = 'button'; b.className = 'fase'; b.id = 'fase-' + f.v; b.dataset.f = f.v;
     b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
     b.innerHTML = '<span class="vn">' + f.v + '</span><h3>' + f.n + '</h3><small>' + f.c + '</small>';
     b.addEventListener('click', function(){ verFase(i, true); });
@@ -358,7 +410,7 @@
     faseSel = i;
     var f = FASES[i];
     [].forEach.call(fasesEl.children, function(b, j){ b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
-    $('faseDet').innerHTML = '<ul class="lista-serv">' + f.s.map(function(s){ return '<li>' + glifo(s[0]) + '<span><b>' + s[1] + '</b>' + (s[2] ? '<br>' + s[2] : '') + '</span></li>'; }).join('') + '</ul><div class="bloque"><h3 style="color:var(--txt-3)">Por qué en esta fase</h3><p>' + f.p + '</p></div>';
+    $('faseDet').innerHTML = '<ul class="lista-serv">' + f.s.map(function(s){ return '<li>' + glifo(s[0]) + '<span><b>' + s[1] + '</b>' + (s[2] ? '<br>' + s[2] : '') + '</span></li>'; }).join('') + '</ul><div class="bloque"><h3 style="color:var(--txt-3)">Criterio</h3><p>' + f.p + '</p></div>';
     if (animar) [].forEach.call($('faseDet').querySelectorAll('li'), function(li, j){ anim(li, [{opacity:0, transform:'translateX(-15px)'}, {opacity:1, transform:'translateX(0)'}], {d:360, delay:j * 50}); });
     moverMarcador(i, animar ? 700 : 0);
   }
@@ -368,9 +420,9 @@
   /* ================= Tablero de proyecciones ================= */
   var M = MODELO, CASOSN = {pesimista:'Pesimista', conservador:'Conservador', favorable:'Favorable'};
   var CASOTXT = {
-    pesimista:'Pesimista. Adopción lenta, US$2,5 por instalación, 15 % de usuarios que se van cada mes y 3 % que reserva: las cinco métricas de corte quedan en zona de replantear. Con el corte activado, la operación se detiene en el mes 8 y la pérdida se queda en el plan.',
-    conservador:'Conservador. Lo que esperaríamos con una ejecución normal: US$1,6 por instalación, 10 % de abandono, 6 % de usuarios que reservan unas 3 veces al mes y una nómina que crece 25 % al año.',
-    favorable:'Favorable. Si el parqueadero engancha: US$1,5 por instalación, 8 % de abandono, 8 % que reserva 3,5 veces al mes, más pauta y un equipo que crece rápido. No es la proyección base.'
+    pesimista:'Pesimista: CPI US$2,5 · abandono 15 % · 3 % reserva 1,1 veces al mes. Las 5 métricas de corte en replantear; con corte, la operación se detiene en el mes 8.',
+    conservador:'Conservador: CPI US$1,6 · abandono 10 % · 6 % reserva 3 veces al mes · nómina +25 % anual.',
+    favorable:'Favorable: CPI US$1,5 · abandono 8 % · 8 % reserva 3,5 veces al mes · más pauta y equipo. No es la base.'
   };
   var P = [
     {k:'pauta0', g:'Usuarios', n:'Pauta mensual al lanzar', min:1e6, max:15e6, st:5e5, f:function(v){ return fmtM(v); }},
@@ -487,11 +539,11 @@
   var vista = 'pyg', datosAct = null, datosObj = null, tween = null;
   var G = {W:760, H:360, ml:64, mr:16, mt:28, mb:34};
   var VISTAS = {
-    pyg:{t:'Ingresos, costos y EBITDA por mes, en millones de COP', ley:[['var(--acc-2)','Ingresos'],['var(--txt-2)','Costos'],['var(--pos)','EBITDA positivo'],['var(--neg)','EBITDA negativo']]},
-    ing:{t:'Ingresos por fuente cada mes, en millones de COP', ley:[['var(--ser-1)','Reservas'],['var(--ser-2)','Comercios'],['var(--ser-3)','SOAT, tecnomecánica e informe'],['var(--ser-4)','Publicidad'],['var(--n-2)','Crédito, seguros y clasificados']]},
-    cos:{t:'Costos por rubro cada mes, en millones de COP', ley:[['var(--ser-1)','Equipo'],['var(--ser-3)','Pauta'],['var(--n-2)','Variables: pasarela, infraestructura e ICA'],['var(--ser-4)','Software, comercios, contabilidad y únicos']]},
-    caja:{t:'Caja acumulada, en millones de COP: lo más bajo es el capital que se necesita', ley:[['var(--txt-1)','Caja acumulada'],['var(--neg)','Por debajo de cero'],['var(--pos)','Por encima de cero']]},
-    us:{t:'Usuarios activos y comercios aliados al cierre de cada mes, con las metas H1 a H4', ley:[['var(--acc-2)','Usuarios activos'],['var(--txt-2)','Comercios aliados'],['var(--txt-1)','Meta']]}
+    pyg:{t:'Ingresos, costos y EBITDA mensuales · M COP', ley:[['var(--acc-2)','Ingresos'],['var(--warn)','Costos'],['var(--pos)','EBITDA positivo'],['var(--neg)','EBITDA negativo']]},
+    ing:{t:'Ingresos mensuales por fuente · M COP', ley:[['var(--ser-1)','Reservas'],['var(--ser-3)','Comercios'],['var(--pos)','SOAT, tecnomecánica e informe'],['var(--warn)','Publicidad'],['var(--txt-1)','Crédito, seguros y clasificados']]},
+    cos:{t:'Costos mensuales por rubro · M COP', ley:[['var(--ser-2)','Equipo'],['var(--ser-4)','Pauta'],['var(--warn)','Variables: pasarela, infraestructura, ICA'],['var(--neg)','Software, comercial, contabilidad, únicos']]},
+    caja:{t:'Caja acumulada · M COP · el mínimo es el capital necesario', ley:[['var(--txt-1)','Caja acumulada'],['var(--neg)','Por debajo de cero'],['var(--pos)','Por encima de cero']]},
+    us:{t:'Usuarios activos y comercios aliados vs. metas H1–H4', ley:[['var(--acc-2)','Usuarios activos'],['var(--pos)','Comercios aliados'],['var(--txt-1)','Meta']]}
   };
   function series(rs){
     var g = function(f){ return rs.map(f); };
@@ -536,7 +588,7 @@
       var bw = (W - ml - mr) / n * 0.6;
       d.eb.forEach(function(v, i){ if (!v) return; var y1 = Y(Math.max(v, 0)), y2 = Y(Math.min(v, 0)); h += '<rect x="' + (X(i) - bw / 2).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(0, y2 - y1).toFixed(1) + '" fill="' + (v > 0 ? 'var(--pos)' : 'var(--neg)') + '" opacity=".75"/>'; });
       h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="var(--txt-3)"/>';
-      h += linea(d.cos, Y, 'var(--txt-2)', 2) + linea(d.ing, Y, 'var(--acc-2)', 2.5);
+      h += linea(d.cos, Y, 'var(--warn)', 2) + linea(d.ing, Y, 'var(--acc-2)', 2.5);
       if (res.equilibrio){ var xe = X(res.equilibrio - 1); h += '<line x1="' + xe + '" x2="' + xe + '" y1="' + mt + '" y2="' + (H - mb) + '" stroke="var(--txt-1)"/><rect x="' + (xe + 4) + '" y="' + (mt + 2) + '" width="150" height="17" fill="var(--sup-1)"/><text x="' + (xe + 7.5) + '" y="' + (mt + 14) + '" fill="var(--txt-1)" ' + TXT + ' font-weight="600" letter-spacing="1.76">EQUILIBRIO · MES ' + res.equilibrio + '</text>'; }
     } else if (vista === 'ing' || vista === 'cos'){
       var ks = vista === 'ing' ? ['i1','i2','i3','i4','i5'] : ['c1','c2','c3','c4'];
@@ -566,7 +618,7 @@
         h += '<rect x="' + (izq ? xm - 250 : xm + 9) + '" y="' + (ym + 9) + '" width="241" height="17" fill="var(--sup-1)"/><text x="' + (izq ? xm - 12 : xm + 12) + '" y="' + (ym + 21) + '" text-anchor="' + (izq ? 'end' : 'start') + '" fill="var(--txt-1)" ' + TXT + ' font-weight="600" letter-spacing="1.2">CAPITAL NECESARIO ' + fmtM(-d.caja[im]).toUpperCase() + ' · MES ' + (im + 1) + '</text>';
       }
     } else if (vista === 'us'){
-      var mid = (H - mt - mb) / 2, paneles = [['act', 'var(--acc-2)', 'act', mt, mt + mid - 15, 'USUARIOS ACTIVOS'], ['com', 'var(--txt-2)', 'com', mt + mid + 15, H - mb, 'COMERCIOS ALIADOS']];
+      var mid = (H - mt - mb) / 2, paneles = [['act', 'var(--acc-2)', 'act', mt, mt + mid - 15, 'USUARIOS ACTIVOS'], ['com', 'var(--pos)', 'com', mt + mid + 15, H - mb, 'COMERCIOS ALIADOS']];
       var ancla = {act:'act', com:'com'};
       paneles.forEach(function(pn, pi){
         var arr = d[pn[0]], metasV = METAS.map(function(m){ return m[pn[2]]; });
@@ -708,19 +760,18 @@
   /* --- semáforo de corte (sección Metas) --- */
   var DOM_C = {cpi:[.5, 4, 1.2, 2.5, true, function(v){ return 'US$' + dec(v, 1); }], activacion:[.2, .8, .40, .65, false, pct0], pctReserva:[0, .2, .03, .08, false, pct0], churn:[.03, .25, .08, .15, true, pct0], pctPagan:[.05, .8, .10, .30, false, pct0]};
   var DESC_C = {
-    cpi:'Se replantea con US$2,5 o más (≈ $ 8.250) · se escala con US$1,2 o menos (≈ $ 3.960)',
-    activacion:'Se replantea con 40 % o menos · se escala con 65 % o más',
-    pctReserva:'Se replantea con 3 % o menos · se escala con 8 % o más',
-    churn:'Se replantea con 15 % o más · se escala con 8 % o menos',
-    pctPagan:'Se replantea con 10 % o menos · se escala con 30 % o más'
+    cpi:'Replantear ≥ US$2,5 (≈ $ 8.250) · escalar ≤ US$1,2 (≈ $ 3.960)',
+    activacion:'Replantear ≤ 40 % · escalar ≥ 65 %',
+    pctReserva:'Replantear ≤ 3 % · escalar ≥ 8 %',
+    churn:'Replantear ≥ 15 % · escalar ≤ 8 %',
+    pctPagan:'Replantear ≤ 10 % · escalar ≥ 30 %'
   };
   function marcas(k, pos){
-    var fila = [[], []];
-    return ['pesimista', 'conservador', 'favorable'].map(function(cs){
-      var x = Math.max(0, Math.min(100, pos(CASOS[cs][k]))), r = fila[0].some(function(o){ return Math.abs(o - x) < 4.5; }) ? 1 : 0;
-      fila[r].push(x);
-      return '<i class="mk" data-c="' + cs + '" style="left:' + x + '%;top:' + (r ? 0 : 17) + 'px">' + cs[0].toUpperCase() + '</i>';
-    }).join('');
+    var xs = ['pesimista', 'conservador', 'favorable'].map(function(cs){ return {c:cs, x:Math.max(0, Math.min(100, pos(CASOS[cs][k])))}; });
+    var et = xs.slice().sort(function(a, b){ return a.x - b.x; }), gap = 4.2;
+    et.forEach(function(o, i){ o.l = o.x; if (i && o.l - et[i - 1].l < gap) o.l = et[i - 1].l + gap; });
+    var exceso = et[et.length - 1].l - 98; if (exceso > 0) et.forEach(function(o){ o.l -= exceso; });
+    return xs.map(function(o){ return '<i class="vas" style="left:' + o.x + '%"></i><i class="mk" title="' + CASOSN[o.c] + '" style="left:' + o.l + '%">' + o.c[0].toUpperCase() + '</i>'; }).join('');
   }
   (function(){
     var h = '';
@@ -729,14 +780,15 @@
       var zonas = d[4] ? '<i class="z-esc" style="width:' + a + '%"></i><i class="z-aju" style="width:' + (b - a) + '%"></i><i class="z-rep" style="flex:1"></i>' : '<i class="z-rep" style="width:' + a + '%"></i><i class="z-aju" style="width:' + (b - a) + '%"></i><i class="z-esc" style="flex:1"></i>';
       h += '<div class="c-fila"><div class="bloque"><h3>' + c.n + '</h3><p class="fuente" style="font-size:16px;color:var(--txt-2)">' + DESC_C[c.k] + '</p></div><div class="pista" data-k="' + c.k + '"><div class="zonas">' + zonas + '</div>' +
         '<span class="umbral" style="left:' + a + '%">' + d[5](d[2]) + '</span><span class="umbral" style="left:' + b + '%">' + d[5](d[3]) + '</span>' +
-        '<i class="mk actual" data-c="actual" style="width:2px;height:60px;top:0"></i>' + marcas(c.k, pos) + '</div></div>';
+        marcas(c.k, pos) + '</div></div>';
     });
     $('corte').innerHTML = h;
   })();
   function pintarCorte(){
-    M.CORTE.forEach(function(c){
-      var d = DOM_C[c.k], v = (par[c.k] - d[0]) / (d[1] - d[0]) * 100, mk = document.querySelector('.pista[data-k="' + c.k + '"] .mk.actual');
-      mk.style.left = Math.max(0, Math.min(100, v)) + '%';
+    var cs = ['pesimista', 'conservador', 'favorable'];
+    METAS.forEach(function(m, i){
+      var cel = document.querySelector('.mm-cum[data-h="' + m.h + '"]');
+      if (cel) cel.innerHTML = cs.map(function(c){ var ok = RES_CASOS[c].metas[i]; return '<span class="cu ' + (ok ? 'si' : 'no') + '" title="' + CASOSN[c] + (ok ? ' cumple' : ' no cumple') + '">' + c[0].toUpperCase() + '</span>'; }).join('');
     });
   }
 
@@ -746,16 +798,16 @@
     var rs = M.correr(par), s = M.resumen(rs), sem = salidas();
     ultimo = {rs:rs, s:s};
     $('chipPers').hidden = !personal;
-    $('casoTxt').textContent = personal ? 'Personalizado a partir del caso ' + CASOSN[caso].toLowerCase() + '. Restablece el caso para volver a sus supuestos.' : CASOTXT[caso];
+    $('casoTxt').textContent = personal ? 'Personalizado sobre el caso ' + CASOSN[caso].toLowerCase() + '.' : CASOTXT[caso];
     var a5 = s.anios[4], cort = rs[59].cortado;
     contar('kIng', a5.ingT, fmtM);
     contar('kEb', a5.ebitda, fmtM, a5.ebitda < 0 ? 'neg' : 'pos');
     var mg = a5.ingT > 0 ? a5.ebitda / a5.ingT : null;
-    $('kEbTxt').textContent = mg === null ? 'sin ingresos en el año 5' : mg < -1 ? 'las pérdidas superan a los ingresos' : 'margen de ' + Math.round(mg * 100).toLocaleString('es-CO') + ' % sobre ingresos';
+    $('kEbTxt').textContent = mg === null ? 'sin ingresos en el año 5' : mg < -1 ? 'margen menor de −100 %' : 'margen ' + Math.round(mg * 100).toLocaleString('es-CO') + ' %';
     contar('kEq', cort ? 'Corte' : s.equilibrio ? s.equilibrio : 'No llega', function(v){ return 'Mes ' + Math.round(v); });
-    $('kEqTxt').textContent = cort ? 'la operación se detiene en el mes 8' : s.equilibrio ? 'año ' + Math.ceil(s.equilibrio / 12) + ' · primer mes con 3 meses seguidos en positivo' : 'en 60 meses no hay 3 meses seguidos en positivo';
+    $('kEqTxt').textContent = cort ? 'operación detenida en el mes 8' : s.equilibrio ? 'año ' + Math.ceil(s.equilibrio / 12) + ' · 3 meses seguidos con EBITDA positivo' : 'sin 3 meses seguidos en positivo';
     contar('kCap', s.capital, fmtM);
-    $('kCapTxt').textContent = 'la caja más baja, en el mes ' + s.mesMin;
+    $('kCapTxt').textContent = 'caja mínima · mes ' + s.mesMin;
     contar('kAct', rs[59].activos, ent);
     contar('kCom', rs[59].aliados, ent);
     $('semaforo').innerHTML = '<span class="etq suave" style="align-self:center">Métricas de corte</span>' + sem.lista.map(function(x){ return '<span class="chip" title="' + x.n + '"><i style="background:' + ZONA[x.e] + '"></i>' + CORTO[x.k] + ' · ' + x.v + '</span>'; }).join('');
@@ -773,7 +825,7 @@
     {k:'claude', n:'Claude', c:'var(--ser-4)'},
     {k:'infra', n:'Software y tiendas', c:'var(--ser-1)'},
     {k:'legal', n:'S.A.S. y marca', c:'var(--n-2)'},
-    {k:'comercios', n:'Salidas a firmar comercios', c:'var(--n-3)'},
+    {k:'comercios', n:'Salidas a firmar comercios', c:'var(--warn)'},
     {k:'pauta', n:'Pauta', c:'var(--ser-2)'},
     {k:'auxilio', n:'Auxilio de ingenieros', c:'var(--n-1)'}
   ];
@@ -805,10 +857,10 @@
     var o = leer(), ms = plan(o), total = ms.reduce(function(a, x){ return a + x.tot; }, 0);
     var t1 = ms.filter(function(x){ return !x.lanz; }).reduce(function(a, x){ return a + x.tot; }, 0);
     $('total').textContent = fmt(total); $('cierreTotal').textContent = fmt(total); $('cierreMeses').textContent = o.d + 4;
-    $('totalTxt').textContent = 'Total del plan: ' + o.d + ' meses de desarrollo + 4 de lanzamiento' + (o.aux > 0 ? ', con auxilio de ' + o.n + ' ingenieros.' : ', sin auxilio de ingenieros.');
+    $('totalTxt').textContent = o.d + ' meses de desarrollo + 4 de lanzamiento' + (o.aux > 0 ? ' · auxilio de ' + o.n + ' ingenieros' : ' · sin auxilio');
     $('t1').textContent = fmt(t1); $('t2').textContent = fmt(total - t1);
-    $('t1Txt').textContent = 'Meses 1 a ' + o.d + ': desarrollo, tiendas, S.A.S., marca y primeras salidas a firmar comercios' + (o.aux > 0 ? ', con auxilio.' : '.');
-    $('t2Txt').textContent = 'Meses ' + (o.d + 1) + ' a ' + (o.d + 4) + ': pauta, software y salidas a firmar comercios' + (o.aux > 0 ? ', con auxilio.' : '.');
+    $('t1Txt').textContent = 'Meses 1–' + o.d + ': desarrollo, tiendas, S.A.S., marca, comercial.';
+    $('t2Txt').textContent = 'Meses ' + (o.d + 1) + '–' + (o.d + 4) + ': pauta, software, comercial.';
     $('leyenda').innerHTML = SERIES.filter(function(s){ return s.k !== 'auxilio' || o.aux > 0; }).map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.n + '</span>'; }).join('') + '<span><i style="background:var(--acc-2);height:2px;vertical-align:3px"></i>Acumulado</span>';
     var W = 640, H = 300, ml = 52, mr = 60, mt = 30, mb = 34;
     var max = Math.max.apply(null, ms.map(function(x){ return x.tot; }));
@@ -863,7 +915,7 @@
     if (o.aux > 0) filas.push(['Auxilio de ingenieros', fmt(o.aux) + ' × ' + o.n + ' × ' + (dev + 4) + ' meses', o.aux * o.n * (dev + 4)]);
     document.querySelector('#desglose tbody').innerHTML = filas.map(function(f){ return '<tr><th>' + f[0] + '</th><td>' + f[1] + '</td><td class="n">' + fmt(f[2]) + '</td></tr>'; }).join('');
     $('desgloseTotal').textContent = fmt(filas.reduce(function(a, f){ return a + f[2]; }, 0));
-    $('desgloseTit').textContent = 'Total del plan por rubro, ' + (dev + 4) + ' meses, en COP';
+    $('desgloseTit').textContent = 'Total por rubro · ' + (dev + 4) + ' meses · COP';
   }
   ['meses3', 'meses4', 'pauta', 'auxilio', 'ing2', 'ing3', 'cloudflare'].forEach(function(id){
     var el = $(id); el.addEventListener('change', function(){ pintarInv(true); });
@@ -900,7 +952,7 @@
 
   /* ================= Navegación activa y progreso ================= */
   var enlaces = [].slice.call(document.querySelectorAll('.barra nav a'));
-  var mapa = {comercios:'modelo', ia:'modelo', funcionamiento:'inversion', ronda:'equipo', fuentes:'equipo'};
+  var mapa = {comercios:'modelo', potencial:'potencial', ia:'modelo', funcionamiento:'inversion', ronda:'equipo', fuentes:'equipo'};
   if ('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){
