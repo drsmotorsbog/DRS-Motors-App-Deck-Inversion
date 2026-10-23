@@ -1,0 +1,2299 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Deck de inversión DRS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="DRS Motors App: parqueadero, lavado, taller y Mi garaje en una sola app, con más servicios por fases. Documento para inversionistas, octubre de 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap">
+<style>
+/* Tokens de marca inyectados desde Marca/drs.tokens.css (invariantes + modo noche). Ningún color se copia a mano. */
+/* -----------------------------------------------------------------------------
+   1 · INVARIANTES  —  no cambian entre modos
+----------------------------------------------------------------------------- */
+:root{
+
+  /* --- Tipografía · brand book §4 ------------------------------------------ */
+  --f-display : 'Bebas Neue', sans-serif;   /* [D] logo, titulares, cifras grandes */
+  --f-label   : 'Montserrat', sans-serif;   /* [D] 600–700, SIEMPRE mayúsculas     */
+  --f-body    : 'Montserrat', sans-serif;   /* [A] 400/500, interlínea 1.6. v2.1 (24/09/2026): Inter RETIRADA por decisión de la marca; el cuerpo usa Montserrat, la familia del sublabel del logo */
+  --f-mono    : 'Montserrat', sans-serif;   /* [d] §1.2: f-label + tabular-nums    */
+  --num       : tabular-nums;               /* [d] regla 17                        */
+
+  /* Tracking. El libro declara TRES valores distintos en §4 y §6; se conservan
+     los tres en vez de promediarlos, porque cada uno tiene un uso escrito.      */
+  --track-eyebrow : .30em;   /* [D] §4 eyebrow 10–12 px                          */
+  --track-label   : .22em;   /* [D] §6 placa de línea — el de uso general        */
+  --track-caption : .16em;   /* [D] §4 caption 10–11 px                          */
+  --track-display : .02em;   /* [D] §4 H1 +2 % (H2 usa .03em como override)      */
+
+  /* --- Escala tipográfica · §1.9.3, en unidades --u ------------------------- */
+  --t-6:6; --t-7_5:7.5; --t-9:9; --t-11:11; --t-13:13; --t-16:16;
+  --t-20:20; --t-26:26; --t-34:34; --t-44:44; --t-56:56; --t-76:76;
+
+  /* --- Escala de espaciado · §1.9.3 ---------------------------------------- */
+  --e-1:1; --e-2:2; --e-4:4; --e-7_5:7.5; --e-15:15; --e-24:24; --e-38:38; --e-60:60;
+
+  /* --- Geometría ------------------------------------------------------------ */
+  /* [d] §1.2: radio 0 si el logotipo es geométrico duro. El wordmark es una
+     grotesca condensada de terminales rectas y el motivo son dos rectas
+     paralelas: no hay una sola curva de esquina en la identidad.               */
+  --radio        : 0;
+  --cap          : butt;    /* [d] §1.8 + regla 19: radio 0 ⇒ butt + miter      */
+  --join         : miter;
+  --trazo-fino   : 1;       /* [d] §1.2, en unidades --u                        */
+  --trazo-medio  : 2;
+  --trazo-grueso : 4;
+
+  /* --- Tratamientos · §1.4, cuarta dimensión del color ---------------------- */
+  /* --trama y --contorno se REDECLARAN dentro de .fr (§1.7): una custom
+     property que contiene var(--u) se resuelve donde se declara, no donde se usa. */
+  --atenuado : .45;
+
+  /* --- Formato y motivo ----------------------------------------------------- */
+  --locale : es-CO;         /* [D] DRS_MAESTRO §1.2: toda la clientela en Colombia
+                                   ⇒ $ 18.400.000 · 4,5 %                       */
+  /* data-motivo="aleron" va como atributo en <html>, no como token.
+     [D] brand book §2: dos líneas paralelas que se separan — la superior Plata
+     y fina, la inferior Azul Acero y más gruesa. Es el flap abriéndose.        */
+  --motivo-sep-min : 3;     /* [d] separación mínima entre las dos líneas, en u */
+
+  /* --- Lienzos · §1.6 y §1.6b ---------------------------------------------- */
+  /* Bases elegidas para que 1 u = 4 px a tamaño nativo en todos los lienzos.   */
+  --base-redes : 270;   /* 1080 px  · 1:1, 4:5, 9:16                            */
+  --base-slide : 480;   /* 1920 px  · 16:9                                      */
+  --base-a4    : 310;   /* 1240 px  · A4 a 150 ppp                              */
+  --base-min   : 320;   /* 1280 px  · miniatura de video                        */
+  --base-og    : 300;   /* 1200 px  · tarjeta de enlace                         */
+  --base-mpu   : 75;    /*  300 px  · banner MPU                                */
+  --base-lb    : 182;   /*  728 px  · leaderboard                               */
+  --base-sky   : 40;    /*  160 px  · rascacielos                               */
+  --base-mov   : 80;    /*  320 px  · banner móvil                              */
+  --base-cab   : 396;   /* 1584 px  · cabecera de perfil                        */
+  --base-tp    : 266;   /* 1063 px  · tarjeta de presentación                   */
+  /* CONFLICTO RESUELTO A FAVOR DEL LIBRO — el sistema trae .fr-tp a 90×54 mm
+     (1063×638). El brand book §7 declara 90×50 mm. Manda el libro:
+     lienzo real 1063 × 591 px a 300 ppp. Registrado, no corregido en silencio. */
+}
+
+
+/* -----------------------------------------------------------------------------
+   2 · MODO NOCHE  —  dominante
+----------------------------------------------------------------------------- */
+:root,
+[data-modo="noche"]{
+
+  /* --- Superficies ---------------------------------------------------------- */
+  --sup-1 : #0A0B0D;  /* [D] Negro Carbón — dominante ≈60 %                     */
+  --sup-2 : #15171B;  /* [D] Grafito — paneles y tarjetas                       */
+  --sup-3 : #1C1F25;  /* [D] --grafito2 del :root del HTML (no está en el .md)  */
+  --linea : #262A31;  /* [D] --linea del :root del HTML · 1,37:1 = estructura   */
+
+  /* --- Texto ---------------------------------------------------------------- */
+  --txt-1   : #E8EAEE;  /* [D] Platino — 16,35:1 sobre sup-1                    */
+  --txt-2   : #C9CDD4;  /* [D] Plata   — 12,34:1                                */
+  --txt-3   : #8A8F98;  /* [D] --humo del :root del HTML.
+                               6,06 / 5,52 / 5,08:1 sobre sup-1/2/3 — pasa en las
+                               tres. Sustituye al #848689 que salía por regla.  */
+  --txt-acc : #E8EAEE;  /* [d] §1.2: de txt-1/sup-1, el que más contrasta sobre
+                               acc-1. Platino da 5,19:1 ⇒ COMPUERTA 3 PASA:
+                               botones y sellos en azul sólido son válidos, no
+                               hay que degradar a contorno.                     */
+
+  /* --- Acentos -------------------------------------------------------------- */
+  --acc-1    : #2A6496;  /* [D] Azul Acero — HSL(208, 56 %, 38 %)               */
+  --acc-2    : #5B93C4;  /* [D] Azul Luz — 6,01:1 sobre sup-1                   */
+  --acc-dato : #2A6496;  /* [d] §1.2: acc-1 alcanza 3,15:1 sobre sup-1          */
+
+  /* !! BLOQUEO 1 — acc-1 sobre sup-1 = 3,15:1.
+        Sirve para relleno de dato y titular ≥24 px. NUNCA para texto de cuerpo:
+        ahí se usa acc-2. El libro ya lo intuía; la medición lo confirma.
+     !! BLOQUEO 2 — acc-1 sobre sup-2 = 2,87:1 y sobre sup-3 = 2,64:1.
+        Falla incluso el umbral gráfico de 3:1. Sobre panel, TODO lo azul pasa a
+        acc-2 (5,48 y 5,03:1). El libro solo lo prohibía «en textos pequeños»;
+        esto amplía la regla a relleno y filete. Ampliación, no corrección.     */
+
+  /* --- Rampa de serie · §1.4, derivada de H=208 S=56 % ---------------------- */
+  /* Rango útil de L: 37–80 (los que dan ≥3:1 sobre sup-1). Cinco pasos a
+     intervalos iguales, numerados por contraste. acc-1 sustituye al paso de L
+     más cercana (ser-5) sin mover los otros cuatro.                            */
+  --ser-1 : #AFCEE9;  /* 12,0:1 — el más lejano de la superficie                */
+  --ser-2 : #84B3DC;  /*  9,0:1                                                 */
+  --ser-3 : #5898D0;  /*  6,5:1                                                 */
+  --ser-4 : #367FBF;  /*  4,6:1                                                 */
+  --ser-5 : #2A6496;  /*  3,2:1 — base de marca. BLOQUEADO sobre sup-2 y sup-3. */
+
+  /* --- Rampa neutra · §1.4 -------------------------------------------------- */
+  /* «Si la marca ya declara grises, se respetan y se ubican donde les toque.»
+     Los cuatro grises del libro caen casi exactos sobre las mezclas 100/78/55/12. */
+  --n-1 : #E8EAEE;  /* [D] Platino · 100 % · 16,35:1                            */
+  --n-2 : #C9CDD4;  /* [D] Plata   ·  ~87 % · 12,34:1                           */
+  --n-3 : #8A8F98;  /* [D] Humo    ·  ~59 % ·  6,06:1                           */
+  --n-4 : #424345;  /* [d] mezcla 25 % · 1,99:1 — ESTRUCTURA, nunca relleno     */
+  --n-5 : #262A31;  /* [D] Línea   ·  ~14 % · 1,37:1 — ESTRUCTURA               */
+
+  /* --- Semánticos ----------------------------------------------------------- */
+  /* [A] CONFLICTO CON EL LIBRO, RESUELTO POR AUTORIZACIÓN EXPRESA DE LA MARCA.
+     El brand book §3 prohíbe «rojos, dorados o degradados multicolor». La marca
+     autorizó rojo, dorado y verde para válido / inválido / pérdida.
+     Derivación: mismo carácter que Azul Acero (S = 56 %), matiz fijado por
+     convención (verde 152°, rojo 358°, dorado 42°) y L caminada hasta pasar
+     4,5:1 sobre sup-3, que es la superficie más exigente del modo.
+     La regla 10 SIGUE VIGENTE: el color nunca va solo. Un dato negativo lleva
+     además glifo, posición respecto al eje o tachado. Estos tres tokens no
+     cuentan para el tope de «dos colores de marca por pieza» (regla 2) porque
+     no son colores de marca: son portadores de significado.                    */
+  --pos  : #2B9966;  /* verde  · 5,49 / 5,00 / 4,60:1 sobre sup-1/2/3           */
+  --neg  : #D36468;  /* rojo   · 5,43 / 4,95 / 4,55:1                           */
+  --warn : #A5822F;  /* dorado · 5,47 / 4,99 / 4,59:1                           */
+}
+
+
+
+/* Concepto: tablero nocturno. Una columna ancha de instrumentos (ranura, órbita, anillo, calendario,
+   ruta, tacómetro) tomados de la skill de video. Cada composición tiene un solo énfasis en Azul Acero;
+   los demás azules son Azul Luz (apoyo) o serie. Radio 0, sin sombras, sin degradados, sin desenfoque.
+   Niveles tipográficos por composición: etiqueta 11 · cuerpo 16 · display 44 (portada y cierre 76). */
+:root{
+  color-scheme: dark;
+  --ancho: 1180px;
+  --texto: 66ch;
+  --fd: var(--f-display), Impact, sans-serif;
+  --fl: var(--f-label), system-ui, sans-serif;
+  --fb: var(--f-body), system-ui, sans-serif;
+  --ease: cubic-bezier(.2,.7,.1,1);
+  --ease-golpe: cubic-bezier(.3,1.35,.5,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--sup-1);color:var(--txt-2);font-family:var(--fb);font-size:16px;line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--acc-2)}
+a:hover{color:var(--txt-1)}
+:focus-visible{outline:2px solid var(--acc-2);outline-offset:2px}
+/* Canal lateral de 16 px: excepción del contrato de página móvil (la escala de espaciado no tiene 16). */
+.envoltura{max-width:var(--ancho);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;flex:none}
+.ico.peq{width:16px;height:16px}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Tipografía ---------- */
+.eyebrow{font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--txt-3);margin:0}
+.etq{font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-label);text-transform:uppercase;color:var(--txt-1);margin:0}
+.etq.suave{color:var(--txt-3)}
+.etq.luz{color:var(--acc-2)}
+h1,h2,h3{font-family:var(--fd);font-weight:400;color:var(--txt-1);margin:0;text-wrap:balance}
+h1{font-size:76px;line-height:.94;letter-spacing:var(--track-display)}
+h2{font-size:44px;line-height:1;letter-spacing:.03em}
+h3{font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-label);text-transform:uppercase;color:var(--txt-1);line-height:1.5}
+p{margin:0;max-width:var(--texto)}
+.lead{font-weight:500;color:var(--txt-2)}
+.fuente{font-family:var(--fb);font-weight:400;font-size:11px;color:var(--txt-3);line-height:1.6}
+.fuente a{color:var(--txt-3)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;padding:2px 7.5px;border:1px solid var(--n-3);color:var(--txt-2);white-space:nowrap}
+.chip.pend{border-color:var(--warn);color:var(--warn)}
+.cifra-d{font-family:var(--fd);font-weight:400;font-size:44px;line-height:1;letter-spacing:.02em;color:var(--txt-1)}
+
+/* ---------- Barra fija ---------- */
+.barra{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--sup-1);border-bottom:1px solid var(--linea)}
+.barra .envoltura{display:flex;align-items:center;gap:24px;min-height:60px}
+.barra .mini{width:112px;height:28px;flex:none;display:block}
+.barra nav{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.barra nav::-webkit-scrollbar{display:none}
+.barra ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;white-space:nowrap}
+.barra nav a{display:block;padding:7.5px 15px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-3);text-decoration:none;border-bottom:2px solid transparent;transition:color .2s}
+.barra nav a:hover{color:var(--txt-1)}
+.barra nav a[aria-current="true"]{color:var(--txt-1);border-bottom-color:var(--acc-2)}
+.progreso{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--acc-2);transform-origin:left center;transform:scaleX(0)}
+
+/* ---------- Secciones ---------- */
+section{padding-block:60px;position:relative}
+.cab{display:grid;gap:15px;margin-bottom:38px}
+.cab p:not(.eyebrow){color:var(--txt-2)}
+.rej{display:grid;gap:24px}
+.rej-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.rej-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.rej-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bloque{display:grid;gap:7.5px;align-content:start;min-width:0}
+.raya{border-top:1px solid var(--linea);padding-top:15px}
+.panel{background:var(--sup-2);border:1px solid var(--linea);padding:24px;min-width:0}
+
+/* El flap: divisor. Plata fina arriba, Azul Acero más gruesa abajo; se abre al entrar en pantalla. */
+.flap{position:relative;height:24px;margin:0}
+.flap::before,.flap::after{content:"";position:absolute;left:0;height:0;width:100%;transform-origin:left center}
+.flap::before{top:7.5px;border-top:2px solid var(--txt-2)}
+.flap::after{top:15px;border-top:3px solid var(--acc-1)}
+.flap.abre::before{animation:abre .9s var(--ease) both}
+.flap.abre::after{animation:abre .9s var(--ease) .12s both}
+@keyframes abre{from{transform:scaleX(.04)}to{transform:scaleX(1)}}
+
+/* Cota: línea que barre un titular al entrar */
+.cota-l{position:absolute;left:0;bottom:-7.5px;height:1px;width:100%;background:var(--txt-2);transform-origin:left center;transform:scaleX(0);pointer-events:none}
+
+/* ---------- Portada ---------- */
+.portada{padding-block:60px 38px}
+.portada .heroe{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:38px;align-items:center}
+.portada .texto{display:grid;gap:24px;min-width:0}
+.portada h1 .linea{display:block;overflow:hidden;padding-bottom:4px}
+.portada h1 .pal{display:inline-block}
+.acciones{display:flex;flex-wrap:wrap;gap:15px}
+.btn{display:inline-flex;align-items:center;gap:7.5px;font-family:var(--fl);font-weight:700;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;text-decoration:none;padding:15px 24px;border:1px solid var(--txt-3);color:var(--txt-1);background:transparent;cursor:pointer;transition:border-color .2s,background-color .2s}
+.btn:hover{border-color:var(--txt-1);color:var(--txt-1);background:var(--sup-2)}
+.btn.prim{border-color:var(--acc-2)}
+.btn .ico{transition:transform .25s var(--ease)}
+.btn:hover .ico{transform:translateX(4px)}
+
+/* Ranura: carrete de servicios con ventana de flap */
+.ranura{position:relative;display:grid;gap:15px;min-width:0}
+.ventana{position:relative;height:228px;overflow:hidden}
+.carrete{position:absolute;left:0;right:0;top:0;will-change:transform}
+.carrete span{display:block;height:76px;line-height:80px;font-family:var(--fd);font-size:76px;letter-spacing:.02em;color:var(--txt-3);white-space:nowrap;overflow:hidden;text-overflow:clip}
+.carrete span.activo{color:var(--txt-1)}
+.ventana::before,.ventana::after{content:"";position:absolute;left:0;right:0;z-index:2;pointer-events:none}
+.ventana::before{top:72px;border-top:2px solid var(--txt-2)}
+.ventana::after{top:154px;border-top:3px solid var(--acc-1)}
+.ventana .velo{position:absolute;left:0;right:0;height:72px;background:var(--sup-1);opacity:.62;z-index:1;pointer-events:none}
+.ventana .velo.arr{top:0}
+.ventana .velo.aba{bottom:0}
+.ranura .pie-r{display:flex;justify-content:space-between;gap:15px;align-items:center}
+.ranura .fase-r{min-width:0}
+
+.cifras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);margin-top:38px}
+.cifra{padding:24px 24px 24px 0;display:grid;gap:7.5px;align-content:start;min-width:0}
+.cifra + .cifra{padding-left:24px;border-left:1px solid var(--linea)}
+.cifra span{color:var(--txt-2)}
+
+/* Odómetro */
+.odo{display:inline-flex;align-items:flex-start;overflow:hidden;line-height:1;vertical-align:top}
+.odo .col{display:inline-block;height:1em;overflow:hidden;position:relative}
+.odo .tira{display:flex;flex-direction:column;will-change:transform}
+.odo .tira i{font-style:normal;height:1em;line-height:1;display:block}
+
+/* ---------- Visión ---------- */
+.mision{display:grid;gap:15px;padding-block:38px;border-top:1px solid var(--linea)}
+.grande{font-family:var(--fd);font-size:44px;line-height:1.04;letter-spacing:.03em;color:var(--txt-1);max-width:26ch}
+.grande em{font-style:normal;color:var(--acc-1)}
+
+/* ---------- Problema (tachado) ---------- */
+.prob{position:relative}
+.prob h3{position:relative;justify-self:start}
+.prob .tacha{position:absolute;left:-4px;right:-4px;top:50%;height:2px;background:var(--txt-2);transform-origin:left center;transform:scaleX(0)}
+.prob.tachado h3{color:var(--txt-3)}
+.prob.tachado .tacha{transform:scaleX(1)}
+.resuelve{margin-top:38px;display:flex;flex-wrap:wrap;align-items:baseline;gap:15px}
+
+/* ---------- Ecosistema (órbita) ---------- */
+.eco{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:38px;align-items:center}
+.orbita{width:100%;max-width:620px;margin-inline:auto;display:block;overflow:visible}
+.orbita .anillo{fill:none;stroke:var(--linea);stroke-width:1}
+.orbita .anillo.v1{stroke:var(--n-3)}
+.orbita .rot-et{font-family:Montserrat, sans-serif;font-weight:600;font-size:11px;letter-spacing:1.76px;fill:var(--txt-3)}
+.orbita .nodo{cursor:pointer}
+.orbita .nodo circle{fill:var(--sup-1);stroke:var(--n-3);stroke-width:1.5;transition:stroke .2s,fill .2s}
+.orbita .nodo:hover circle{stroke:var(--txt-1)}
+.orbita .nodo[aria-pressed="true"] circle{stroke:var(--acc-2);stroke-width:2;fill:var(--sup-2)}
+.orbita .nodo svg,.orbita .nodo text{color:var(--txt-2);fill:none;stroke:currentColor}
+.orbita .nodo text{fill:currentColor;stroke:none;font-family:Montserrat, sans-serif;font-weight:700;font-size:11px;letter-spacing:1px}
+.orbita .nodo[aria-pressed="true"] svg,.orbita .nodo[aria-pressed="true"] text{color:var(--txt-1)}
+.orbita .nodo:focus-visible{outline:none}
+.orbita .nodo:focus-visible circle{stroke:var(--acc-2);stroke-width:3}
+.orbita .barrido{stroke:var(--acc-2);stroke-width:1.5;opacity:.55}
+.orbita .centro{fill:var(--sup-2);stroke:var(--linea)}
+.orbita .centro-t{font-family:'Bebas Neue', Impact, sans-serif;font-size:26px;letter-spacing:.6px;fill:var(--txt-1)}
+.eco-det{display:grid;gap:15px;align-content:start}
+.eco-det .nombre{font-family:var(--fd);font-size:44px;line-height:1;letter-spacing:.03em;color:var(--txt-1)}
+.eco-det dl{display:grid;gap:4px 0;margin:0}
+.eco-det dt{margin-top:7.5px}
+.eco-det dd{margin:0;color:var(--txt-2)}
+.eco-det ul{margin:0;padding-left:15px;display:grid;gap:4px}
+.eco-nav{display:flex;gap:7.5px;margin-top:7.5px}
+.eco-nav button{all:unset;cursor:pointer;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;padding:7.5px 15px;border:1px solid var(--n-3);color:var(--txt-2)}
+.eco-nav button:hover{border-color:var(--txt-1);color:var(--txt-1)}
+.eco-nav button:focus-visible{outline:2px solid var(--acc-2);outline-offset:2px}
+
+/* ---------- Mercado ---------- */
+.mercado{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:38px;align-items:center}
+.anillo-m{position:relative;max-width:360px;width:100%;margin-inline:auto}
+.anillo-m svg{width:100%;height:auto;display:block}
+.anillo-m .medio{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:4px}
+.ley-m{display:grid;gap:7.5px;margin-top:24px}
+.ley-m div{display:grid;grid-template-columns:15px 1fr auto;gap:15px;align-items:center;border-top:1px solid var(--linea);padding-top:7.5px}
+.ley-m i{display:block;width:15px;height:15px}
+.dato{display:grid;gap:7.5px;align-content:start;padding-top:15px;border-top:1px solid var(--linea);min-width:0}
+.dato span{color:var(--txt-2)}
+.dato.clave .cifra-d{color:var(--acc-1)}
+
+/* ---------- Ingresos ---------- */
+.filtros{display:flex;flex-wrap:wrap;gap:7.5px;align-items:center;margin-bottom:15px}
+.filtros .etq{color:var(--txt-3);margin-right:7.5px}
+.filtro{all:unset;box-sizing:border-box;cursor:pointer;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;padding:7.5px 15px;border:1px solid var(--n-3);color:var(--txt-2);transition:border-color .2s,color .2s}
+.filtro:hover{border-color:var(--txt-1);color:var(--txt-1)}
+.filtro[aria-pressed="true"]{border-color:var(--acc-2);color:var(--txt-1);background:var(--sup-2)}
+.filtro:focus-visible{outline:2px solid var(--acc-2);outline-offset:2px}
+.ingresos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--linea);border:1px solid var(--linea);margin-top:24px}
+.ing{background:var(--sup-1);padding:24px;display:grid;gap:7.5px;align-content:start;min-width:0}
+.ing .meta{display:flex;flex-wrap:wrap;gap:7.5px;margin-top:4px}
+.vacio{background:var(--sup-1);padding:24px;color:var(--txt-3);grid-column:1/-1}
+
+/* Calendario de frecuencia */
+.frec{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:38px;margin-top:60px;align-items:start}
+.cal{display:grid;gap:15px;min-width:0}
+.cal-fila{display:grid;grid-template-columns:120px minmax(0,1fr) 44px;gap:15px;align-items:center}
+.cal-dias{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));gap:2px}
+.cal-dias i{display:block;aspect-ratio:1/2.2;max-width:100%;background:var(--sup-3);transition:background-color .25s}
+.cal-dias i.on{background:var(--txt-2)}
+.cal-fila.parq .cal-dias i.on{background:var(--acc-2)}
+.cal-fila b{font-family:var(--fd);font-weight:400;font-size:26px;color:var(--txt-1);text-align:right;line-height:1}
+.cal-eje{display:grid;grid-template-columns:120px minmax(0,1fr) 44px;gap:15px}
+.cal-eje span{display:flex;justify-content:space-between}
+
+/* Horas valle */
+.valle svg{width:100%;height:auto;display:block;overflow:visible}
+.ley{display:flex;flex-wrap:wrap;gap:7.5px 24px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-2)}
+.ley i{display:inline-block;width:11px;height:11px;margin-right:7.5px;vertical-align:-1px}
+
+/* ---------- Hoja de ruta ---------- */
+.ruta-svg{width:100%;height:auto;display:block;overflow:visible;margin-bottom:-4px}
+.ruta-svg .via{fill:none;stroke:var(--n-3);stroke-width:2}
+.ruta-svg .via-base{fill:none;stroke:var(--linea);stroke-width:2;stroke-dasharray:4 6}
+.ruta-svg .parada{fill:var(--sup-1);stroke:var(--n-3);stroke-width:2}
+.ruta-svg .parada.on{stroke:var(--txt-1)}
+.ruta-svg .marcador{fill:var(--acc-2)}
+.fases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--linea)}
+.fase{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:7.5px;align-content:start;padding:24px 15px 24px 0;border-bottom:1px solid var(--linea);position:relative;min-width:0;transition:background-color .2s}
+.fase + .fase{padding-left:15px;border-left:1px solid var(--linea)}
+.fase::before{content:"";position:absolute;left:0;right:0;top:-1px;height:3px;background:var(--acc-2);transform:scaleX(0);transform-origin:left center;transition:transform .35s var(--ease)}
+.fase[aria-pressed="true"]::before{transform:scaleX(1)}
+.fase .vn{font-family:var(--fd);font-size:44px;line-height:1;color:var(--txt-3);transition:color .2s}
+.fase[aria-pressed="true"] .vn{color:var(--txt-1)}
+.fase small{font-size:16px;color:var(--txt-2);line-height:1.5}
+.fase:focus-visible{outline:2px solid var(--acc-2);outline-offset:-2px}
+.fase-det{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:24px;padding-top:24px}
+.lista-serv{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea)}
+.lista-serv li{background:var(--sup-1);padding:15px;display:flex;gap:15px;align-items:flex-start}
+.lista-serv li .ico,.lista-serv li .rot{color:var(--txt-3);margin-top:1px}
+.lista-serv b{color:var(--txt-1);font-weight:500}
+.rot{display:inline-grid;place-items:center;min-width:24px;height:24px;padding-inline:2px;border:2px solid currentColor;font-family:var(--fl);font-weight:700;font-size:9px;letter-spacing:var(--track-caption);flex:none}
+.etapas{margin-top:60px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;position:relative}
+.etapa{display:grid;gap:7.5px;align-content:start;border-top:1px solid var(--linea);padding-top:15px;position:relative;min-width:0}
+.etapa .n{font-family:var(--fd);font-size:44px;line-height:1;color:var(--txt-1)}
+
+/* ---------- Tablas ---------- */
+.tabla-env{overflow-x:auto;border:1px solid var(--linea)}
+table{border-collapse:collapse;width:100%;font-size:16px;min-width:620px}
+th,td{text-align:left;padding:7.5px 15px;border-bottom:1px solid var(--linea);vertical-align:top}
+thead th{font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-3);background:var(--sup-2);padding-block:15px}
+tbody th{font-weight:500;color:var(--txt-1)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tfoot td,tfoot th{font-weight:600;color:var(--txt-1);border-bottom:0;background:var(--sup-2)}
+tr:last-child td,tr:last-child th{border-bottom:0}
+.hito{font-family:var(--fd);font-size:44px;line-height:1;color:var(--txt-1);display:block}
+.barrita{display:block;height:4px;background:var(--n-3);margin-top:7.5px;transform-origin:right center}
+
+/* Semáforo de corte */
+.corte{display:grid;gap:0;border-top:1px solid var(--linea)}
+.c-fila{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:24px;padding-block:15px;border-bottom:1px solid var(--linea);align-items:center}
+.pista{position:relative;height:60px}
+.pista .zonas{position:absolute;left:0;right:0;top:36px;height:4px;display:flex;gap:2px}
+.pista .zonas i{display:block;height:100%}
+.z-rep{background:var(--neg)}
+.z-aju{background:var(--warn)}
+.z-esc{background:var(--pos)}
+.pista .umbral{position:absolute;top:44px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);color:var(--txt-3);transform:translateX(-50%);white-space:nowrap}
+.pista .mk{position:absolute;top:0;width:15px;height:15px;transform:translateX(-50%);display:grid;place-items:center;font-family:var(--fl);font-weight:700;font-size:9px;color:var(--sup-1);background:var(--txt-2);transition:left .5s var(--ease)}
+.pista .mk.actual{background:var(--acc-2);color:var(--sup-1)}
+
+/* ---------- Tablero de proyecciones ---------- */
+.tablero{display:grid;gap:24px}
+.casos{display:flex;flex-wrap:wrap;gap:15px;align-items:center;justify-content:space-between}
+.seg{display:flex;border:1px solid var(--n-3);flex-wrap:wrap}
+.seg button,.seg label{all:unset;box-sizing:border-box;cursor:pointer;position:relative;flex:1}
+.seg button span,.seg label span{display:block;text-align:center;padding:15px 24px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-2);border-bottom:2px solid transparent;transition:background-color .2s,color .2s}
+.seg button + button,.seg label + label{border-left:1px solid var(--n-3)}
+.seg button[aria-pressed="true"] span,.seg input:checked + span{background:var(--sup-3);color:var(--txt-1);border-bottom-color:var(--acc-2)}
+.seg button:focus-visible span,.seg input:focus-visible + span{outline:2px solid var(--acc-2);outline-offset:-2px}
+.seg input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.estado-caso{display:flex;gap:15px;align-items:center;flex-wrap:wrap}
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:var(--linea);border:1px solid var(--linea)}
+.kpi{background:var(--sup-1);padding:15px;display:grid;gap:4px;align-content:start;min-width:0}
+.kpi .cifra-d{white-space:nowrap}
+.kpi .cifra-d.neg{color:var(--neg)}
+.kpi .cifra-d.pos{color:var(--pos)}
+.kpi span:last-child{color:var(--txt-3);font-size:11px;line-height:1.5}
+.tab-cuerpo{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px;align-items:start}
+.palancas{display:grid;gap:15px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 96px);overflow:auto;padding-right:4px;scrollbar-width:thin}
+.grupo{display:grid;gap:15px;padding:15px;border:1px solid var(--linea)}
+.grupo > .etq{color:var(--txt-3)}
+.pal{display:grid;gap:4px}
+.pal .top{display:flex;justify-content:space-between;gap:15px;align-items:baseline}
+.pal label{font-size:11px;font-family:var(--fl);font-weight:600;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-2);line-height:1.4}
+.pal output{font-family:var(--fl);font-weight:700;font-size:11px;letter-spacing:.06em;color:var(--txt-1);white-space:nowrap;font-variant-numeric:tabular-nums}
+.pal output .pt{display:inline-block;width:7.5px;height:7.5px;margin-left:7.5px;vertical-align:1px}
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;margin:0;cursor:pointer}
+input[type="range"]::-webkit-slider-runnable-track{height:2px;background:var(--n-4)}
+input[type="range"]::-moz-range-track{height:2px;background:var(--n-4)}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;margin-top:-6.5px;background:var(--txt-1);border:0;border-radius:0}
+input[type="range"]::-moz-range-thumb{width:15px;height:15px;background:var(--txt-1);border:0;border-radius:0}
+input[type="range"]:focus-visible{outline:2px solid var(--acc-2);outline-offset:2px}
+details.avanz{border:1px solid var(--linea)}
+details.avanz summary{cursor:pointer;padding:15px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-2);list-style:none;display:flex;justify-content:space-between}
+details.avanz summary::-webkit-details-marker{display:none}
+details.avanz summary::after{content:"+";font-weight:700}
+details.avanz[open] summary::after{content:"−"}
+details.avanz .grupo{border:0;border-top:1px solid var(--linea)}
+.check{display:flex;gap:15px;align-items:flex-start;color:var(--txt-2);cursor:pointer;line-height:1.5}
+.check input{-webkit-appearance:none;appearance:none;width:15px;height:15px;border:1px solid var(--n-3);border-radius:0;margin:4px 0 0;flex:none;display:grid;place-items:center;cursor:pointer;background:var(--sup-1)}
+.check input:checked{background:var(--acc-2);border-color:var(--acc-2)}
+.check input:checked::after{content:"";width:7.5px;height:4px;border-left:2px solid var(--sup-1);border-bottom:2px solid var(--sup-1);transform:rotate(-45deg) translate(1px,-1px)}
+.check input:focus-visible{outline:2px solid var(--acc-2);outline-offset:2px}
+.vistas{display:grid;gap:15px;min-width:0}
+.pestanas{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--linea)}
+.pestanas button{all:unset;cursor:pointer;padding:15px;font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
+.pestanas button:hover{color:var(--txt-1)}
+.pestanas button[aria-selected="true"]{color:var(--txt-1);border-bottom-color:var(--acc-2)}
+.pestanas button:focus-visible{outline:2px solid var(--acc-2);outline-offset:-2px}
+.lienzo{position:relative;min-width:0}
+.lienzo svg{width:100%;height:auto;display:block;overflow:visible;touch-action:pan-y}
+.lienzo .lectura{position:absolute;top:0;pointer-events:none;background:var(--sup-2);border:1px solid var(--linea);padding:7.5px 15px;font-size:11px;line-height:1.6;color:var(--txt-2);min-width:180px;display:none;z-index:3}
+.lienzo .lectura b{color:var(--txt-1);font-weight:600}
+.lienzo .lectura .fila{display:flex;justify-content:space-between;gap:15px;font-variant-numeric:tabular-nums}
+.pie-graf{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;align-items:center}
+.semaforo{display:flex;flex-wrap:wrap;gap:7.5px}
+.semaforo .chip{gap:7.5px}
+.semaforo .chip i{display:inline-block;width:7.5px;height:7.5px}
+.pyg td.n,.pyg th.n{min-width:96px}
+.pyg tr.tot th,.pyg tr.tot td{color:var(--txt-1);font-weight:600;border-top:1px solid var(--n-3)}
+.pyg tr.sec th{font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-caption);text-transform:uppercase;color:var(--txt-3);padding-top:24px}
+.pyg tr.sub th{padding-left:24px;font-weight:400;color:var(--txt-2)}
+.pyg .menos{color:var(--neg)}
+.pyg .mas{color:var(--pos)}
+.unidad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+
+/* ---------- Inversión ---------- */
+.inv{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px;align-items:start}
+.controles{display:grid;gap:24px}
+.control{display:grid;gap:7.5px;border:0;margin:0;padding:0;min-width:0}
+.control > label,.control legend{font-family:var(--fl);font-weight:600;font-size:11px;letter-spacing:var(--track-label);text-transform:uppercase;color:var(--txt-3);padding:0}
+select,input[type="number"],input[type="text"]{-webkit-appearance:none;appearance:none;width:100%;background:var(--sup-1);color:var(--txt-1);border:1px solid var(--n-3);border-radius:0;padding:15px;font:500 16px var(--fb);font-variant-numeric:tabular-nums}
+select{background-image:none;cursor:pointer}
+select:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-offset:0}
+.total{display:grid;gap:4px;padding-block:24px;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+.total .cifra-d{color:var(--acc-1)}
+.tramos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.tramo{display:grid;gap:4px;padding-top:15px;border-top:1px solid var(--linea)}
+.grafica{display:grid;gap:15px;min-width:0}
+.grafica svg{width:100%;height:auto;display:block;overflow:visible}
+.tip{min-height:52px;color:var(--txt-2);border-left:2px solid var(--n-3);padding-left:15px}
+
+/* ---------- Riesgos y jurídico ---------- */
+.juridico{border:1px solid var(--linea);border-left:4px solid var(--warn);background:var(--sup-2);padding:24px;display:grid;gap:15px}
+.juridico ul{margin:0;padding-left:15px;display:grid;gap:7.5px}
+.juridico .etq{color:var(--warn)}
+
+/* ---------- Equipo ---------- */
+.persona{display:grid;gap:7.5px;align-content:start;padding-top:15px;border-top:1px solid var(--linea);min-width:0}
+.persona .quien{font-family:var(--fd);font-size:44px;line-height:1;letter-spacing:.03em;color:var(--txt-1)}
+
+/* ---------- Cierre ---------- */
+.cierre{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding-block:60px}
+.cierre .envoltura{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:38px;align-items:center}
+.cierre h2{font-size:76px;line-height:.94;letter-spacing:var(--track-display)}
+.taco{width:100%;max-width:420px;margin-inline:auto;display:block;overflow:visible}
+.taco .led{fill:var(--sup-3)}
+.taco .led.on{fill:var(--txt-2)}
+.taco .led.alta.on{fill:var(--txt-1)}
+.taco .led.tope.on{fill:var(--acc-1)}
+.taco .aguja{stroke:var(--txt-1);stroke-width:3}
+.taco .eje-t{font-family:Montserrat, sans-serif;font-weight:600;font-size:11px;letter-spacing:1.76px;fill:var(--txt-3)}
+.cierre .lado{display:grid;gap:24px;min-width:0}
+.contacto{display:flex;flex-wrap:wrap;gap:15px 24px;color:var(--txt-1)}
+.contacto span{user-select:all}
+.logo-cierre{width:280px;height:100px;display:block;margin-bottom:24px}
+.fuentes ol{margin:0;padding-left:24px;display:grid;gap:4px;font-size:11px;color:var(--txt-3);line-height:1.6}
+.fuentes a{color:var(--txt-3)}
+.pie{padding-block:24px 38px;border-top:1px solid var(--linea)}
+.pie .envoltura{display:flex;flex-wrap:wrap;justify-content:space-between;gap:15px;align-items:center}
+.pie svg{width:120px;height:30px}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1080px){
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tab-cuerpo{grid-template-columns:minmax(0,1fr)}
+  .palancas{position:static;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .palancas details,.palancas .check{grid-column:1/-1}
+  .vistas{order:-1}
+}
+@media (max-width: 960px){
+  .portada .heroe,.eco,.inv,.fase-det,.mercado,.frec,.cierre .envoltura{grid-template-columns:minmax(0,1fr)}
+  .rej-4,.etapas,.unidad{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fases{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fase:nth-child(3){padding-left:0;border-left:0}
+  .ruta-svg{display:none}
+}
+@media (max-width: 720px){
+  h1{font-size:56px}
+  .cierre h2{font-size:56px}
+  .carrete span{font-size:56px;height:56px;line-height:60px}
+  .ventana{height:168px}
+  .ventana::before{top:52px}
+  .ventana::after{top:114px}
+  .ventana .velo{height:52px}
+  section{padding-block:38px}
+  .rej-2,.rej-3,.ingresos,.c-fila{grid-template-columns:minmax(0,1fr)}
+  .cifras{grid-template-columns:minmax(0,1fr)}
+  .cifra,.cifra + .cifra{padding:15px 0;border-left:0}
+  .cifra + .cifra{border-top:1px solid var(--linea)}
+  .palancas{grid-template-columns:minmax(0,1fr)}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cal-fila,.cal-eje{grid-template-columns:76px minmax(0,1fr) 38px;gap:7.5px}
+  .barra .mini{width:90px;height:24px}
+}
+@media (max-width: 480px){
+  .rej-4,.etapas,.fases,.tramos,.unidad{grid-template-columns:minmax(0,1fr)}
+  .fase,.fase + .fase{padding-left:0;border-left:0}
+  .seg button span,.seg label span{padding:15px 7.5px}
+}
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<!-- Copia de Marca/drs.logos.svg y Marca/drs.iconos.svg. logo-h-chico = logo-h-oscuro sin sublabel (regla: se retira bajo 160 px). -->
+<symbol id="logo-h-oscuro" viewBox="0 0 420 150">
+  <text x="210" y="86" text-anchor="middle" font-family="Bebas Neue" font-size="92" letter-spacing="4" fill="#E8EAEE">DRS MOTORS</text>
+  <line x1="30" y1="97" x2="390" y2="97" stroke="#0A0B0D" stroke-width="10"/>
+  <line x1="30" y1="93" x2="390" y2="93" stroke="#C9CDD4" stroke-width="1.5"/>
+  <line x1="30" y1="101" x2="390" y2="101" stroke="#2A6496" stroke-width="2.5"/>
+  <text x="210" y="132" text-anchor="middle" font-family="Montserrat" font-weight="600" font-size="12" letter-spacing="7" fill="#8A8F98">BOGOTÁ · COLOMBIA</text>
+</symbol>
+<symbol id="logo-h-chico" viewBox="20 14 380 96">
+  <text x="210" y="86" text-anchor="middle" font-family="Bebas Neue" font-size="92" letter-spacing="4" fill="#E8EAEE">DRS MOTORS</text>
+  <line x1="30" y1="97" x2="390" y2="97" stroke="#0A0B0D" stroke-width="10"/>
+  <line x1="30" y1="93" x2="390" y2="93" stroke="#C9CDD4" stroke-width="1.5"/>
+  <line x1="30" y1="101" x2="390" y2="101" stroke="#2A6496" stroke-width="2.5"/>
+</symbol>
+<symbol id="ico-ubicacion" viewBox="0 0 24 24"><!-- [S] hueco como subtrazo -->
+  <path d="M12 22L5.5 12.5A7 7 0 1 1 18.5 12.5ZM15 9.5a3 3 0 1 0-6 0 3 3 0 1 0 6 0z"/>
+</symbol>
+<symbol id="ico-detailing" viewBox="0 0 24 24"><!-- gota: cerámico, pulido, PPF -->
+  <path d="M12 21a6 6 0 0 1-6-6c0-4 6-12 6-12s6 8 6 12a6 6 0 0 1-6 6z"/>
+  <path d="M3 4l2 2M21 4l-2 2"/>
+</symbol>
+<symbol id="ico-taller" viewBox="0 0 24 24">
+  <path d="M3 21l10-10a5 5 0 0 1 6.6-6.6L16.5 7.5l2 2 3.1-3.1A5 5 0 0 1 15 13L5 23z"/>
+</symbol>
+<symbol id="ico-alerta" viewBox="0 0 24 24"><!-- [S] -->
+  <path d="M12 2L22 21H2z"/>
+  <path d="M12 9v6"/>
+  <circle cx="12" cy="18" r="1" fill="currentColor" stroke="none"/>
+</symbol>
+<symbol id="ico-consignacion" viewBox="0 0 24 24"><!-- llave dentro del expediente -->
+  <path d="M3 2h11l5 5v15H3z"/>
+  <path d="M14 2v5h5"/>
+  <path d="M10 14a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM10 14h7v2.5M14 14v2"/>
+</symbol>
+<symbol id="ico-traspaso" viewBox="0 0 24 24"><!-- placa + cambio de titular -->
+  <path d="M5 4h13M15 1l3 3-3 3M19 11H6M9 8l-3 3 3 3"/>
+  <path d="M2 16h20v6H2z"/>
+</symbol>
+<symbol id="ico-certificado" viewBox="0 0 24 24"><!-- SOAT y tecnomecánica -->
+  <path d="M4 2h11l5 5v9H4z"/>
+  <path d="M15 2v5h5M8 10h8"/>
+  <path d="M16 16.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM11 19l-1 4 3-1.5L16 23l-1-4"/>
+</symbol>
+<symbol id="ico-runt" viewBox="0 0 24 24"><!-- ficha de registro oficial -->
+  <path d="M2 4h20v16H2z"/>
+  <path d="M2 9h20M6 13h9M6 17h5"/>
+  <circle cx="18" cy="16" r="2.5"/>
+</symbol>
+<symbol id="ico-precio" viewBox="0 0 24 24"><!-- [S] hueco como subtrazo -->
+  <path d="M3 3h9l9 9-9 9-9-9zM8.5 7.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3z"/>
+</symbol>
+<symbol id="ico-carrito" viewBox="0 0 24 24">
+  <path d="M2 3h3l3 12h11l3-9H6"/>
+  <circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+  <circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none"/>
+</symbol>
+<symbol id="ico-verificado" viewBox="0 0 24 24"><!-- [S] -->
+  <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+  <path d="M7.5 12l3 3 6-6"/>
+</symbol>
+<symbol id="ico-pago" viewBox="0 0 24 24"><!-- [S] -->
+  <path d="M2 5h20v14H2z"/>
+  <path d="M2 10h20M6 15h4"/>
+</symbol>
+<symbol id="ico-flecha" viewBox="0 0 24 24">
+  <path d="M3 12h18M13 4l8 8-8 8"/>
+</symbol>
+<symbol id="ico-enlace-externo" viewBox="0 0 24 24">
+  <path d="M14 3h7v7M21 3L11 13M19 13v8H3V5h8"/>
+</symbol>
+<symbol id="ico-horario" viewBox="0 0 24 24"><!-- [S] -->
+  <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
+  <path d="M12 6v6h5"/>
+</symbol>
+<symbol id="ico-documento" viewBox="0 0 24 24"><!-- [S] -->
+  <path d="M5 2h9l5 5v15H5z"/>
+  <path d="M14 2v5h5M8 12h8M8 16h5"/>
+</symbol>
+<symbol id="ico-buscar" viewBox="0 0 24 24">
+  <path d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0zM14.95 14.95L21 21"/>
+</symbol>
+<symbol id="ico-chat" viewBox="0 0 24 24">
+  <path d="M8 3h14v10h-4l-4 3v-3H8z"/>
+  <path d="M2 8h4M2 12h4M2 16h9l4 3v-3h1"/>
+</symbol>
+</svg>
+
+<header class="barra">
+  <div class="envoltura">
+    <a href="#inicio" aria-label="DRS Motors, ir al inicio"><svg class="mini" aria-hidden="true"><use href="#logo-h-chico"/></svg></a>
+    <nav aria-label="Secciones">
+      <ul>
+        <li><a href="#vision">Visión</a></li>
+        <li><a href="#producto">Producto</a></li>
+        <li><a href="#mercado">Mercado</a></li>
+        <li><a href="#modelo">Modelo</a></li>
+        <li><a href="#ruta">Hoja de ruta</a></li>
+        <li><a href="#metas">Metas</a></li>
+        <li><a href="#proyecciones">Proyecciones</a></li>
+        <li><a href="#inversion">Inversión</a></li>
+        <li><a href="#riesgos">Riesgos</a></li>
+        <li><a href="#equipo">Equipo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <i class="progreso" id="progreso" aria-hidden="true"></i>
+</header>
+
+<main>
+
+<!-- ================= PORTADA ================= -->
+<section class="portada" id="inicio">
+  <div class="envoltura heroe">
+    <div class="texto">
+      <p class="eyebrow">DRS Motors App · Documento para inversionistas · Octubre de 2026</p>
+      <h1 id="titular"><span class="linea">Todo lo de tu carro</span><span class="linea">o tu moto,</span><span class="linea">en una sola app.</span></h1>
+      <p class="lead">Empieza por lo que se usa cada semana: parqueadero, lavado y taller con pago en la app, y Mi garaje para tener al día el SOAT, la tecnomecánica y las multas. La financiación, los seguros y la compraventa entre personas llegan a medida que se firman los aliados. Se construye y se opera con inteligencia artificial para gastar poco.</p>
+      <div class="acciones">
+        <a class="btn prim" href="#proyecciones">Ver las proyecciones <svg class="ico peq" aria-hidden="true"><use href="#ico-flecha"/></svg></a>
+        <a class="btn" href="https://drsmotorsbog.github.io/DRS-Motors-App-Demo_1-/" target="_blank" rel="noopener">Abrir la demo <svg class="ico peq" aria-hidden="true"><use href="#ico-enlace-externo"/></svg></a>
+      </div>
+    </div>
+    <div class="ranura" aria-label="Servicios de la app">
+      <p class="eyebrow">En la app</p>
+      <div class="ventana" aria-hidden="true">
+        <div class="carrete" id="carrete"></div>
+        <i class="velo arr"></i><i class="velo aba"></i>
+      </div>
+      <div class="pie-r">
+        <p class="etq luz fase-r" id="ranuraFase" aria-live="polite">V1 · al lanzar</p>
+        <p class="etq suave num" id="ranuraN">01 / 15</p>
+      </div>
+    </div>
+  </div>
+  <div class="envoltura">
+    <div class="cifras">
+      <div class="cifra"><b class="cifra-d num" data-odo>21,3 M</b><span>vehículos activos en el RUNT al cierre de 2025. El mercado son sus dueños.</span></div>
+      <div class="cifra"><b class="cifra-d num" data-odo>$ 22,7 M</b><span>para construir la app y lanzarla en Bogotá en 8 meses, sin auxilio de ingenieros.</span></div>
+      <div class="cifra"><b class="cifra-d num" data-odo>15</b><span>comercios aliados firmados el día del lanzamiento: la primera meta, H0.</span></div>
+    </div>
+    <p class="fuente" style="margin-top:15px">Fuentes: RUNT vía El Colombiano (parque automotor 2025) · presupuesto de la DRS Motors App, octubre de 2026. Cifras en pesos colombianos; US$1 = $ 3.300.</p>
+  </div>
+</section>
+
+<!-- ================= VISIÓN ================= -->
+<section id="vision">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Visión y misión</p>
+      <h2 data-cota>Una app para todo lo que implica tener vehículo</h2>
+    </div>
+    <div class="mision">
+      <p class="eyebrow">Visión de largo plazo</p>
+      <p class="grande" data-sube>Que cada persona con carro o moto en Colombia tenga la app de DRS y sepa que <em>todo servicio automotriz que necesite está ahí.</em></p>
+    </div>
+    <div class="rej rej-2">
+      <div class="bloque raya" data-sube><h3>Misión</h3><p>Darle al dueño del vehículo un solo lugar para reservar, pagar, mantener al día, comprar, financiar y vender, con precios a la vista y procesos claros. Y darle a cada comercio del sector un canal digital que le llene las horas vacías.</p></div>
+      <div class="bloque raya" data-sube><h3>Ambición</h3><p>La ambición es construir desde Bogotá una compañía de escala unicornio. Es una meta de largo plazo, no una proyección: este documento solo pide lo de los primeros 8 meses. El camino va por etapas: los servicios de uso frecuente en una ciudad, después los servicios financieros y los clasificados, y después el resto del país y la región.</p></div>
+    </div>
+    <div class="rej rej-4" style="margin-top:38px">
+      <div class="bloque" data-sube><h3>Transparencia</h3><p>Precio final antes de reservar, sin letra pequeña, como en la operación de DRS.</p></div>
+      <div class="bloque" data-sube><h3>Curaduría</h3><p>Cada comercio aliado entra revisado: estar en la app significa que alguien de DRS ya lo miró.</p></div>
+      <div class="bloque" data-sube><h3>Comunidad</h3><p>La app nace de una marca que ya convoca en redes.</p></div>
+      <div class="bloque" data-sube><h3>IA en el centro</h3><p>Se construye y se opera con inteligencia artificial: equipo pequeño, costos bajos, mejoras rápidas.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= PROBLEMA Y PRODUCTO ================= -->
+<section id="producto">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">El problema</p>
+      <h2 data-cota>Tener vehículo en Bogotá es una cadena de vueltas sueltas</h2>
+    </div>
+    <div class="rej rej-4" id="problemas">
+      <div class="bloque raya prob"><h3>Un canal distinto para cada vuelta<i class="tacha"></i></h3><p>Parquear, lavar, ir al taller o comprar el SOAT se resuelve en lugares distintos, o por WhatsApp y llamadas.</p></div>
+      <div class="bloque raya prob"><h3>Fechas que se olvidan<i class="tacha"></i></h3><p>SOAT, tecnomecánica, pico y placa, multas, cambio de aceite. Cuando se olvidan, cuestan.</p></div>
+      <div class="bloque raya prob"><h3>Comercios sin canal digital<i class="tacha"></i></h3><p>Parqueaderos, lavaderos y talleres de barrio tienen horas vacías y ninguna forma de llenarlas.</p></div>
+      <div class="bloque raya prob"><h3>Comprar un usado da miedo<i class="tacha"></i></h3><p>Traspaso, plata y papeles: el riesgo de quedar con un problema hace que la gente no compre, o compre mal.</p></div>
+    </div>
+    <div class="resuelve"><p class="grande" id="resuelve">La DRS Motors App las junta en un solo lugar.</p></div>
+
+    <div class="cab" style="margin-top:60px">
+      <p class="eyebrow">La solución · el ecosistema</p>
+      <h2 data-cota>Toca un servicio para ver cómo funciona</h2>
+      <p>Cada anillo es una fase. El anillo interior es lo que se lanza primero; los de afuera entran cuando se cumple su condición.</p>
+    </div>
+    <div class="eco">
+      <svg class="orbita" id="orbita" viewBox="-20 -20 640 640" role="group" aria-label="Servicios de la app por fase"></svg>
+      <div class="panel eco-det" id="ecoDet" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= MERCADO ================= -->
+<section id="mercado">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Mercado</p>
+      <h2 data-cota>El cliente es el dueño del vehículo, y son millones</h2>
+      <p>Cada vehículo genera gasto todos los meses en parqueo, lavado y mantenimiento, y todos los años en SOAT y tecnomecánica. La app se queda con la relación con el dueño, y cada servicio la refuerza.</p>
+    </div>
+    <div class="mercado">
+      <div>
+        <div class="anillo-m">
+          <svg viewBox="0 0 200 200" id="anilloM" role="img" aria-label="Parque automotor de Colombia al cierre de 2025: 63 % motos, 36 % carros, camionetas y demás, 1 % maquinaria y remolques"></svg>
+          <div class="medio"><b class="cifra-d num" data-odo>21,3 M</b><span class="etq suave">vehículos activos</span></div>
+        </div>
+        <div class="ley-m">
+          <div><i style="background:var(--ser-2)"></i><span>Motos</span><b class="num">13,5 M · 63 %</b></div>
+          <div><i style="background:var(--ser-4)"></i><span>Carros, camionetas y demás</span><b class="num">7,6 M · 36 %</b></div>
+          <div><i style="background:var(--n-3)"></i><span>Maquinaria y remolques</span><b class="num">0,2 M · 1 %</b></div>
+        </div>
+      </div>
+      <div class="rej rej-2">
+        <div class="dato clave" data-sube><b class="cifra-d num" data-odo>2,6 M</b><span>vehículos en el Registro Distrital Automotor de Bogotá en 2024, 400.000 más que en 2016.</span></div>
+        <div class="dato" data-sube><b class="cifra-d num" data-odo>80 %</b><span>de los registrados en Bogotá son carros, camperos y camionetas; las motos son el 18 %. En la ciudad la proporción nacional se invierte.</span></div>
+        <div class="dato" data-sube><b class="cifra-d num">≈ 30 %</b><span>de los vehículos que circulan habitualmente en Bogotá están matriculados fuera de la ciudad (estimación de la Secretaría Distrital de Movilidad).</span></div>
+        <div class="dato" data-sube><b class="cifra-d num" data-odo>70.947</b><span>vehículos nuevos matriculados en Bogotá entre enero y septiembre de 2026, un 88,4 % más que en el mismo periodo de 2025.</span></div>
+      </div>
+    </div>
+    <p class="fuente" style="margin-top:24px">Fuentes: RUNT, cierre de 2025, vía El Colombiano · Secretaría Distrital de Hacienda, Notas de Hacienda Distrital (diciembre de 2025) · Fenalco y Andi, vía Minuto60.</p>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= MODELO DE NEGOCIO ================= -->
+<section id="modelo">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Modelo de negocio</p>
+      <h2 data-cota>El usuario paga en la app; el comercio paga por estar y por vender</h2>
+      <p>Cada comercio aliado paga una mensualidad por aparecer en la app y una comisión por cada reserva. Sobre esa base se suman, por fases, los servicios financieros, la publicidad y los clasificados. Los precios y porcentajes se definen con los primeros comercios.</p>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar fuentes de ingreso por quién paga">
+      <span class="etq">Quién paga</span>
+      <button class="filtro" data-f="pagador" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="filtro" data-f="pagador" data-v="comercio" aria-pressed="false">Comercios</button>
+      <button class="filtro" data-f="pagador" data-v="usuario" aria-pressed="false">Usuarios</button>
+      <button class="filtro" data-f="pagador" data-v="financiero" aria-pressed="false">Bancos y aseguradoras</button>
+      <button class="filtro" data-f="pagador" data-v="marcas" aria-pressed="false">Marcas y concesionarios</button>
+      <button class="filtro" data-f="pagador" data-v="vendedor" aria-pressed="false">Vendedores</button>
+    </div>
+    <div class="filtros" role="group" aria-label="Filtrar fuentes de ingreso por fase">
+      <span class="etq">Fase</span>
+      <button class="filtro" data-f="fase" data-v="todas" aria-pressed="true">Todas</button>
+      <button class="filtro" data-f="fase" data-v="V1" aria-pressed="false">V1 · Lanzamiento</button>
+      <button class="filtro" data-f="fase" data-v="V2" aria-pressed="false">V2 · Retención</button>
+      <button class="filtro" data-f="fase" data-v="V3" aria-pressed="false">V3 · Financiero</button>
+      <button class="filtro" data-f="fase" data-v="V4" aria-pressed="false">V4 · Plataforma</button>
+    </div>
+    <div class="ingresos" id="ingresos" aria-live="polite"></div>
+    <p class="fuente" style="margin-top:15px" id="conteo"></p>
+
+    <div class="frec">
+      <div class="bloque">
+        <p class="eyebrow">Por qué empezamos por el parqueadero</p>
+        <p class="grande" style="max-width:none">El servicio que se usa día de por medio</p>
+        <p>Quien parquea día de por medio abre la app unas 15 veces al mes. Lavado y taller se piden pocas veces al año, según la operación de los fundadores. Esa frecuencia mantiene vivos los demás servicios: cada vez que el usuario parquea, la app le recuerda el SOAT, el lavado o el cambio de aceite.</p>
+      </div>
+      <div class="cal" id="cal" role="img" aria-label="Un mes de un usuario frecuente: 15 parqueos, 1 lavado, ninguna visita al taller">
+        <p class="etq suave">Un mes de un usuario frecuente (supuesto)</p>
+        <div class="cal-fila parq"><span class="etq">Parqueadero</span><div class="cal-dias" data-dias="parq"></div><b class="num">15</b></div>
+        <div class="cal-fila"><span class="etq">Lavado</span><div class="cal-dias" data-dias="lav"></div><b class="num">1</b></div>
+        <div class="cal-fila"><span class="etq">Taller</span><div class="cal-dias" data-dias="tal"></div><b class="num">0</b></div>
+        <div class="cal-eje"><span></span><span class="fuente"><span>Día 1</span><span>Día 15</span><span>Día 30</span></span><span></span></div>
+      </div>
+    </div>
+
+    <div class="frec">
+      <div class="panel bloque">
+        <p class="etq luz">Horas valle</p>
+        <h3>Promociones donde el comercio tiene cupos vacíos</h3>
+        <p>El parqueadero, el lavadero o el taller programa descuentos en sus franjas flojas, por ejemplo de 10 a. m. a 3 p. m. La app se los muestra a los usuarios cercanos. El comercio llena capacidad que hoy pierde y el usuario paga menos.</p>
+      </div>
+      <div class="valle bloque">
+        <p class="etq suave">Ocupación ilustrativa de un parqueadero en un día hábil</p>
+        <svg id="valle" viewBox="0 0 640 230" role="img" aria-label="Ocupación por hora de 6 a. m. a 9 p. m.: picos en la mañana y la tarde, valle entre 10 a. m. y 3 p. m. que se llena con promociones"></svg>
+        <div class="ley"><span><i style="background:var(--n-3)"></i>Ocupación sin la app</span><span><i style="background:var(--acc-2)"></i>Cupos que llenan las promociones</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= COMERCIOS E IA ================= -->
+<section id="comercios">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Comercios aliados</p>
+      <h2 data-cota>Lo que gana un parqueadero, un lavadero o un taller</h2>
+    </div>
+    <div class="rej rej-4">
+      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-horario"/></svg><h3>Horas llenas</h3><p>Promociones en horas valle que llegan a usuarios cercanos, incluidas en la mensualidad.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-pago"/></svg><h3>Pago asegurado</h3><p>El cliente paga en la app al reservar. Menos citas perdidas.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-documento"/></svg><h3>Panel de gestión</h3><p>Agenda, reservas, servicios, promociones, reseñas y pagos en un panel web.</p></div>
+      <div class="bloque raya" data-sube><svg class="ico" aria-hidden="true"><use href="#ico-buscar"/></svg><h3>Clientes nuevos</h3><p>Visibilidad ante una comunidad automotriz que hoy no lo conoce.</p></div>
+    </div>
+    <div class="panel" style="margin-top:38px;display:grid;gap:7.5px">
+      <p class="etq luz">Cómo se cobra al comercio</p>
+      <p><b style="color:var(--txt-1);font-weight:600">Mensualidad por aparecer + comisión por reserva.</b> Para arrancar, los primeros 30 comercios tienen dos meses sin mensualidad; la comisión sí se cobra desde el primer día. Al comienzo nadie paga por estar en una app sin usuarios. Cuando la app le manda clientes al comercio, el comercio sí paga.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ia">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Construida y operada con IA</p>
+      <h2 data-cota>Un equipo pequeño que trabaja como uno grande</h2>
+      <p>Los ingenieros fundadores desarrollan con Claude Code. Eso cambia la estructura de costos: construir y lanzar cuesta $ 22,7 M, y desde el mes 9 el software de toda la operación cuesta cerca de $ 451.000 al mes. La IA también entra al producto, en este orden:</p>
+    </div>
+    <div class="tabla-env">
+      <table>
+        <thead><tr><th>Dónde entra la IA</th><th>Qué hace</th><th>Fase</th></tr></thead>
+        <tbody>
+          <tr><th>Desarrollo</th><td>Escribe, prueba y corrige código con el equipo fundador. Menos personas, más velocidad.</td><td>Desde el día 1</td></tr>
+          <tr><th>Registro del vehículo</th><td>Lee la tarjeta de propiedad, el SOAT y la tecnomecánica a partir de una foto y llena Mi garaje.</td><td>V2</td></tr>
+          <tr><th>Horas valle</th><td>Le sugiere a cada comercio cuándo y cuánto descontar según la demanda de su zona.</td><td>V2</td></tr>
+          <tr><th>Asistente de trámites</th><td>Responde a cualquier hora qué papeles se necesitan y cuánto cuesta un trámite en Bogotá.</td><td>V2</td></tr>
+          <tr><th>Soporte</th><td>Atiende el primer nivel de usuarios y comercios, y escala a una persona solo lo necesario.</td><td>V2 en adelante</td></tr>
+          <tr><th>Clasificados</th><td>Revisa publicaciones, detecta fraudes y estima el precio de mercado de un vehículo.</td><td>V4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= HOJA DE RUTA ================= -->
+<section id="ruta">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Hoja de ruta</p>
+      <h2 data-cota>Se lanza con lo básico y cada servicio entra cuando se cumple su condición</h2>
+      <p>Lanzar con pocas funciones acorta el desarrollo y concentra la pauta. Los servicios financieros y los clasificados abiertos entran cuando se firman los aliados y hay usuarios suficientes. Las metas dicen cuándo esperamos llegar; si la condición no se cumple, el servicio espera.</p>
+    </div>
+    <svg class="ruta-svg" id="rutaSvg" viewBox="0 0 1000 110" aria-hidden="true"></svg>
+    <div class="fases" role="group" aria-label="Fases de la app" id="fases"></div>
+    <div class="fase-det" id="faseDet" aria-live="polite"></div>
+    <div class="etapas">
+      <div class="etapa" data-sube><span class="n">1</span><h3>Bogotá</h3><p>Servicios de uso frecuente y comercios aliados en la ciudad.</p></div>
+      <div class="etapa" data-sube><span class="n">2</span><h3>Servicios financieros y clasificados</h3><p>Crédito, seguros, publicidad, clasificados y repuestos sobre una base de usuarios activa.</p></div>
+      <div class="etapa" data-sube><span class="n">3</span><h3>Colombia</h3><p>Las principales ciudades del país, con el mismo modelo de comercios aliados.</p></div>
+      <div class="etapa" data-sube><span class="n">4</span><h3>La región</h3><p>Llevar la plataforma a otros mercados de América Latina.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= METAS ================= -->
+<section id="metas">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Metas</p>
+      <h2 data-cota>Metas de usuarios, comercios y servicios que se pueden verificar</h2>
+      <p>Se miden desde el lanzamiento. Esta ronda cubre hasta H1, los 4 meses de lanzamiento. De H2 en adelante, las metas suponen que el lanzamiento pasó las métricas de corte y que la pauta se sostiene con ingresos o con una nueva ronda. En el tablero de proyecciones, el caso favorable las cumple todas, el conservador cumple H1 y H2 y llega a los activos y comercios de H3, y el pesimista no las alcanza.</p>
+    </div>
+    <div class="tabla-env">
+      <table id="tablaMetas">
+        <thead><tr><th>Hito</th><th class="n">Registrados</th><th class="n">Activos al mes</th><th class="n">Comercios aliados</th><th>Servicios lanzados, si se cumple la condición</th></tr></thead>
+        <tbody>
+          <tr><th><span class="hito">H0</span>Lanzamiento · mes 5 del plan</th><td class="n">—</td><td class="n">—</td><td class="n"><span class="num">15</span><span class="barrita" style="width:5%;margin-left:auto"></span></td><td>V1 completa. 15 comercios firmados: 6 parqueaderos, 6 lavaderos y 3 talleres, en 1 o 2 zonas.</td></tr>
+          <tr><th><span class="hito">H1</span>Mes 3 en el mercado · mes 7 del plan</th><td class="n"><span class="num">1.000</span><span class="barrita" style="width:5%;margin-left:auto"></span></td><td class="n"><span class="num">400</span><span class="barrita" style="width:6.7%;margin-left:auto"></span></td><td class="n"><span class="num">30</span><span class="barrita" style="width:10%;margin-left:auto"></span></td><td>Solo V1. Se miden las métricas de corte.</td></tr>
+          <tr><th><span class="hito">H2</span>Mes 6 en el mercado · mes 10 del plan</th><td class="n"><span class="num">2.500</span><span class="barrita" style="width:12.5%;margin-left:auto"></span></td><td class="n"><span class="num">900</span><span class="barrita" style="width:15%;margin-left:auto"></span></td><td class="n"><span class="num">50</span><span class="barrita" style="width:16.7%;margin-left:auto"></span></td><td>Puntos y fidelización, renovación de SOAT y tecnomecánica, informe vehicular.</td></tr>
+          <tr><th><span class="hito">H3</span>Mes 12 en el mercado · mes 16 del plan</th><td class="n"><span class="num">6.000</span><span class="barrita" style="width:30%;margin-left:auto"></span></td><td class="n"><span class="num">2.000</span><span class="barrita" style="width:33.3%;margin-left:auto"></span></td><td class="n"><span class="num">100</span><span class="barrita" style="width:33.3%;margin-left:auto"></span></td><td>Primer banco o aseguradora: crédito o todo riesgo. Pantalla de entrada patrocinada.</td></tr>
+          <tr><th><span class="hito">H4</span>Mes 24 en el mercado · mes 28 del plan</th><td class="n"><span class="num">20.000</span><span class="barrita" style="width:100%;margin-left:auto"></span></td><td class="n"><span class="num">6.000</span><span class="barrita" style="width:100%;margin-left:auto"></span></td><td class="n"><span class="num">300</span><span class="barrita" style="width:100%;margin-left:auto"></span></td><td>Clasificados abiertos, tienda de repuestos, compraventa protegida, segunda ciudad.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cab" style="margin-top:60px">
+      <p class="eyebrow">Métricas de corte</p>
+      <h2 data-cota>Al final del lanzamiento se decide con datos reales</h2>
+      <p>Los 4 meses de lanzamiento son un experimento. Al cierre del mes 8 del plan, estas cinco métricas dicen si se escala, se ajusta o se replantea. Los cuadros marcan dónde queda cada caso del tablero: P pesimista, C conservador, F favorable. El cuadro azul sigue lo que muevas en el tablero.</p>
+    </div>
+    <div class="corte" id="corte"></div>
+    <div class="ley" style="margin-top:15px"><span><i class="z-rep"></i>Se replantea</span><span><i class="z-aju"></i>Se ajusta</span><span><i class="z-esc"></i>Se escala</span></div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= PROYECCIONES ================= -->
+<section id="proyecciones">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Proyecciones a 5 años · tablero</p>
+      <h2 data-cota>Mueve los supuestos y mira qué pasa con el negocio</h2>
+      <p>Tres casos armados con supuestos explícitos. El pesimista es el punto de partida. Cualquier palanca se puede mover, y los ingresos, los costos, el estado de resultados y la caja se recalculan mes a mes desde el primer mes de desarrollo. Son proyecciones ilustrativas con supuestos de los fundadores, no una promesa de resultados.</p>
+    </div>
+    <div class="tablero">
+      <div class="casos">
+        <div class="seg" role="group" aria-label="Caso" id="casos">
+          <button type="button" data-caso="pesimista" aria-pressed="true"><span>Pesimista</span></button>
+          <button type="button" data-caso="conservador" aria-pressed="false"><span>Conservador</span></button>
+          <button type="button" data-caso="favorable" aria-pressed="false"><span>Favorable</span></button>
+        </div>
+        <div class="estado-caso">
+          <span class="chip pend" id="chipPers" hidden>Personalizado</span>
+          <label class="check" for="corteOn"><input type="checkbox" id="corteOn"> Aplicar las métricas de corte</label>
+          <button type="button" class="btn" id="restablecer">Restablecer el caso</button>
+        </div>
+      </div>
+      <p class="fuente" id="casoTxt"></p>
+
+      <div class="kpis" id="kpis">
+        <div class="kpi"><span class="etq suave">Ingresos año 5</span><b class="cifra-d num" id="kIng">—</b><span>en los meses 49 a 60</span></div>
+        <div class="kpi"><span class="etq suave">EBITDA año 5</span><b class="cifra-d num" id="kEb">—</b><span id="kEbTxt">margen</span></div>
+        <div class="kpi"><span class="etq suave">Equilibrio</span><b class="cifra-d num" id="kEq">—</b><span id="kEqTxt">primer mes con 3 meses seguidos en positivo</span></div>
+        <div class="kpi"><span class="etq suave">Capital necesario</span><b class="cifra-d num" id="kCap">—</b><span id="kCapTxt">la caja más baja</span></div>
+        <div class="kpi"><span class="etq suave">Usuarios activos</span><b class="cifra-d num" id="kAct">—</b><span>al mes 60</span></div>
+        <div class="kpi"><span class="etq suave">Comercios aliados</span><b class="cifra-d num" id="kCom">—</b><span>al mes 60</span></div>
+      </div>
+
+      <div class="tab-cuerpo">
+        <div class="palancas" id="palancas" aria-label="Supuestos"></div>
+        <div class="vistas">
+          <div class="pestanas" role="tablist" aria-label="Vista" id="pestanas">
+            <button role="tab" id="tab-pyg" aria-selected="true" data-v="pyg">Ingresos y costos</button>
+            <button role="tab" id="tab-ing" aria-selected="false" data-v="ing">Ingresos por fuente</button>
+            <button role="tab" id="tab-cos" aria-selected="false" data-v="cos">Costos por rubro</button>
+            <button role="tab" id="tab-caja" aria-selected="false" data-v="caja">Caja</button>
+            <button role="tab" id="tab-us" aria-selected="false" data-v="us">Usuarios y comercios</button>
+          </div>
+          <p class="etq suave" id="vistaTit">Ingresos, costos y EBITDA por mes, en millones de COP</p>
+          <div class="lienzo" id="lienzo">
+            <svg id="graf" viewBox="0 0 760 360" role="img" aria-label="Gráfica del tablero"></svg>
+            <div class="lectura" id="lectura"></div>
+          </div>
+          <div class="ley" id="leyTab"></div>
+          <div class="pie-graf">
+            <div class="semaforo" id="semaforo" aria-label="Métricas de corte del caso"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cab" style="margin:24px 0 0">
+        <p class="eyebrow">Estado de resultados por año</p>
+        <h2 data-cota>Pérdidas y ganancias, en millones de COP</h2>
+      </div>
+      <div class="tabla-env">
+        <table class="pyg" id="pyg"></table>
+      </div>
+      <div class="unidad" id="unidad"></div>
+      <p class="fuente">EBITDA antes de impuesto de renta, depreciación e intereses. Incluye la pasarela (2,65 % + $ 700 + IVA por pago), ICA de 9,66 por mil sobre los ingresos, el software fijo del plan ($ 541.200 al mes, +10 % al año), $ 80 por usuario activo de infraestructura, contabilidad y legal desde el mes 9 y la nómina que definas. La operación actual de DRS Motors (consignación y trámites) no se suma. US$1 = $ 3.300; inflación de precios del 4 % al año.</p>
+
+      <div class="cab" style="margin:38px 0 0">
+        <p class="eyebrow">Los tres casos, lado a lado</p>
+      </div>
+      <div class="tabla-env">
+        <table id="comparar"></table>
+      </div>
+      <details class="avanz" style="margin-top:15px">
+        <summary>Ver todos los supuestos de los tres casos</summary>
+        <div class="tabla-env" style="border:0"><table id="supuestos"></table></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= INVERSIÓN ================= -->
+<section id="inversion">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Inversión · uso de los fondos</p>
+      <h2 data-cota>Lo que cuesta construir y lanzar, mes a mes</h2>
+      <p>El dinero no se necesita de una vez. El primer tramo paga el desarrollo; el segundo, el lanzamiento y la pauta. Mueve los controles para ver cómo cambia el total.</p>
+    </div>
+    <div class="inv">
+      <div class="controles">
+        <fieldset class="control">
+          <legend>Meses de desarrollo</legend>
+          <div class="seg">
+            <label><input type="radio" name="meses" id="meses3" value="3"><span>3 meses</span></label>
+            <label><input type="radio" name="meses" id="meses4" value="4" checked><span>4 meses</span></label>
+          </div>
+        </fieldset>
+        <div class="control">
+          <label for="pauta">Pauta mensual en Meta y TikTok</label>
+          <select id="pauta">
+            <option value="2000000">$ 2.000.000</option>
+            <option value="3000000" selected>$ 3.000.000</option>
+            <option value="5000000">$ 5.000.000</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="auxilio">Auxilio mensual por ingeniero fundador</label>
+          <input type="text" id="auxilio" value="$ 0" inputmode="numeric" autocomplete="off">
+          <p class="fuente">Por definir. Los ingenieros son parte de los fundadores y reciben acciones. Hasta $ 10.000.000.</p>
+        </div>
+        <fieldset class="control">
+          <legend>Ingenieros con auxilio</legend>
+          <div class="seg">
+            <label><input type="radio" name="ing" id="ing2" value="2" checked><span>2</span></label>
+            <label><input type="radio" name="ing" id="ing3" value="3"><span>3</span></label>
+          </div>
+        </fieldset>
+        <label class="check" for="cloudflare"><input type="checkbox" id="cloudflare"> Alojar el panel del comercio en Cloudflare Pages (gratis) en lugar de Vercel Pro</label>
+      </div>
+      <div class="grafica">
+        <div class="total">
+          <b class="cifra-d num" id="total">$ 22.712.500</b>
+          <span id="totalTxt">Total del plan: 4 meses de desarrollo + 4 de lanzamiento.</span>
+        </div>
+        <div class="tramos">
+          <div class="tramo"><span class="etq suave">Tramo 1 · Desarrollo</span><b class="cifra-d num" id="t1">—</b><span id="t1Txt"></span></div>
+          <div class="tramo"><span class="etq suave">Tramo 2 · Lanzamiento</span><b class="cifra-d num" id="t2">—</b><span id="t2Txt"></span></div>
+        </div>
+        <p class="etq suave">Desembolsos mensuales del plan, en millones de COP</p>
+        <div class="ley" id="leyenda"></div>
+        <svg id="grafica" viewBox="0 0 640 300" role="img" aria-label="Desembolsos mensuales del plan, en millones de COP, con el acumulado"></svg>
+        <p class="tip" id="tip">Pasa el cursor o toca una barra para ver el detalle del mes.</p>
+      </div>
+    </div>
+
+    <div class="cab" style="margin:60px 0 24px">
+      <p class="eyebrow">Desglose por rubro</p>
+      <h3 id="desgloseTit">Total del plan por rubro, 8 meses, en COP</h3>
+    </div>
+    <div class="tabla-env">
+      <table id="desglose">
+        <thead><tr><th>Rubro</th><th>Detalle</th><th class="n">COP</th></tr></thead>
+        <tbody></tbody>
+        <tfoot><tr><th colspan="2">Total</th><td class="n" id="desgloseTotal"></td></tr></tfoot>
+      </table>
+    </div>
+    <p class="fuente" style="margin-top:15px">Precios de octubre de 2026 en las páginas de cada proveedor. La constitución de la S.A.S., el registro de marca y las salidas a firmar comercios son estimados de los fundadores. US$1 = $ 3.300.</p>
+  </div>
+</section>
+
+<section id="funcionamiento">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Funcionamiento desde el mes 9</p>
+      <h2 data-cota>El software cuesta menos que la pauta</h2>
+      <p>Casi todas las herramientas funcionan con planes gratis o de pocos dólares al mes. El costo crece con los usuarios, no con el tamaño del equipo. Durante los meses 5 a 8 el plan paga Vercel Pro y Expo Starter por prudencia: $ 541.200 al mes.</p>
+    </div>
+    <div class="tabla-env">
+      <table>
+        <thead><tr><th>Servicio</th><th>Para qué</th><th class="n">Al terminar el plan · hasta 1.000 activos</th><th class="n">Con ~10.000 usuarios activos al mes</th></tr></thead>
+        <tbody>
+          <tr><th>Claude Max 5x</th><td>Seguir desarrollando y corrigiendo</td><td class="n">330.000</td><td class="n">330.000</td></tr>
+          <tr><th>Supabase</th><td>Base de datos, ingreso de usuarios, archivos, tiempo real</td><td class="n">82.500</td><td class="n">≈ 247.500</td></tr>
+          <tr><th>Expo EAS</th><td>Compilar y actualizar la app sin pasar por las tiendas</td><td class="n">0 (plan gratis)</td><td class="n">≈ 178.000</td></tr>
+          <tr><th>Apple Developer</th><td>Publicar en el App Store (US$99 al año, prorrateado)</td><td class="n">27.200</td><td class="n">27.200</td></tr>
+          <tr><th>Google Maps</th><td>Mapa, búsqueda de lugares y rutas</td><td class="n">0</td><td class="n">≈ 247.500 (estimado)</td></tr>
+          <tr><th>Correo y monitoreo de errores</th><td>Comprobantes, confirmaciones y alertas de fallas</td><td class="n">0</td><td class="n">≈ 152.000</td></tr>
+          <tr><th>Dominio</th><td>Página y correos de la app (prorrateado)</td><td class="n">11.000</td><td class="n">11.000</td></tr>
+          <tr><th>Panel web, notificaciones, GitHub, facturación DIAN</th><td>Planes gratis; el panel en Cloudflare Pages (66.000 con Vercel Pro)</td><td class="n">0</td><td class="n">0</td></tr>
+        </tbody>
+        <tfoot><tr><th colspan="2">Total software al mes</th><td class="n">≈ 451.000</td><td class="n">≈ 1.193.000</td></tr></tfoot>
+      </table>
+    </div>
+    <p class="fuente" style="margin-top:15px">Apple y el dominio van prorrateados al mes; en el plan se pagan en el mes 1.</p>
+    <div class="rej rej-3" style="margin-top:38px">
+      <div class="dato"><b class="cifra-d num">≈ $ 3,95 M</b><span>al mes de funcionamiento desde el mes 9: software, $ 3 M de pauta y $ 500.000 de salidas a firmar comercios. Sin auxilio de ingenieros ni contador; el tablero de proyecciones sí los incluye.</span></div>
+      <div class="dato"><b class="cifra-d num">2,65 % + $ 700</b><span>más IVA por cada pago con Wompi. Es costo variable: sale de cada reserva.</span></div>
+      <div class="dato"><b class="cifra-d num">$ 0</b><span>de comisión de Apple y Google por servicios que se consumen fuera de la app, como parqueadero, lavado o taller. El informe vehicular y el plan premium, que son digitales, sí pagarían entre 15 % y 30 % a las tiendas.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= RIESGOS ================= -->
+<section id="riesgos">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Riesgos</p>
+      <h2 data-cota>Lo que puede salir mal y cómo se responde</h2>
+    </div>
+    <div class="tabla-env">
+      <table>
+        <thead><tr><th>Riesgo</th><th>Mitigación</th></tr></thead>
+        <tbody>
+          <tr><th>Los usuarios no adoptan la app al ritmo esperado</th><td>Lanzamiento como experimento con métricas de corte. Si fallan, se para con una pérdida acotada al plan de 8 meses. La pauta se ajusta mes a mes y la comunidad de DRS en redes baja el costo de adquisición.</td></tr>
+          <tr><th>Los comercios no pagan la mensualidad</th><td>Dos meses sin mensualidad para los primeros 30. El panel de gestión y las horas valle deben mostrar valor medible antes del primer cobro.</td></tr>
+          <tr><th>La pasarela de pagos se come el margen de las reservas de bajo valor</th><td>Pagos divididos entre la S.A.S. de la app y el comercio, y evaluación de una tarifa de servicio por reserva.</td></tr>
+          <tr><th>Se bloquean las consultas automatizadas al RUNT</th><td>Proveedores de datos vehiculares como respaldo, con costo por consulta.</td></tr>
+          <tr><th>El alcance crece más rápido que el negocio</th><td>Cada servicio nuevo entra solo cuando se cumple su condición de la hoja de ruta.</td></tr>
+          <tr><th>Competidores con más capital</th><td>Foco en una ciudad y en los servicios de uso frecuente, con una marca y una comunidad que ya existen.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="juridico" style="margin-top:38px">
+      <p class="etq">Comentario jurídico</p>
+      <h3>Opinión de los fundadores, pendiente de concepto de un abogado externo</h3>
+      <ul>
+        <li><b>Estructura.</b> DRS Motors opera hoy como sociedad de hecho entre sus dos socios (arts. 498–501 C. de Co.). La inversión entraría a una S.A.S. que se constituirá para la app. La relación comercial entre la sociedad de hecho y la S.A.S. (qué cobra cada una por consignación y trámites) se define por contrato antes de la ronda.</li>
+        <li><b>Pagos de terceros.</b> El dinero de los comercios no debe quedar en cuentas de los socios. Recibir y retener de forma habitual dinero de terceros puede configurar captación masiva y habitual (art. 316 C.P.; Decreto 1981 de 1988, hoy art. 2.18.2.1 del Decreto 1068 de 2015). Por eso se usará una pasarela con pagos divididos y, para la compraventa protegida, un encargo fiduciario o custodia regulada.</li>
+        <li><b>Seguros y SOAT.</b> Cobrar comisión por pólizas es intermediación de seguros (Decreto 663 de 1993, arts. 40–41): se hará con una agencia habilitada como aliada.</li>
+        <li><b>Crédito.</b> Referir clientes a bancos es posible. Las condiciones de crédito que muestre la app deben venir del banco aliado, que responde ante el consumidor financiero (Ley 1328 de 2009, art. 9), y la publicidad de la app debe ser veraz y suficiente (Ley 1480 de 2011, arts. 23, 29 y 30).</li>
+        <li><b>Retracto y reservas.</b> Las reservas pagadas en la app son ventas a distancia: aplica el derecho de retracto (Ley 1480 de 2011, art. 47), salvo servicios ya iniciados con acuerdo del usuario. La política de cancelación debe decirlo antes del pago.</li>
+        <li><b>Datos personales.</b> Placas, documentos y ubicación exigen autorización previa y expresa y un responsable del tratamiento (Ley 1581 de 2012). El informe vehicular y los datos del mercado se entregan sin datos personales de terceros.</li>
+        <li><b>Parqueaderos.</b> Las tarifas fuera de vía en Bogotá tienen tope (Decreto Distrital 026 de 2026). Las promociones en horas valle siempre van por debajo del tope vigente, y cualquier tarifa de servicio de la app que se sume al parqueo se revisa frente a ese tope.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura"><div class="flap" data-flap aria-hidden="true"></div></div>
+
+<!-- ================= EQUIPO ================= -->
+<section id="equipo">
+  <div class="envoltura">
+    <div class="cab">
+      <p class="eyebrow">Equipo</p>
+      <h2 data-cota>Quiénes lo construyen</h2>
+      <p>DRS Motors ya consigna y comercializa carros y motos en Bogotá, hace trámites ante tránsito y tiene comunidad en redes: 5.427 seguidores en Instagram (agosto de 2026) y unos 2.000 en TikTok, según los fundadores.</p>
+    </div>
+    <div class="rej rej-3">
+      <div class="persona" data-sube><p class="etq suave">CEO · cofundador</p><p class="quien">Miguel Ángel Guerrero Vizcaíno</p><p>Economista y abogado de la Universidad de los Andes. Estructura, producto y asuntos legales. Cara visible de DRS.</p></div>
+      <div class="persona" data-sube><p class="etq suave">Cofundador · comercial</p><p class="quien">Santiago Rojas Celis</p><p>Prospección, ventas y alianzas con comercios. Cara visible de DRS.</p></div>
+      <div class="persona" data-sube><p class="etq suave">Ingeniería · cofundadores</p><p class="quien">Ingenieros fundadores</p><p>Desarrollan la app con IA, casi tiempo completo, a cambio de acciones. El auxilio mensual está por definir y no está incluido en el total. <span class="chip pend">Nombres por confirmar</span></p></div>
+      <div class="persona" data-sube><p class="etq suave">Alianzas</p><p class="quien">Mateo</p><p>Firma de comercios aliados junto con Santiago. <span class="chip pend">Rol por confirmar</span></p></div>
+      <div class="persona" data-sube><p class="etq suave">Inversionistas</p><p class="quien">Inversionistas estratégicos</p><p>Además del capital, pueden aportar relaciones públicas y contactos con bancos, aseguradoras y concesionarios.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CIERRE ================= -->
+<section class="cierre" id="ronda">
+  <div class="envoltura">
+    <svg class="taco" id="taco" viewBox="0 0 320 210" aria-hidden="true"></svg>
+    <div class="lado">
+      <p class="eyebrow">La ronda</p>
+      <h2>Confianza a toda velocidad.</h2>
+      <div class="rej rej-3">
+        <div class="bloque"><h3>Uso de los fondos</h3><p><b class="num" style="color:var(--txt-1);font-weight:600" id="cierreTotal">$ 22.712.500</b> en <span id="cierreMeses">8</span> meses, en dos tramos: desarrollo y lanzamiento.</p></div>
+        <div class="bloque"><h3>Lo que compra</h3><p>La app en las tiendas, 15 comercios firmados el día del lanzamiento y 4 meses de pauta para medir las métricas de corte.</p></div>
+        <div class="bloque"><h3>Por definir</h3><p>Monto final de la ronda, instrumento (SAFE, que es un acuerdo de capital futuro; nota convertible o acciones) y participación.</p></div>
+      </div>
+      <div class="contacto">
+        <span>drsmotorsbog@gmail.com</span>
+        <span>WhatsApp 311 472 8250</span>
+        <span>Instagram @drsmotors_col</span>
+        <span>TikTok @drsmotors_dc</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fuentes" id="fuentes">
+  <div class="envoltura">
+    <svg class="logo-cierre" viewBox="0 0 420 150" aria-label="DRS Motors"><use href="#logo-h-oscuro"/></svg>
+    <div class="cab" style="margin-bottom:15px"><p class="eyebrow">Fuentes</p></div>
+    <ol>
+      <li>Parque automotor de Colombia al cierre de 2025 (RUNT): <a href="https://www.elcolombiano.com/negocios/parque-automotor-colombia-2025-NP33968207" target="_blank" rel="noopener">El Colombiano</a>.</li>
+      <li>Parque automotor de Bogotá en 2024, composición y vehículos matriculados fuera de la ciudad: <a href="https://observatoriofiscal.shd.gov.co/sites/default/files/documentos_informacion_destacada/Primera%20Nota%20de%20Hacienda%20Distrital.pdf" target="_blank" rel="noopener">Secretaría Distrital de Hacienda, Notas de Hacienda Distrital</a>.</li>
+      <li>Matrículas nuevas en Bogotá, enero a septiembre de 2026 (Fenalco y Andi): <a href="https://minuto60.com/bogota/bogota-registro-carros-nuevos-septiembre-los-mas-vendidos-andi-fenalco/16411" target="_blank" rel="noopener">Minuto60</a>.</li>
+      <li>Precios: <a href="https://support.claude.com/en/articles/11049741" target="_blank" rel="noopener">Claude Max</a> · <a href="https://supabase.com/pricing" target="_blank" rel="noopener">Supabase</a> · <a href="https://vercel.com/pricing" target="_blank" rel="noopener">Vercel</a> · <a href="https://expo.dev/pricing" target="_blank" rel="noopener">Expo</a> · <a href="https://developers.google.com/maps/billing/overview/" target="_blank" rel="noopener">Google Maps</a> · <a href="https://wompi.com/es/co/planes-tarifas/" target="_blank" rel="noopener">Wompi, plan avanzado</a>.</li>
+      <li>Servicios que se consumen fuera de la app: <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">App Store Review Guidelines, norma 3.1.3(e)</a> · <a href="https://support.google.com/googleplay/android-developer/answer/9858738" target="_blank" rel="noopener">política de pagos de Google Play</a>.</li>
+      <li>Topes de parqueaderos en Bogotá, 2026: <a href="https://bogota.gov.co/mi-ciudad/movilidad/tarifas-de-parqueaderos-y-parqueo-en-que-regiran-en-bogota-en-2026" target="_blank" rel="noopener">Alcaldía de Bogotá</a>.</li>
+      <li>TRM de octubre de 2026: <a href="https://www.portafolio.co/economia/finanzas/dolar-hoy-en-colombia-arranca-octubre-cerca-de-3-300-y-acumula-caida-de-11-38-en-503720" target="_blank" rel="noopener">Portafolio</a>.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="envoltura">
+    <svg aria-label="DRS Motors"><use href="#logo-h-chico"/></svg>
+    <p class="fuente">Documento confidencial para inversionistas · Bogotá, octubre de 2026 · Cifras en COP</p>
+  </div>
+</footer>
+
+<script>
+/* Motor de proyecciones de la DRS Motors App. Mismo código en el deck y en las pruebas con node. */
+var MODELO = (function(){
+  var T = 3300;
+  var FUENTES = [
+    {k:'comision', n:'Comisión por reserva', f:'V1'},
+    {k:'tarifa', n:'Tarifa de servicio', f:'V1'},
+    {k:'mensualidad', n:'Mensualidad de comercios', f:'V1'},
+    {k:'destacados', n:'Destacados en la zona', f:'V3'},
+    {k:'renov', n:'SOAT, tecnomecánica e informe', f:'V2'},
+    {k:'publicidad', n:'Publicidad', f:'V3'},
+    {k:'financiero', n:'Crédito y seguros', f:'V3'},
+    {k:'mercado', n:'Clasificados, repuestos y compraventa', f:'V4'}
+  ];
+  var RUBROS = [
+    {k:'pasarela', n:'Pasarela de pagos', v:true},
+    {k:'techVar', n:'Tecnología por usuario', v:true},
+    {k:'ica', n:'ICA', v:true},
+    {k:'pauta', n:'Pauta'},
+    {k:'equipo', n:'Equipo'},
+    {k:'tech', n:'Software fijo'},
+    {k:'comercial', n:'Firma de comercios'},
+    {k:'admin', n:'Contabilidad y legal'},
+    {k:'unicos', n:'S.A.S., marca y tiendas'}
+  ];
+  function correr(p, meses){
+    meses = meses || 60;
+    var L = p.lanz, corte = p.corte && semaforo(p).replantear >= 3, out = [], activos = 0, aliados = 0, registrados = 0, caja = 0;
+    for (var m = 1; m <= meses; m++){
+      var k = m - L + 1;               /* mes en el mercado: 1 = mes del lanzamiento */
+      var lanz = k >= 1, ak = lanz ? Math.floor((k - 1) / 12) : 0;
+      var inf = Math.pow(1 + p.inflacion, Math.floor((m - 1) / 12));
+      var r = {m:m, k:k, lanz:lanz, ing:{}, cos:{}};
+      /* usuarios */
+      var pauta = lanz ? p.pauta0 * Math.pow(1 + p.pautaCrec, ak) : 0;
+      var cpi = p.cpi * T * Math.pow(1 + p.cpiCrec, ak);
+      var inst = lanz ? pauta / cpi + p.org0 * Math.pow(1 + p.orgCrec, k - 1) : 0;
+      registrados += inst * p.activacion;
+      activos = activos * (1 - p.churn) + inst * p.activacion;
+      var res = lanz ? p.pctReserva * (1 + (p.rampa - 1) * Math.min((k - 1) / 24, 1)) * p.frecuencia : 0;
+      var reservas = activos * res;
+      var gmv = reservas * p.ticket * inf;
+      /* comercios */
+      if (k === -1 || k === 0) aliados += p.preFirma / 2;
+      else if (lanz) aliados = aliados * (1 - p.churnCom) + p.nuevos0 * Math.pow(1 + p.nuevosCrec, ak);
+      /* ingresos */
+      var I = r.ing;
+      I.comision = gmv * p.take;
+      I.tarifa = reservas * p.tarifa * inf;
+      I.mensualidad = (lanz && k > p.mesesGratis) ? aliados * p.pctPagan * p.mensualidad * inf : 0;
+      I.destacados = (lanz && k > p.v3) ? aliados * p.pctDest * p.precioDest * inf : 0;
+      I.renov = (lanz && k > p.v2) ? activos * p.arpuRenov * inf : 0;
+      I.publicidad = (lanz && k > p.v3) ? activos * p.aperturas * p.cpm / 1000 * inf : 0;
+      I.financiero = (lanz && k > p.v3) ? activos * p.arpuFin * inf : 0;
+      I.mercado = (lanz && k > p.v4) ? activos * p.arpuMkt * inf : 0;
+      var ing = 0; for (var a in I) ing += I[a];
+      /* costos */
+      var C = r.cos;
+      C.pasarela = (gmv + I.tarifa) * 0.0265 * 1.19 + reservas * 700 * 1.19;
+      C.techVar = activos * p.techUsuario * inf;
+      C.ica = ing * 0.00966;
+      C.pauta = pauta;
+      C.equipo = p.aux * p.nAux * (k <= 4 ? 1 : 0) + (k > 4 ? p.nomina0 * Math.pow(1 + p.nominaCrec, Math.floor((k - 5) / 12)) : 0);
+      var usd = lanz ? 100 + (p.cloudflare ? 0 : 20) + 25 + 19 : 300 + (p.cloudflare ? 0 : 20) + (m >= L - 1 ? 25 : 0);
+      C.tech = usd * T * (lanz ? Math.pow(1.10, ak) : 1);
+      C.comercial = (k >= -1 && k <= 2) ? 500000 : (k > 4 ? p.comercial * inf : 0);
+      C.admin = k > 4 ? p.admin * inf : 0;
+      C.unicos = m === 1 ? 164 * T + 1700000 : ((m - 1) % 12 === 0 ? 139 * T : 0);
+      if (corte && k > 4){ for (var z in I) I[z] = 0; for (var w in C) C[w] = 0; ing = 0; activos = 0; aliados = 0; reservas = 0; gmv = 0; inst = 0; pauta = 0; }
+      var cos = 0; for (var b in C) cos += C[b];
+      var vari = C.pasarela + C.techVar + C.ica;
+      caja += ing - cos;
+      r.ingT = ing; r.cosT = cos; r.var = vari; r.ebitda = ing - cos; r.caja = caja; r.cortado = corte && k > 4;
+      r.activos = activos; r.registrados = registrados; r.aliados = aliados; r.reservas = reservas; r.gmv = gmv; r.inst = inst; r.pautaM = pauta; r.cpiCOP = cpi;
+      out.push(r);
+    }
+    return out;
+  }
+  /* Métricas de corte del deck: valor en el umbral o peor = replantear; en el umbral de escalar o mejor = escalar. */
+  var CORTE = [
+    {k:'cpi', n:'Costo por instalación', rep:function(p){return p.cpi >= 2.5;}, esc:function(p){return p.cpi <= 1.2;}, v:function(p){return 'US$' + p.cpi.toLocaleString('es-CO');}},
+    {k:'activacion', n:'Instalaciones que registran un vehículo', rep:function(p){return p.activacion <= .40;}, esc:function(p){return p.activacion >= .65;}, v:function(p){return Math.round(p.activacion*100) + ' %';}},
+    {k:'pctReserva', n:'Usuarios activos que reservan en el mes', rep:function(p){return p.pctReserva <= .03;}, esc:function(p){return p.pctReserva >= .08;}, v:function(p){return (p.pctReserva*100).toLocaleString('es-CO',{maximumFractionDigits:1}) + ' %';}},
+    {k:'churn', n:'Usuarios que dejan la app cada mes', rep:function(p){return p.churn >= .15;}, esc:function(p){return p.churn <= .08;}, v:function(p){return Math.round(p.churn*100) + ' %';}},
+    {k:'pctPagan', n:'Comercios que pagan después de los meses gratis', rep:function(p){return p.pctPagan <= .10;}, esc:function(p){return p.pctPagan >= .30;}, v:function(p){return Math.round(p.pctPagan*100) + ' %';}}
+  ];
+  function semaforo(p){
+    var n = {replantear:0, ajustar:0, escalar:0, lista:[]};
+    CORTE.forEach(function(c){ var e = c.rep(p) ? 'replantear' : c.esc(p) ? 'escalar' : 'ajustar'; n[e]++; n.lista.push({k:c.k, n:c.n, v:c.v(p), e:e}); });
+    return n;
+  }
+  function resumen(rs){
+    var min = 0, mesMin = 0, eq = null, racha = 0;
+    rs.forEach(function(r){
+      if (r.caja < min){ min = r.caja; mesMin = r.m; }
+      if (r.lanz && r.ebitda > 0){ racha++; if (racha === 3 && eq === null) eq = r.m - 2; } else racha = 0;
+    });
+    var anios = [];
+    for (var y = 0; y < Math.ceil(rs.length / 12); y++){
+      var sl = rs.slice(y * 12, y * 12 + 12), a = {ing:{}, cos:{}, ingT:0, cosT:0, var:0, ebitda:0};
+      sl.forEach(function(r){
+        for (var i in r.ing) a.ing[i] = (a.ing[i] || 0) + r.ing[i];
+        for (var c in r.cos) a.cos[c] = (a.cos[c] || 0) + r.cos[c];
+        a.ingT += r.ingT; a.cosT += r.cosT; a.var += r.var; a.ebitda += r.ebitda;
+      });
+      var u = sl[sl.length - 1];
+      a.activos = u.activos; a.aliados = u.aliados; a.caja = u.caja; a.registrados = u.registrados;
+      a.reservas = sl.reduce(function(s, r){ return s + r.reservas; }, 0);
+      a.gmv = sl.reduce(function(s, r){ return s + r.gmv; }, 0);
+      anios.push(a);
+    }
+    return {capital: -min, mesMin: mesMin, equilibrio: eq, anios: anios};
+  }
+  return {T:T, FUENTES:FUENTES, RUBROS:RUBROS, CORTE:CORTE, semaforo:semaforo, correr:correr, resumen:resumen};
+})();
+if (typeof module !== 'undefined') module.exports = MODELO;
+
+var BASE = {lanz:5, inflacion:.04, aux:0, nAux:2, cloudflare:false, corte:false, preFirma:15, mesesGratis:2, techUsuario:80, comercial:5e5, admin:8e5, precioDest:40000, rampa:2};
+var CASOS = {
+ pesimista: Object.assign({}, BASE, {pauta0:3e6,pautaCrec:.10,cpi:2.5,cpiCrec:.15,org0:150,orgCrec:.02,activacion:.40,churn:.15,pctReserva:.03,frecuencia:1.1,ticket:40000,take:.10,tarifa:0,nuevos0:5,nuevosCrec:.2,churnCom:.05,mensualidad:59000,pctPagan:.10,pctDest:.05,v2:6,v3:14,v4:26,arpuRenov:76,aperturas:4,cpm:5000,arpuFin:55,arpuMkt:30,nomina0:10e6,nominaCrec:.10}),
+ conservador: Object.assign({}, BASE, {pauta0:3e6,pautaCrec:.4,cpi:1.6,cpiCrec:.10,org0:300,orgCrec:.03,activacion:.5,churn:.10,pctReserva:.06,frecuencia:3,ticket:40000,take:.12,tarifa:1000,nuevos0:12,nuevosCrec:.4,churnCom:.04,mensualidad:79000,pctPagan:.25,pctDest:.08,v2:6,v3:12,v4:24,arpuRenov:150,aperturas:8,cpm:8000,arpuFin:120,arpuMkt:80,nomina0:10e6,nominaCrec:.25}),
+ favorable: Object.assign({}, BASE, {pauta0:5e6,pautaCrec:.6,cpi:1.5,cpiCrec:.10,org0:400,orgCrec:.04,activacion:.6,churn:.08,pctReserva:.08,frecuencia:3.5,ticket:45000,take:.12,tarifa:1500,nuevos0:15,nuevosCrec:.5,churnCom:.03,mensualidad:99000,pctPagan:.35,pctDest:.12,v2:6,v3:10,v4:20,arpuRenov:200,aperturas:12,cpm:10000,arpuFin:200,arpuMkt:150,nomina0:15e6,nominaCrec:.7})
+};
+
+
+</script>
+<script>
+(function(){
+  'use strict';
+  var T = 3300;
+  var QUIETO = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n){ return (n < 0 ? '−' : '') + '$ ' + Math.round(Math.abs(n)).toLocaleString('es-CO'); };
+  var dec = function(n, d){ return n.toLocaleString('es-CO', {minimumFractionDigits:d, maximumFractionDigits:d}); };
+  var ent = function(n){ return Math.round(n).toLocaleString('es-CO'); };
+  function fmtM(n){
+    if (Math.abs(n) < 5e4) return '$ 0';
+    var a = Math.abs(n) / 1e6, s = a >= 100 ? ent(a) : a >= 10 ? dec(a, 0) : dec(a, 1);
+    return (n < 0 ? '−' : '') + '$ ' + s + ' M';
+  }
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function anim(el, frames, o){
+    if (QUIETO || !el || !el.animate) return null;
+    o = o || {};
+    return el.animate(frames, {duration:o.d || 600, delay:o.delay || 0, easing:o.e || 'cubic-bezier(.2,.7,.1,1)', fill:o.fill || 'backwards'});
+  }
+  function alVer(el, fn, umbral){
+    if (!el) return;
+    if (!('IntersectionObserver' in window)){ fn(); return; }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ io.disconnect(); fn(); } });
+    }, {threshold: umbral || 0.25});
+    io.observe(el);
+  }
+  function icono(id, cls){ return '<svg class="ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
+  function rotulo(t){ return '<span class="rot" aria-hidden="true">' + t + '</span>'; }
+  function glifo(g){ return g.indexOf('ico-') === 0 ? icono(g) : rotulo(g); }
+
+  /* ================= Odómetro ================= */
+  function odoPreparar(el){
+    var txt = el.textContent, html = '<span class="sr">' + txt + '</span><span class="odo" aria-hidden="true">';
+    for (var i = 0; i < txt.length; i++){
+      var c = txt[i];
+      if (c >= '0' && c <= '9'){
+        var tira = '';
+        for (var k = 0; k < 20; k++) tira += '<i>' + (k % 10) + '</i>';
+        html += '<span class="col"><span class="tira" data-d="' + c + '" style="transform:translateY(-' + (10 + +c) + 'em)">' + tira + '</span></span>';
+      } else html += '<span>' + (c === ' ' ? '&nbsp;' : c) + '</span>';
+    }
+    el.innerHTML = html + '</span>';
+  }
+  function odoCorrer(el, retraso){
+    [].forEach.call(el.querySelectorAll('.tira'), function(t, i){
+      var d = +t.dataset.d;
+      anim(t, [{transform:'translateY(0em)'}, {transform:'translateY(-' + (10 + d) + 'em)'}], {d:1100 + i * 90, delay:(retraso || 0) + i * 40, e:'cubic-bezier(.15,.75,.2,1)'});
+    });
+  }
+  [].forEach.call(document.querySelectorAll('[data-odo]'), function(el){
+    odoPreparar(el);
+    alVer(el, function(){ odoCorrer(el, 0); }, 0.5);
+  });
+
+  /* ================= Portada: titular a golpes ================= */
+  [].forEach.call(document.querySelectorAll('#titular .linea'), function(l, li){
+    var ps = l.textContent.split(' ');
+    l.innerHTML = ps.map(function(p){ return '<span class="pal">' + p + '</span>'; }).join(' ');
+    [].forEach.call(l.querySelectorAll('.pal'), function(p, pi){
+      anim(p, [{transform:'translateY(110%)'}, {transform:'translateY(0)'}], {d:640, delay:120 + li * 250 + pi * 125, e:'cubic-bezier(.3,1.25,.5,1)'});
+    });
+  });
+
+  /* ================= Ranura de servicios ================= */
+  var SERV = [
+    ['Parqueadero','V1 · al lanzar'],['Lavado','V1 · al lanzar'],['Taller','V1 · al lanzar'],['Mi garaje','V1 · al lanzar'],
+    ['Vehículos DRS','V1 · al lanzar'],['Trámites','V1 · al lanzar'],['SOAT','V2 · con aliados'],['Tecnomecánica','V2 · con aliados'],
+    ['Informe vehicular','V2 · con aliados'],['Puntos','V2 · con aliados'],['Financiación','V3 · con un banco'],['Seguros','V3 · con una aseguradora'],
+    ['Clasificados','V4 · plataforma'],['Repuestos','V4 · plataforma'],['Compraventa','V4 · plataforma']
+  ];
+  var carrete = $('carrete'), N = SERV.length, rIdx = N, rTimer = null, rVisible = true;
+  carrete.innerHTML = [0,1,2].map(function(){ return SERV.map(function(s){ return '<span>' + s[0] + '</span>'; }).join(''); }).join('');
+  var filas = carrete.children;
+  function altoFila(){ return filas[0].getBoundingClientRect().height || 76; }
+  function ranuraIr(i, dur, ease){
+    rIdx = i;
+    var y = -(i - 1) * altoFila();
+    [].forEach.call(filas, function(f, j){ f.classList.toggle('activo', j === i); });
+    var s = SERV[i % N];
+    $('ranuraFase').textContent = s[1];
+    $('ranuraN').textContent = String(i % N + 1).padStart(2, '0') + ' / ' + N;
+    if (QUIETO || !dur){ carrete.style.transform = 'translateY(' + y + 'px)'; return; }
+    var desde = getComputedStyle(carrete).transform;
+    carrete.style.transform = 'translateY(' + y + 'px)';
+    carrete.animate([{transform: desde === 'none' ? 'translateY(0)' : desde}, {transform:'translateY(' + y + 'px)'}], {duration:dur, easing:ease || 'cubic-bezier(.5,0,.2,1)'});
+  }
+  function ranuraPaso(){
+    if (!rVisible || document.hidden) return;
+    var sig = rIdx + 1;
+    if (sig >= 2 * N){ ranuraIr(sig - N - 1, 0); sig = rIdx + 1; }
+    ranuraIr(sig, 520);
+  }
+  ranuraIr(0, 0);
+  if (QUIETO) ranuraIr(N, 0);
+  else {
+    setTimeout(function(){ ranuraIr(N, 2300, 'cubic-bezier(.12,.6,.18,1)'); }, 350);
+    setTimeout(function(){ rTimer = setInterval(ranuraPaso, 2200); }, 2900);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ rVisible = es[0].isIntersecting; }).observe(carrete.parentNode);
+  }
+  window.addEventListener('resize', function(){ ranuraIr(rIdx, 0); });
+
+  /* ================= Entradas al hacer scroll ================= */
+  [].forEach.call(document.querySelectorAll('[data-cota]'), function(h){
+    h.style.position = 'relative';
+    var l = document.createElement('i'); l.className = 'cota-l'; l.setAttribute('aria-hidden', 'true'); h.appendChild(l);
+    alVer(h, function(){
+      anim(h, [{clipPath:'inset(-10% 100% -10% 0)'}, {clipPath:'inset(-10% 0 -10% 0)'}], {d:700, e:'cubic-bezier(.6,0,.2,1)'});
+      anim(l, [{transform:'scaleX(0)', opacity:1}, {transform:'scaleX(1)', opacity:1, offset:.7}, {transform:'scaleX(1)', opacity:0}], {d:950, e:'cubic-bezier(.6,0,.2,1)', fill:'none'});
+    }, 0.4);
+  });
+  var grupos = new Map();
+  [].forEach.call(document.querySelectorAll('[data-sube]'), function(el){
+    var p = el.parentNode; if (!grupos.has(p)) grupos.set(p, []); grupos.get(p).push(el);
+  });
+  grupos.forEach(function(els, p){
+    alVer(p, function(){ els.forEach(function(el, i){ anim(el, [{transform:'translateY(24px)', opacity:0}, {transform:'translateY(0)', opacity:1}], {d:650, delay:i * 90}); }); }, 0.2);
+  });
+  [].forEach.call(document.querySelectorAll('[data-flap]'), function(f){ alVer(f, function(){ f.classList.add('abre'); }, 0.9); });
+
+  /* Problema: tachado */
+  var probs = [].slice.call(document.querySelectorAll('#problemas .prob'));
+  alVer($('problemas'), function(){
+    probs.forEach(function(p, i){
+      setTimeout(function(){
+        p.classList.add('tachado');
+        anim(p.querySelector('.tacha'), [{transform:'scaleX(0)'}, {transform:'scaleX(1)'}], {d:420, e:'cubic-bezier(.7,0,.3,1)'});
+      }, QUIETO ? 0 : 500 + i * 380);
+    });
+    setTimeout(function(){ anim($('resuelve'), [{transform:'translateY(60%)', opacity:0}, {transform:'translateY(0)', opacity:1}], {d:620, e:'cubic-bezier(.3,1.3,.5,1)'}); }, QUIETO ? 0 : 500 + probs.length * 380);
+  }, 0.5);
+
+  /* ================= Ecosistema en órbita ================= */
+  var FASEN = {V1:'Lanzamiento', V2:'Retención', V3:'Financiero', V4:'Plataforma'};
+  var ECO = [
+    {n:'Parqueaderos', g:'ico-ubicacion', f:'V1', a:-90, hace:'Ve en el mapa los parqueaderos cercanos con su precio y la promoción si es hora valle, reserva y paga en la app.', paga:'El usuario paga el servicio en la app; el parqueadero paga mensualidad y comisión por reserva.', mas:['Es el servicio de mayor frecuencia: quien parquea día de por medio abre la app unas 15 veces al mes (supuesto).','Al lanzar, el parqueadero confirma cada reserva desde su panel. La integración con talanqueras viene después.']},
+    {n:'Lavado y detallado', g:'ico-detailing', f:'V1', a:-30, hace:'Elige lavadero, servicio y hora, paga en la app y recibe un recordatorio.', paga:'El usuario en la app; el lavadero con mensualidad y comisión.', mas:['Promociones en horas valle para llenar las franjas flojas.','Puntos y fidelización desde V2.']},
+    {n:'Taller y mantenimiento', g:'ico-taller', f:'V1', a:30, hace:'Pide cita o cotización en talleres aliados y registra el próximo cambio de aceite y las revisiones.', paga:'El usuario en la app; el taller con mensualidad y comisión.', mas:['El historial de mantenimiento queda en Mi garaje y sube el valor del vehículo al venderlo.']},
+    {n:'Mi garaje', g:'ico-alerta', f:'V1', a:90, hace:'Registra el vehículo por placa y recibe alertas de SOAT, tecnomecánica, pico y placa, multas y cambio de aceite.', paga:'La versión básica es gratis: es lo que trae y retiene usuarios.', mas:['Desde V2, la alerta de vencimiento lleva a renovar el SOAT o la tecnomecánica con aliados.']},
+    {n:'Vehículos DRS', g:'ico-consignacion', f:'V1', a:150, hace:'Mira el catálogo de carros y motos que DRS tiene en consignación, con fotos y video profesionales.', paga:'Es un servicio de DRS Motors (sociedad de hecho). Cómo se reparte ese ingreso con la S.A.S. de la app está por definir.', mas:['En V1 solo aparecen vehículos de DRS. Los clasificados abiertos a terceros llegan en V4.']},
+    {n:'Trámites DRS', g:'ico-traspaso', f:'V1', a:210, hace:'Cotiza y solicita traspasos, levantamientos de prenda y demás trámites ante tránsito en Bogotá.', paga:'Honorarios de tramitación de DRS Motors (sociedad de hecho), con el mismo reparto por definir.', mas:['Solo en Bogotá. La actualización de datos en el RUNT la hace el titular en persona.']},
+    {n:'Renovación de SOAT y tecnomecánica', g:'ico-certificado', f:'V2', a:-60, hace:'Desde la alerta de vencimiento, renueva el SOAT con una agencia aliada o agenda la tecnomecánica en un CDA.', paga:'La agencia de seguros o el CDA aliado paga por cada cliente referido.', mas:['Entra cuando se firmen una agencia de seguros habilitada y un CDA (hito H2).']},
+    {n:'Informe vehicular', g:'ico-runt', f:'V2', a:60, hace:'Compra un reporte de cualquier placa: número de propietarios anteriores, prendas, multas y estado de papeles.', paga:'El usuario que va a comprar un usado. Al ser digital, pagaría la comisión de las tiendas.', mas:['Se entrega sin datos personales de terceros.']},
+    {n:'Puntos y fidelización', g:'PTS', f:'V2', a:180, hace:'Acumula puntos con cada reserva y los cambia por descuentos en comercios aliados.', paga:'Los comercios financian los descuentos.', mas:['Sale en H2, después de pasar las métricas de corte.']},
+    {n:'Financiación', g:'FIN', f:'V3', a:-30, hace:'Solicita crédito para comprar o cambiar de vehículo con bancos y financieras aliados.', paga:'El banco paga una comisión por cada crédito desembolsado.', mas:['Entra cuando se firme el primer aliado financiero (hito H3).']},
+    {n:'Seguros', g:'SEG', f:'V3', a:90, hace:'Cotiza y contrata pólizas todo riesgo con aseguradoras aliadas.', paga:'La aseguradora o la agencia aliada paga por cada póliza.', mas:['Se hace con una agencia de seguros habilitada.','La renovación del SOAT entra antes, en V2.']},
+    {n:'Publicidad', g:'PUB', f:'V3', a:210, hace:'Ve una pantalla de entrada patrocinada al abrir la app, como en las apps bancarias, y anuncios de marcas del sector.', paga:'Marcas, concesionarios y comercios.', mas:['Tiene sentido con una base activa que interese a las marcas (hito H3).']},
+    {n:'Clasificados de vehículos', g:'ico-precio', f:'V4', a:-120, hace:'Publica tu carro o moto en venta, como en un portal de clasificados, dentro de la misma app.', paga:'Publicación básica gratis; destacados y planes para vendedores profesionales.', mas:['Desde V4, concesionarios y marcas también pueden pagar para que sus vehículos aparezcan primero.']},
+    {n:'Repuestos', g:'ico-carrito', f:'V4', a:15, hace:'Compra repuestos y accesorios de vendedores aliados.', paga:'El vendedor paga una comisión por cada venta.', mas:['Se cruza con el taller: el repuesto llega al taller donde se reservó la cita.']},
+    {n:'Compraventa protegida', g:'ico-verificado', f:'V4', a:135, hace:'El comprador paga a una custodia, se hace el traspaso y, al terminar, el dinero llega al vendedor y el vehículo al comprador.', paga:'Tarifa por transacción, más los honorarios del traspaso.', mas:['Requiere un encargo fiduciario o custodia regulada: el dinero nunca queda en cuentas de los socios.']}
+  ];
+  var RADIO = {V1:122, V2:184, V3:240, V4:292}, C0 = 300, orb = $('orbita'), ecoSel = 0;
+  (function(){
+    var h = '';
+    ['V4','V3','V2','V1'].forEach(function(v){
+      var r = RADIO[v];
+      h += '<circle class="anillo ' + v.toLowerCase() + '" cx="300" cy="300" r="' + r + '" pathLength="1000"' + (v === 'V1' ? '' : ' stroke-dasharray="3 5"') + '/>';
+    });
+    h += '<g class="barrido-g"><line class="barrido" x1="300" y1="300" x2="300" y2="-6"/></g>';
+    h += '<circle class="centro" cx="300" cy="300" r="64"/><text class="centro-t" x="300" y="294" text-anchor="middle">TU</text><text class="centro-t" x="300" y="322" text-anchor="middle">VEHÍCULO</text>';
+    ['V1','V2','V3','V4'].forEach(function(v){
+      var r = RADIO[v];
+      h += '<g aria-hidden="true"><rect x="' + (300 + r - 15) + '" y="291" width="30" height="18" fill="var(--sup-1)"/><text class="rot-et" x="' + (300 + r) + '" y="304" text-anchor="middle">' + v + '</text></g>';
+    });
+    ECO.forEach(function(s, i){
+      var r = RADIO[s.f], a = s.a * Math.PI / 180, x = C0 + r * Math.cos(a), y = C0 + r * Math.sin(a);
+      s.x = x; s.y = y;
+      var dentro = s.g.indexOf('ico-') === 0
+        ? '<svg x="' + (x - 12) + '" y="' + (y - 12) + '" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"><use href="#' + s.g + '"/></svg>'
+        : '<text x="' + x + '" y="' + (y + 4) + '" text-anchor="middle">' + s.g + '</text>';
+      h += '<g class="nodo" data-i="' + i + '" role="button" tabindex="0" aria-pressed="false" aria-label="' + s.n + ', fase ' + s.f + '"><circle cx="' + x + '" cy="' + y + '" r="24"/>' + dentro + '</g>';
+    });
+    orb.innerHTML = h;
+  })();
+  var nodos = [].slice.call(orb.querySelectorAll('.nodo'));
+  function verEco(i, animar){
+    ecoSel = (i + ECO.length) % ECO.length;
+    var s = ECO[ecoSel];
+    nodos.forEach(function(n, j){ n.setAttribute('aria-pressed', j === ecoSel ? 'true' : 'false'); });
+    var det = $('ecoDet');
+    det.innerHTML = '<p class="etq luz">Fase ' + s.f + ' · ' + FASEN[s.f] + '</p><p class="nombre">' + s.n + '</p>' +
+      '<dl><dt class="etq suave">Qué hace el usuario</dt><dd>' + s.hace + '</dd><dt class="etq suave">Quién paga</dt><dd>' + s.paga + '</dd></dl>' +
+      '<ul>' + s.mas.map(function(m){ return '<li>' + m + '</li>'; }).join('') + '</ul>' +
+      '<div class="eco-nav"><button type="button" id="ecoAnt">Anterior</button><button type="button" id="ecoSig">Siguiente</button><span class="etq suave" style="align-self:center;margin-left:auto">' + String(ecoSel + 1).padStart(2, '0') + ' / ' + ECO.length + '</span></div>';
+    $('ecoAnt').onclick = function(){ verEco(ecoSel - 1, true); };
+    $('ecoSig').onclick = function(){ verEco(ecoSel + 1, true); };
+    if (animar) anim(det, [{opacity:0, transform:'translateX(15px)'}, {opacity:1, transform:'translateX(0)'}], {d:320});
+  }
+  nodos.forEach(function(n){
+    var i = +n.dataset.i;
+    n.addEventListener('click', function(){ verEco(i, true); });
+    n.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); verEco(i, true); } });
+  });
+  verEco(0, false);
+  (function(){
+    var g = orb.querySelector('.barrido-g');
+    g.style.transformOrigin = '300px 300px'; g.style.transformBox = 'view-box';
+    if (!QUIETO && g.animate) g.animate([{transform:'rotate(0deg)'}, {transform:'rotate(360deg)'}], {duration:16000, iterations:Infinity});
+    alVer(orb, function(){
+      [].forEach.call(orb.querySelectorAll('.anillo'), function(c, i){
+        anim(c, [{strokeDashoffset:1000, strokeDasharray:'1000 1000'}, {strokeDashoffset:0, strokeDasharray:'1000 1000'}], {d:1100, delay:(3 - i) * 160, e:'cubic-bezier(.5,0,.2,1)', fill:'none'});
+      });
+      nodos.forEach(function(n, j){
+        var c = n.querySelector('circle');
+        n.style.transformOrigin = ECO[j].x + 'px ' + ECO[j].y + 'px'; n.style.transformBox = 'view-box';
+        anim(n, [{transform:'scale(0)', opacity:0}, {transform:'scale(1)', opacity:1}], {d:520, delay:300 + ['V1','V2','V3','V4'].indexOf(ECO[j].f) * 220 + j * 30, e:'cubic-bezier(.3,1.4,.5,1)'});
+      });
+    }, 0.3);
+  })();
+
+  /* ================= Mercado: anillo ================= */
+  (function(){
+    var svg = $('anilloM'), r = 80, C = 2 * Math.PI * r, segs = [[63, 'var(--ser-2)'], [36, 'var(--ser-4)'], [1, 'var(--n-3)']], acc = 0, h = '';
+    h += '<circle cx="100" cy="100" r="' + r + '" fill="none" stroke="var(--sup-3)" stroke-width="18"/>';
+    segs.forEach(function(s){
+      var len = C * s[0] / 100 - 2;
+      h += '<circle class="seg-m" cx="100" cy="100" r="' + r + '" fill="none" stroke="' + s[1] + '" stroke-width="18" stroke-dasharray="' + len + ' ' + (C - len) + '" stroke-dashoffset="' + (-C * acc / 100) + '" transform="rotate(-90 100 100)" data-len="' + len + '"/>';
+      acc += s[0];
+    });
+    svg.innerHTML = h;
+    alVer(svg, function(){
+      [].forEach.call(svg.querySelectorAll('.seg-m'), function(c, i){
+        var len = +c.dataset.len;
+        anim(c, [{strokeDasharray:'0 ' + C}, {strokeDasharray:len + ' ' + (C - len)}], {d:900, delay:i * 650, e:'cubic-bezier(.5,0,.2,1)'});
+      });
+    }, 0.4);
+  })();
+
+  /* ================= Fuentes de ingreso ================= */
+  var ING = [
+    {n:'Comisión por reserva', p:'comercio', pl:'Comercios', f:'V1', d:'Un porcentaje de cada reserva de parqueadero, lavado o taller pagada en la app. Es la fuente principal del plan.'},
+    {n:'Mensualidad por aparecer', p:'comercio', pl:'Comercios', f:'V1', d:'Cada comercio paga por estar en el mapa y usar el panel de gestión. Los primeros 30 tienen dos meses sin mensualidad; la comisión sí se cobra desde el primer día.'},
+    {n:'Tarifa de servicio', p:'usuario', pl:'Usuarios', f:'V1', d:'Un cargo fijo pequeño por reserva para cubrir la pasarela de pagos.', ev:'En evaluación'},
+    {n:'Vehículos y trámites DRS', p:'usuario', pl:'Clientes de DRS', f:'V1', d:'Consignación y trámites ante tránsito en Bogotá, que hoy presta DRS Motors (sociedad de hecho). La app los muestra; cómo se reparte ese ingreso entre DRS y la S.A.S. de la app está por definir.', ev:'Por definir'},
+    {n:'Renovación de SOAT y tecnomecánica', p:'financiero', pl:'Agencia de seguros y CDA', f:'V2', d:'La alerta de vencimiento lleva a renovar con un aliado, que paga por cada cliente referido.'},
+    {n:'Informe vehicular', p:'usuario', pl:'Usuarios', f:'V2', d:'Reporte pagado de cualquier placa: número de propietarios anteriores, prendas, multas y estado de papeles. Lo compra quien va a comprar un usado. Al ser digital, pagaría la comisión de las tiendas.'},
+    {n:'Plan premium de Mi garaje', p:'usuario', pl:'Usuarios', f:'V2', d:'Varios vehículos, documentos digitales y alertas avanzadas.', ev:'En evaluación'},
+    {n:'Destacados en la zona', p:'comercio', pl:'Comercios', f:'V3', d:'El comercio paga por aparecer primero en su zona. Las promociones en horas valle están incluidas en la mensualidad.'},
+    {n:'Pantalla de entrada patrocinada', p:'marcas', pl:'Marcas', f:'V3', d:'Un anuncio al abrir la app, antes de entrar, como en las apps bancarias.'},
+    {n:'Pauta de concesionarios y marcas', p:'marcas', pl:'Concesionarios', f:'V3', d:'Anuncios de lanzamientos y vehículos nuevos en la pantalla de entrada y en Mi garaje. Cuando se abran los clasificados (V4), también posiciones destacadas.'},
+    {n:'Referido de crédito', p:'financiero', pl:'Bancos', f:'V3', d:'Comisión por cada crédito de vehículo desembolsado desde la app.'},
+    {n:'Referido de seguros', p:'financiero', pl:'Aseguradoras', f:'V3', d:'Comisión por cada póliza todo riesgo emitida, con una agencia habilitada.'},
+    {n:'Clasificados de vehículos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Publicación gratis y destacados pagos, con planes mensuales para compraventas y concesionarios.'},
+    {n:'Tienda de repuestos', p:'vendedor', pl:'Vendedores', f:'V4', d:'Comisión por cada repuesto o accesorio vendido en la app.'},
+    {n:'Compraventa protegida', p:'usuario', pl:'Comprador y vendedor', f:'V4', d:'Tarifa por custodiar el pago y hacer el traspaso de principio a fin.'},
+    {n:'Datos del mercado', p:'marcas', pl:'Empresas del sector', f:'V4', d:'Estimador de precios y tendencias con datos anonimizados.'}
+  ];
+  var filtro = {pagador:'todos', fase:'todas'};
+  function pintarIng(animar){
+    var l = ING.filter(function(x){ return (filtro.pagador === 'todos' || x.p === filtro.pagador) && (filtro.fase === 'todas' || x.f === filtro.fase); });
+    var cont = $('ingresos');
+    cont.innerHTML = l.length ? l.map(function(x){
+      return '<article class="ing"><h3>' + x.n + '</h3><p>' + x.d + '</p><div class="meta"><span class="chip">' + x.f + ' · ' + FASEN[x.f] + '</span><span class="chip">Paga: ' + x.pl + '</span>' + (x.ev ? '<span class="chip pend">' + x.ev + '</span>' : '') + '</div></article>';
+    }).join('') : '<p class="vacio">No hay fuentes de ingreso con esos dos filtros. Cambia uno de los dos.</p>';
+    $('conteo').textContent = l.length + ' de ' + ING.length + ' fuentes de ingreso. Precios y porcentajes por definir con los primeros aliados.';
+    if (animar) [].forEach.call(cont.children, function(c, i){ anim(c, [{opacity:0, transform:'translateY(15px)'}, {opacity:1, transform:'translateY(0)'}], {d:380, delay:i * 40}); });
+  }
+  [].forEach.call(document.querySelectorAll('.filtro'), function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f; filtro[f] = b.dataset.v;
+      [].forEach.call(document.querySelectorAll('.filtro[data-f="' + f + '"]'), function(o){ o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      pintarIng(true);
+    });
+  });
+  pintarIng(false);
+
+  /* ================= Calendario de frecuencia ================= */
+  (function(){
+    var on = {parq:function(d){ return d % 2 === 1; }, lav:function(d){ return d === 12; }, tal:function(){ return false; }};
+    var celdas = [];
+    [].forEach.call(document.querySelectorAll('[data-dias]'), function(f){
+      var k = f.dataset.dias, h = '';
+      for (var d = 1; d <= 30; d++) h += '<i' + (on[k](d) ? ' class="on"' : '') + '></i>';
+      f.innerHTML = h;
+      [].forEach.call(f.children, function(c, i){ if (c.classList.contains('on')) celdas.push([c, i]); });
+    });
+    alVer($('cal'), function(){
+      celdas.forEach(function(x){ anim(x[0], [{transform:'scaleY(0)'}, {transform:'scaleY(1)'}], {d:300, delay:x[1] * 45, e:'cubic-bezier(.3,1.4,.5,1)'}); });
+    }, 0.5);
+  })();
+
+  /* ================= Horas valle ================= */
+  (function(){
+    var svg = $('valle'), base = [35,70,86,72,46,36,30,28,33,44,62,84,88,70,50,38], promo = [0,0,0,0,20,28,32,34,26,12,0,0,0,0,0,0];
+    var W = 640, H = 230, ml = 44, mr = 4, mt = 24, mb = 30, n = base.length, bw = (W - ml - mr) / n;
+    var y = function(v){ return mt + (H - mt - mb) * (1 - v / 100); }, h = '';
+    [0, 50, 100].forEach(function(v){
+      h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="var(--linea)"/><text x="' + (ml - 7.5) + '" y="' + (y(v) + 4) + '" text-anchor="end" fill="var(--txt-3)" font-family="Montserrat, sans-serif" font-size="11">' + v + ' %</text>';
+    });
+    var x0 = ml + bw * 4, x1 = ml + bw * 10;
+    h += '<line x1="' + x0 + '" x2="' + x1 + '" y1="7.5" y2="7.5" stroke="var(--txt-2)"/><line x1="' + x0 + '" x2="' + x0 + '" y1="7.5" y2="15" stroke="var(--txt-2)"/><line x1="' + x1 + '" x2="' + x1 + '" y1="7.5" y2="15" stroke="var(--txt-2)"/>';
+    h += '<rect x="' + ((x0 + x1) / 2 - 52) + '" y="0" width="104" height="15" fill="var(--sup-1)"/><text x="' + ((x0 + x1) / 2) + '" y="11" text-anchor="middle" fill="var(--txt-1)" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" letter-spacing="1.76">HORAS VALLE</text>';
+    base.forEach(function(v, i){
+      var bx = ml + bw * i + bw * 0.18, w = bw * 0.64;
+      h += '<rect class="vb" x="' + bx + '" y="' + y(v) + '" width="' + w + '" height="' + (y(0) - y(v)) + '" fill="var(--n-3)"/>';
+      if (promo[i]) h += '<rect class="vp" x="' + bx + '" y="' + y(v + promo[i]) + '" width="' + w + '" height="' + (y(v) - y(v + promo[i])) + '" fill="var(--acc-2)"/>';
+      if (i % 3 === 0){
+        var hr = 6 + i, et = hr < 12 ? hr + ' a. m.' : hr === 12 ? '12 m.' : (hr - 12) + ' p. m.';
+        h += '<text x="' + (bx + w / 2) + '" y="' + (H - 9) + '" text-anchor="middle" fill="var(--txt-3)" font-family="Montserrat, sans-serif" font-size="11">' + et + '</text>';
+      }
+    });
+    svg.innerHTML = h;
+    alVer(svg, function(){
+      [].forEach.call(svg.querySelectorAll('.vb'), function(r, i){ r.style.transformOrigin = 'center ' + y(0) + 'px'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scaleY(0)'}, {transform:'scaleY(1)'}], {d:600, delay:i * 35}); });
+      [].forEach.call(svg.querySelectorAll('.vp'), function(r, i){ r.style.transformOrigin = 'center ' + (+r.getAttribute('y') + +r.getAttribute('height')) + 'px'; r.style.transformBox = 'view-box'; anim(r, [{transform:'scaleY(0)'}, {transform:'scaleY(1)'}], {d:520, delay:1000 + i * 110, e:'cubic-bezier(.3,1.4,.5,1)'}); });
+    }, 0.4);
+  })();
+
+  /* ================= Hoja de ruta ================= */
+  var FASES = [
+    {v:'V1', n:'Lanzamiento', c:'Al terminar el desarrollo (hito H0)',
+     s:[['ico-ubicacion','Reservas de parqueadero','con horas valle y pago en la app'],['ico-detailing','Reservas de lavado',''],['ico-taller','Reservas de taller','y recordatorio de cambio de aceite'],['ico-alerta','Mi garaje','SOAT, tecnomecánica, pico y placa y multas'],['ico-consignacion','Vehículos DRS','solo el inventario propio'],['ico-traspaso','Trámites DRS','solo en Bogotá'],['ico-documento','Panel web del comercio','agenda, reservas, servicios, promociones, reseñas y pagos']],
+     p:'Lo que más se usa, lo que más retiene y lo que DRS ya sabe operar. Se deja fuera todo lo que depende de aliados que todavía no están firmados.'},
+    {v:'V2', n:'Retención', c:'Con reservas repetidas, una agencia de seguros habilitada (SOAT) y un CDA firmados (H2)',
+     s:[['PTS','Puntos y fidelización','financiados por los comercios'],['ico-certificado','Renovación de SOAT y tecnomecánica','desde la alerta de vencimiento'],['ico-runt','Informe vehicular','de cualquier placa'],['ico-horario','Horas valle con IA','sugerencias de descuento por zona'],['ico-chat','Asistente de trámites','responde a cualquier hora']],
+     p:'El objetivo es que el usuario vuelva cada semana y que el comercio vea resultados medibles.'},
+    {v:'V3', n:'Financiero', c:'Al firmar el primer banco o aseguradora, o con una base activa que interese a las marcas (H3)',
+     s:[['FIN','Crédito para vehículo','con bancos y financieras aliados'],['SEG','Seguro todo riesgo','con una agencia habilitada'],['PUB','Pantalla de entrada patrocinada','y pauta de marcas y concesionarios'],['DST','Destacados en la zona','para comercios aliados']],
+     p:'Con una base activa, la app vale para los aliados financieros y para las marcas.'},
+    {v:'V4', n:'Plataforma', c:'Con base de usuarios suficiente y custodia contratada (H4)',
+     s:[['ico-precio','Clasificados de vehículos','abiertos a cualquier vendedor'],['ico-carrito','Tienda de repuestos','conectada con los talleres'],['ico-verificado','Compraventa protegida','pago en custodia y traspaso incluido'],['DAT','Datos del mercado','precios y tendencias anonimizados'],['2.ª','Segunda ciudad','el mismo modelo de comercios aliados']],
+     p:'La app pasa de ser un conjunto de servicios a ser la plataforma donde ocurre todo lo del vehículo.'}
+  ];
+  var rutaSvg = $('rutaSvg'), PX = [125, 375, 625, 875], PY = [90, 70, 50, 30], via, viaLen, viaPos = [], faseSel = 0;
+  (function(){
+    var d = 'M20 90 H300 L320 70 H550 L570 50 H800 L820 30 H980', h = '<path class="via-base" d="' + d + '"/><path class="via" id="via" d="' + d + '"/>';
+    PX.forEach(function(x, i){ h += '<rect class="parada" data-i="' + i + '" x="' + (x - 7.5) + '" y="' + (PY[i] - 7.5) + '" width="15" height="15"/><text x="' + x + '" y="' + (PY[i] - 15) + '" text-anchor="middle" fill="var(--txt-3)" font-family="Montserrat, sans-serif" font-weight="600" font-size="11" letter-spacing="1.76">' + FASES[i].v + '</text>'; });
+    h += '<rect class="marcador" id="marcador" x="-5" y="-5" width="10" height="10"/>';
+    rutaSvg.innerHTML = h;
+    via = $('via'); viaLen = via.getTotalLength();
+    PX.forEach(function(x){ var lo = 0, hi = viaLen; for (var k = 0; k < 30; k++){ var m = (lo + hi) / 2; if (via.getPointAtLength(m).x < x) lo = m; else hi = m; } viaPos.push(hi); });
+    via.style.strokeDasharray = viaLen + ' ' + viaLen;
+  })();
+  var marcLen = 0;
+  function moverMarcador(i, dur){
+    var desde = marcLen, hasta = viaPos[i], m = $('marcador'), t0 = null;
+    function paso(ts){
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - k, 3), L = desde + (hasta - desde) * e, p = via.getPointAtLength(L);
+      m.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ')');
+      via.style.strokeDashoffset = viaLen - L;
+      if (k < 1) requestAnimationFrame(paso); else marcLen = hasta;
+    }
+    if (QUIETO || !dur){ var p = via.getPointAtLength(hasta); m.setAttribute('transform', 'translate(' + p.x + ' ' + p.y + ')'); via.style.strokeDashoffset = viaLen - hasta; marcLen = hasta; }
+    else requestAnimationFrame(paso);
+    [].forEach.call(rutaSvg.querySelectorAll('.parada'), function(r, j){ r.classList.toggle('on', j <= i); });
+  }
+  var fasesEl = $('fases');
+  FASES.forEach(function(f, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'fase'; b.id = 'fase-' + f.v;
+    b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    b.innerHTML = '<span class="vn">' + f.v + '</span><h3>' + f.n + '</h3><small>' + f.c + '</small>';
+    b.addEventListener('click', function(){ verFase(i, true); });
+    fasesEl.appendChild(b);
+  });
+  function verFase(i, animar){
+    faseSel = i;
+    var f = FASES[i];
+    [].forEach.call(fasesEl.children, function(b, j){ b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+    $('faseDet').innerHTML = '<ul class="lista-serv">' + f.s.map(function(s){ return '<li>' + glifo(s[0]) + '<span><b>' + s[1] + '</b>' + (s[2] ? '<br>' + s[2] : '') + '</span></li>'; }).join('') + '</ul><div class="bloque"><h3 style="color:var(--txt-3)">Por qué en esta fase</h3><p>' + f.p + '</p></div>';
+    if (animar) [].forEach.call($('faseDet').querySelectorAll('li'), function(li, j){ anim(li, [{opacity:0, transform:'translateX(-15px)'}, {opacity:1, transform:'translateX(0)'}], {d:360, delay:j * 50}); });
+    moverMarcador(i, animar ? 700 : 0);
+  }
+  verFase(0, false);
+  alVer(rutaSvg, function(){ marcLen = 0; moverMarcador(faseSel, 0); var j = faseSel; marcLen = 0; via.style.strokeDashoffset = viaLen; setTimeout(function(){ moverMarcador(3, 1600); setTimeout(function(){ moverMarcador(j, 600); }, 1900); }, 200); }, 0.6);
+
+  /* ================= Tablero de proyecciones ================= */
+  var M = MODELO, CASOSN = {pesimista:'Pesimista', conservador:'Conservador', favorable:'Favorable'};
+  var CASOTXT = {
+    pesimista:'Pesimista. Adopción lenta, US$2,5 por instalación, 15 % de usuarios que se van cada mes y 3 % que reserva: las cinco métricas de corte quedan en zona de replantear. Con el corte activado, la operación se detiene en el mes 8 y la pérdida se queda en el plan.',
+    conservador:'Conservador. Lo que esperaríamos con una ejecución normal: US$1,6 por instalación, 10 % de abandono, 6 % de usuarios que reservan unas 3 veces al mes y una nómina que crece 25 % al año.',
+    favorable:'Favorable. Si el parqueadero engancha: US$1,5 por instalación, 8 % de abandono, 8 % que reserva 3,5 veces al mes, más pauta y un equipo que crece rápido. No es la proyección base.'
+  };
+  var P = [
+    {k:'pauta0', g:'Usuarios', n:'Pauta mensual al lanzar', min:1e6, max:15e6, st:5e5, f:function(v){ return fmtM(v); }},
+    {k:'pautaCrec', g:'Usuarios', n:'Crecimiento anual de la pauta', min:0, max:1, st:.05, f:pct0},
+    {k:'cpi', g:'Usuarios', n:'Costo por instalación', min:.5, max:4, st:.1, f:function(v){ return 'US$' + dec(v, 1); }, corte:'cpi'},
+    {k:'activacion', g:'Usuarios', n:'Instalaciones que registran un vehículo', min:.2, max:.8, st:.05, f:pct0, corte:'activacion'},
+    {k:'churn', g:'Usuarios', n:'Usuarios que dejan la app cada mes', min:.03, max:.25, st:.01, f:pct0, corte:'churn'},
+    {k:'pctReserva', g:'Reservas', n:'Usuarios activos que reservan en el mes', min:.01, max:.2, st:.005, f:pct1, corte:'pctReserva'},
+    {k:'frecuencia', g:'Reservas', n:'Reservas al mes de quien reserva', min:1, max:15, st:.5, f:function(v){ return dec(v, 1); }},
+    {k:'ticket', g:'Reservas', n:'Valor promedio de la reserva', min:1e4, max:1e5, st:5e3, f:function(v){ return fmt(v); }},
+    {k:'take', g:'Reservas', n:'Comisión por reserva', min:.05, max:.2, st:.01, f:pct0},
+    {k:'tarifa', g:'Reservas', n:'Tarifa de servicio al usuario', min:0, max:3000, st:250, f:function(v){ return fmt(v); }},
+    {k:'nuevos0', g:'Comercios', n:'Comercios nuevos al mes', min:1, max:50, st:1, f:ent},
+    {k:'mensualidad', g:'Comercios', n:'Mensualidad del comercio', min:0, max:25e4, st:1e4, f:function(v){ return fmt(v); }},
+    {k:'pctPagan', g:'Comercios', n:'Comercios que pagan la mensualidad', min:.05, max:.8, st:.05, f:pct0, corte:'pctPagan'},
+    {k:'nomina0', g:'Equipo', n:'Nómina mensual desde el mes 9', min:0, max:4e7, st:1e6, f:function(v){ return fmtM(v); }},
+    {k:'nominaCrec', g:'Equipo', n:'Crecimiento anual de la nómina', min:0, max:1, st:.05, f:pct0},
+    {k:'org0', g:'Más', n:'Instalaciones orgánicas al mes al lanzar', min:0, max:2000, st:50, f:ent},
+    {k:'orgCrec', g:'Más', n:'Crecimiento mensual de lo orgánico', min:0, max:.08, st:.005, f:pct1},
+    {k:'cpiCrec', g:'Más', n:'Encarecimiento anual de la instalación', min:0, max:.3, st:.01, f:pct0},
+    {k:'rampa', g:'Más', n:'Mejora de la tasa de reserva en 24 meses', min:1, max:3, st:.1, f:function(v){ return '×' + dec(v, 1); }},
+    {k:'nuevosCrec', g:'Más', n:'Crecimiento anual de comercios nuevos', min:0, max:1, st:.05, f:pct0},
+    {k:'churnCom', g:'Más', n:'Comercios que se van cada mes', min:0, max:.15, st:.01, f:pct0},
+    {k:'pctDest', g:'Más', n:'Comercios que compran destacados (V3)', min:0, max:.4, st:.01, f:pct0},
+    {k:'precioDest', g:'Más', n:'Precio mensual del destacado', min:0, max:2e5, st:1e4, f:function(v){ return fmt(v); }},
+    {k:'arpuRenov', g:'Más', n:'SOAT, tecnomecánica e informe (V2), por activo al mes', min:0, max:600, st:10, f:function(v){ return fmt(v); }},
+    {k:'aperturas', g:'Más', n:'Aperturas de la app al mes por activo (publicidad, V3)', min:0, max:30, st:1, f:ent},
+    {k:'cpm', g:'Más', n:'Precio por mil impresiones (CPM)', min:0, max:3e4, st:1e3, f:function(v){ return fmt(v); }},
+    {k:'arpuFin', g:'Más', n:'Crédito y seguros (V3), por activo al mes', min:0, max:600, st:10, f:function(v){ return fmt(v); }},
+    {k:'arpuMkt', g:'Más', n:'Clasificados, repuestos y compraventa (V4), por activo al mes', min:0, max:600, st:10, f:function(v){ return fmt(v); }},
+    {k:'v2', g:'Más', n:'V2 sale en el mes en el mercado', min:3, max:24, st:1, f:ent},
+    {k:'v3', g:'Más', n:'V3 sale en el mes en el mercado', min:6, max:36, st:1, f:ent},
+    {k:'v4', g:'Más', n:'V4 sale en el mes en el mercado', min:12, max:48, st:1, f:ent},
+    {k:'techUsuario', g:'Más', n:'Infraestructura por usuario activo al mes', min:0, max:400, st:10, f:function(v){ return fmt(v); }},
+    {k:'comercial', g:'Más', n:'Salidas a firmar comercios al mes, desde el mes 9', min:0, max:5e6, st:1e5, f:function(v){ return fmt(v); }},
+    {k:'admin', g:'Más', n:'Contabilidad y legal al mes, desde el mes 9', min:0, max:5e6, st:1e5, f:function(v){ return fmt(v); }},
+    {k:'aux', g:'Más', n:'Auxilio por ingeniero en los meses 1 a 8', min:0, max:5e6, st:25e4, f:function(v){ return fmt(v); }},
+    {k:'nAux', g:'Más', n:'Ingenieros con auxilio', min:2, max:3, st:1, f:ent},
+    {k:'inflacion', g:'Más', n:'Inflación anual de precios', min:0, max:.12, st:.01, f:pct0}
+  ];
+  function pct0(v){ return Math.round(v * 100) + ' %'; }
+  function pct1(v){ return dec(v * 100, 1) + ' %'; }
+  var caso = 'pesimista', par = Object.assign({}, CASOS.pesimista), personal = false;
+  var CORTO = {cpi:'Instalación', activacion:'Registro', pctReserva:'Reservan', churn:'Abandono', pctPagan:'Pagan mensualidad'};
+  var ZONA = {replantear:'var(--neg)', ajustar:'var(--warn)', escalar:'var(--pos)'};
+  var ZONAN = {replantear:'Se replantea', ajustar:'Se ajusta', escalar:'Se escala'};
+  (function(){
+    var pal = $('palancas'), grupos = {}, orden = ['Usuarios', 'Reservas', 'Comercios', 'Equipo'];
+    orden.forEach(function(g){ var d = document.createElement('div'); d.className = 'grupo'; d.innerHTML = '<p class="etq">' + g + '</p>'; pal.appendChild(d); grupos[g] = d; });
+    var det = document.createElement('details'); det.className = 'avanz'; det.innerHTML = '<summary>Más supuestos</summary>';
+    var gm = document.createElement('div'); gm.className = 'grupo'; det.appendChild(gm); grupos['Más'] = gm;
+    var cf = document.createElement('label'); cf.className = 'check'; cf.setAttribute('for', 'pCloud');
+    cf.innerHTML = '<input type="checkbox" id="pCloud"> Panel del comercio en Cloudflare Pages (sin Vercel Pro)';
+    gm.appendChild(cf);
+    pal.appendChild(det);
+    P.forEach(function(p){
+      var d = document.createElement('div'); d.className = 'pal';
+      d.innerHTML = '<div class="top"><label for="p-' + p.k + '">' + p.n + '</label><output id="o-' + p.k + '" for="p-' + p.k + '"></output></div><input type="range" id="p-' + p.k + '" min="' + p.min + '" max="' + p.max + '" step="' + p.st + '">';
+      grupos[p.g].appendChild(d);
+      var inp = d.querySelector('input');
+      inp.addEventListener('input', function(){ par[p.k] = +inp.value; personal = true; recalcular(); });
+    });
+    $('pCloud').addEventListener('change', function(){ par.cloudflare = this.checked; personal = true; recalcular(); });
+    $('corteOn').addEventListener('change', function(){ par.corte = this.checked; recalcular(); });
+  })();
+  function sincronizar(){
+    P.forEach(function(p){ $('p-' + p.k).value = par[p.k]; });
+    $('pCloud').checked = !!par.cloudflare;
+  }
+  function salidas(){
+    var sem = M.semaforo(par), z = {};
+    sem.lista.forEach(function(x){ z[x.k] = x.e; });
+    P.forEach(function(p){
+      var o = $('o-' + p.k);
+      o.innerHTML = p.f(par[p.k]) + (p.corte ? '<i class="pt" style="background:' + ZONA[z[p.corte]] + '" title="' + ZONAN[z[p.corte]] + '"></i>' : '');
+    });
+    return sem;
+  }
+  function elegirCaso(c){
+    caso = c; var corte = $('corteOn').checked;
+    par = Object.assign({}, CASOS[c], {corte:corte}); personal = false;
+    [].forEach.call(document.querySelectorAll('#casos button'), function(b){ b.setAttribute('aria-pressed', b.dataset.caso === c ? 'true' : 'false'); });
+    sincronizar(); recalcular();
+  }
+  [].forEach.call(document.querySelectorAll('#casos button'), function(b){ b.addEventListener('click', function(){ elegirCaso(b.dataset.caso); }); });
+  $('restablecer').addEventListener('click', function(){ elegirCaso(caso); });
+
+  /* --- metas --- */
+  var METAS = [{h:'H1', k:3, reg:1000, act:400, com:30}, {h:'H2', k:6, reg:2500, act:900, com:50}, {h:'H3', k:12, reg:6000, act:2000, com:100}, {h:'H4', k:24, reg:20000, act:6000, com:300}];
+  function cumpleMetas(rs, p){
+    return METAS.map(function(m){ var r = rs[p.lanz + m.k - 2]; return r && r.registrados >= m.reg && r.activos >= m.act && r.aliados >= m.com; });
+  }
+
+  /* --- KPIs con conteo --- */
+  var kpiPrev = {};
+  function contar(id, valor, f, cls){
+    var el = $(id), prev = kpiPrev[id], desde = typeof prev === 'number' ? prev : (typeof valor === 'number' ? 0 : valor);
+    kpiPrev[id] = valor;
+    el.className = 'cifra-d num' + (cls ? ' ' + cls : '');
+    if (QUIETO || typeof valor !== 'number'){ el.textContent = typeof valor === 'number' ? f(valor) : valor; return; }
+    var t0 = null, tok = (el._tok = (el._tok || 0) + 1);
+    function paso(ts){
+      if (tok !== el._tok) return;
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / 550), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = f(desde + (valor - desde) * e);
+      if (k < 1) requestAnimationFrame(paso);
+    }
+    el.textContent = f(desde);
+    requestAnimationFrame(paso);
+  }
+
+  /* --- gráficas del tablero --- */
+  var vista = 'pyg', datosAct = null, datosObj = null, tween = null;
+  var G = {W:760, H:360, ml:64, mr:16, mt:28, mb:34};
+  var VISTAS = {
+    pyg:{t:'Ingresos, costos y EBITDA por mes, en millones de COP', ley:[['var(--acc-2)','Ingresos'],['var(--txt-2)','Costos'],['var(--pos)','EBITDA positivo'],['var(--neg)','EBITDA negativo']]},
+    ing:{t:'Ingresos por fuente cada mes, en millones de COP', ley:[['var(--ser-1)','Reservas'],['var(--ser-2)','Comercios'],['var(--ser-3)','SOAT, tecnomecánica e informe'],['var(--ser-4)','Publicidad'],['var(--n-2)','Crédito, seguros y clasificados']]},
+    cos:{t:'Costos por rubro cada mes, en millones de COP', ley:[['var(--ser-1)','Equipo'],['var(--ser-3)','Pauta'],['var(--n-2)','Variables: pasarela, infraestructura e ICA'],['var(--ser-4)','Software, comercios, contabilidad y únicos']]},
+    caja:{t:'Caja acumulada, en millones de COP: lo más bajo es el capital que se necesita', ley:[['var(--txt-1)','Caja acumulada'],['var(--neg)','Por debajo de cero'],['var(--pos)','Por encima de cero']]},
+    us:{t:'Usuarios activos y comercios aliados al cierre de cada mes, con las metas H1 a H4', ley:[['var(--acc-2)','Usuarios activos'],['var(--txt-2)','Comercios aliados'],['var(--txt-1)','Meta']]}
+  };
+  function series(rs){
+    var g = function(f){ return rs.map(f); };
+    return {
+      ing:g(function(r){ return r.ingT; }), cos:g(function(r){ return r.cosT; }), eb:g(function(r){ return r.ebitda; }), caja:g(function(r){ return r.caja; }),
+      i1:g(function(r){ return r.ing.comision + r.ing.tarifa; }), i2:g(function(r){ return r.ing.mensualidad + r.ing.destacados; }), i3:g(function(r){ return r.ing.renov; }), i4:g(function(r){ return r.ing.publicidad; }), i5:g(function(r){ return r.ing.financiero + r.ing.mercado; }),
+      c1:g(function(r){ return r.cos.equipo; }), c2:g(function(r){ return r.cos.pauta; }), c3:g(function(r){ return r.var; }), c4:g(function(r){ return r.cos.tech + r.cos.comercial + r.cos.admin + r.cos.unicos; }),
+      act:g(function(r){ return r.activos; }), com:g(function(r){ return r.aliados; })
+    };
+  }
+  function cero(s){ var o = {}; for (var k in s) o[k] = s[k].map(function(){ return 0; }); return o; }
+  function mezclar(a, b, t){ var o = {}; for (var k in b) o[k] = b[k].map(function(v, i){ return a[k][i] + (v - a[k][i]) * t; }); return o; }
+  function escala(min, max, n){
+    if (max - min < 1) max = min + 1;
+    var bruto = (max - min) / (n || 5), mag = Math.pow(10, Math.floor(Math.log10(bruto))), r = bruto / mag;
+    var paso = (r <= 1 ? 1 : r <= 2 ? 2 : r <= 2.5 ? 2.5 : r <= 5 ? 5 : 10) * mag;
+    var lo = Math.floor(min / paso) * paso, hi = Math.ceil(max / paso) * paso, ts = [];
+    for (var v = lo; v <= hi + paso / 2; v += paso) ts.push(v);
+    return {lo:lo, hi:hi, ts:ts};
+  }
+  function etqM(v){ var a = Math.abs(v) / 1e6; return (v < 0 ? '−' : '') + (a >= 10 || a === 0 ? ent(a) : dec(a, 1)); }
+  var TXT = 'font-family="Montserrat, sans-serif" font-size="11"';
+  function dibujar(d){
+    var W = G.W, H = G.H, ml = G.ml, mr = G.mr, mt = G.mt, mb = G.mb, n = d.ing.length;
+    var X = function(i){ return ml + (W - ml - mr) * i / (n - 1); }, h = '', res = ultimo.s, L = par.lanz;
+    function marco(sc, Y, fmtEje, y0, y1){
+      sc.ts.forEach(function(v){ h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--linea)"/><text x="' + (ml - 7.5) + '" y="' + (Y(v) + 4) + '" text-anchor="end" fill="var(--txt-3)" ' + TXT + '>' + fmtEje(v) + '</text>'; });
+      for (var a = 0; a < 5; a++){
+        var xa = X(a * 12), xc = X(a * 12 + 5.5);
+        if (a) h += '<line x1="' + xa + '" x2="' + xa + '" y1="' + y0 + '" y2="' + y1 + '" stroke="var(--linea)"/>';
+        h += '<text x="' + xc + '" y="' + (H - 10) + '" text-anchor="middle" fill="var(--txt-3)" ' + TXT + ' font-weight="600" letter-spacing="1.76">AÑO ' + (a + 1) + '</text>';
+      }
+      var xl = X(L - 1);
+      h += '<line x1="' + xl + '" x2="' + xl + '" y1="' + y0 + '" y2="' + y1 + '" stroke="var(--txt-3)" stroke-dasharray="3 3"/><text x="' + (xl + 4) + '" y="' + (mt - 10) + '" fill="var(--txt-2)" ' + TXT + ' font-weight="600" letter-spacing="1.76">LANZAMIENTO</text>';
+      if (par.corte && ultimo.rs[n - 1].cortado){ var xc2 = X(L + 3); h += '<line x1="' + xc2 + '" x2="' + xc2 + '" y1="' + y0 + '" y2="' + y1 + '" stroke="var(--neg)" stroke-dasharray="3 3"/><text x="' + (xc2 + 4) + '" y="' + (mt + 6) + '" fill="var(--neg)" ' + TXT + ' font-weight="600" letter-spacing="1.76">CORTE</text>'; }
+    }
+    function linea(arr, Y, color, ancho, extra){ return '<polyline fill="none" stroke="' + color + '" stroke-width="' + ancho + '" stroke-linejoin="miter" ' + (extra || '') + ' points="' + arr.map(function(v, i){ return X(i).toFixed(1) + ',' + Y(v).toFixed(1); }).join(' ') + '"/>'; }
+    if (vista === 'pyg'){
+      var mx = Math.max.apply(null, d.ing.concat(d.cos)), mn = Math.min.apply(null, d.eb.concat([0]));
+      var sc = escala(mn, mx, 5), Y = function(v){ return mt + (H - mt - mb) * (sc.hi - v) / (sc.hi - sc.lo); };
+      marco(sc, Y, etqM, mt, H - mb);
+      var bw = (W - ml - mr) / n * 0.6;
+      d.eb.forEach(function(v, i){ if (!v) return; var y1 = Y(Math.max(v, 0)), y2 = Y(Math.min(v, 0)); h += '<rect x="' + (X(i) - bw / 2).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(0, y2 - y1).toFixed(1) + '" fill="' + (v > 0 ? 'var(--pos)' : 'var(--neg)') + '" opacity=".75"/>'; });
+      h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="var(--txt-3)"/>';
+      h += linea(d.cos, Y, 'var(--txt-2)', 2) + linea(d.ing, Y, 'var(--acc-2)', 2.5);
+      if (res.equilibrio){ var xe = X(res.equilibrio - 1); h += '<line x1="' + xe + '" x2="' + xe + '" y1="' + mt + '" y2="' + (H - mb) + '" stroke="var(--txt-1)"/><rect x="' + (xe + 4) + '" y="' + (mt + 2) + '" width="150" height="17" fill="var(--sup-1)"/><text x="' + (xe + 7.5) + '" y="' + (mt + 14) + '" fill="var(--txt-1)" ' + TXT + ' font-weight="600" letter-spacing="1.76">EQUILIBRIO · MES ' + res.equilibrio + '</text>'; }
+    } else if (vista === 'ing' || vista === 'cos'){
+      var ks = vista === 'ing' ? ['i1','i2','i3','i4','i5'] : ['c1','c2','c3','c4'];
+      var cols = VISTAS[vista].ley.map(function(x){ return x[0]; });
+      var tot = d.ing.map(function(_, i){ return ks.reduce(function(a, k){ return a + d[k][i]; }, 0); });
+      var sc2 = escala(0, Math.max.apply(null, tot), 5), Y2 = function(v){ return mt + (H - mt - mb) * (sc2.hi - v) / (sc2.hi - sc2.lo); };
+      marco(sc2, Y2, etqM, mt, H - mb);
+      var base = d.ing.map(function(){ return 0; });
+      ks.forEach(function(k, j){
+        var arriba = base.map(function(b, i){ return b + d[k][i]; });
+        var pts = arriba.map(function(v, i){ return X(i).toFixed(1) + ',' + Y2(v).toFixed(1); }).concat(base.slice().reverse().map(function(v, i){ return X(n - 1 - i).toFixed(1) + ',' + Y2(v).toFixed(1); }));
+        h += '<polygon points="' + pts.join(' ') + '" fill="' + cols[j] + '"/>';
+        base = arriba;
+      });
+      h += linea(tot, Y2, 'var(--txt-1)', 1);
+    } else if (vista === 'caja'){
+      var sc3 = escala(Math.min.apply(null, d.caja.concat([0])), Math.max.apply(null, d.caja.concat([0])), 5), Y3 = function(v){ return mt + (H - mt - mb) * (sc3.hi - v) / (sc3.hi - sc3.lo); };
+      marco(sc3, Y3, etqM, mt, H - mb);
+      var y0 = Y3(0), area = d.caja.map(function(v, i){ return X(i).toFixed(1) + ',' + Y3(v).toFixed(1); }).concat([X(n - 1) + ',' + y0, X(0) + ',' + y0]).join(' ');
+      h += '<defs><clipPath id="cAba"><rect x="0" y="' + y0 + '" width="' + W + '" height="' + H + '"/></clipPath><clipPath id="cArr"><rect x="0" y="0" width="' + W + '" height="' + y0 + '"/></clipPath></defs>';
+      h += '<polygon points="' + area + '" fill="var(--neg)" opacity=".22" clip-path="url(#cAba)"/><polygon points="' + area + '" fill="var(--pos)" opacity=".22" clip-path="url(#cArr)"/>';
+      h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y0 + '" y2="' + y0 + '" stroke="var(--txt-3)"/>' + linea(d.caja, Y3, 'var(--txt-1)', 2);
+      var im = 0; d.caja.forEach(function(v, i){ if (v < d.caja[im]) im = i; });
+      if (d.caja[im] < 0){
+        var xm = X(im), ym = Y3(d.caja[im]), izq = xm > W * 0.6;
+        h += '<rect x="' + (xm - 5) + '" y="' + (ym - 5) + '" width="10" height="10" fill="var(--txt-1)"/>';
+        h += '<rect x="' + (izq ? xm - 250 : xm + 9) + '" y="' + (ym + 9) + '" width="241" height="17" fill="var(--sup-1)"/><text x="' + (izq ? xm - 12 : xm + 12) + '" y="' + (ym + 21) + '" text-anchor="' + (izq ? 'end' : 'start') + '" fill="var(--txt-1)" ' + TXT + ' font-weight="600" letter-spacing="1.2">CAPITAL NECESARIO ' + fmtM(-d.caja[im]).toUpperCase() + ' · MES ' + (im + 1) + '</text>';
+      }
+    } else if (vista === 'us'){
+      var mid = (H - mt - mb) / 2, paneles = [['act', 'var(--acc-2)', 'act', mt, mt + mid - 15, 'USUARIOS ACTIVOS'], ['com', 'var(--txt-2)', 'com', mt + mid + 15, H - mb, 'COMERCIOS ALIADOS']];
+      var ancla = {act:'act', com:'com'};
+      paneles.forEach(function(pn, pi){
+        var arr = d[pn[0]], metasV = METAS.map(function(m){ return m[pn[2]]; });
+        var mxv = Math.max.apply(null, arr.concat(metasV)), sc4 = escala(0, mxv, 3), top = pn[3], bot = pn[4];
+        var Y4 = function(v){ return top + (bot - top) * (sc4.hi - v) / (sc4.hi - sc4.lo); };
+        sc4.ts.forEach(function(v){ h += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y4(v) + '" y2="' + Y4(v) + '" stroke="var(--linea)"/><text x="' + (ml - 7.5) + '" y="' + (Y4(v) + 4) + '" text-anchor="end" fill="var(--txt-3)" ' + TXT + '>' + (v >= 1000 ? dec(v / 1000, v % 1000 ? 1 : 0) + ' mil' : ent(v)) + '</text>'; });
+        h += '<text x="' + (ml + 4) + '" y="' + (top - 7.5) + '" fill="var(--txt-2)" ' + TXT + ' font-weight="600" letter-spacing="1.76">' + pn[5] + '</text>';
+        for (var a = 1; a < 5; a++){ var xa = X(a * 12); h += '<line x1="' + xa + '" x2="' + xa + '" y1="' + top + '" y2="' + bot + '" stroke="var(--linea)"/>'; }
+        var xl = X(L - 1); h += '<line x1="' + xl + '" x2="' + xl + '" y1="' + top + '" y2="' + bot + '" stroke="var(--txt-3)" stroke-dasharray="3 3"/>';
+        h += linea(arr, Y4, pn[1], 2.5);
+        METAS.forEach(function(m){
+          var xm = X(L + m.k - 2), ym = Y4(m[pn[2]]);
+          h += '<rect x="' + (xm - 4) + '" y="' + (ym - 4) + '" width="8" height="8" fill="none" stroke="var(--txt-1)" stroke-width="1.5"/><text x="' + xm + '" y="' + (ym - 9) + '" text-anchor="middle" fill="var(--txt-1)" ' + TXT + ' font-weight="600">' + m.h + '</text>';
+        });
+      });
+      for (var a2 = 0; a2 < 5; a2++) h += '<text x="' + X(a2 * 12 + 5.5) + '" y="' + (H - 10) + '" text-anchor="middle" fill="var(--txt-3)" ' + TXT + ' font-weight="600" letter-spacing="1.76">AÑO ' + (a2 + 1) + '</text>';
+    }
+    h += '<line id="cruz" x1="0" x2="0" y1="' + mt + '" y2="' + (H - mb) + '" stroke="var(--txt-2)" stroke-width="1" visibility="hidden"/>';
+    h += '<rect id="captura" x="' + ml + '" y="' + mt + '" width="' + (W - ml - mr) + '" height="' + (H - mt - mb) + '" fill="transparent"/>';
+    $('graf').innerHTML = h;
+    enganchar();
+  }
+  function animarA(nuevos, desdeCero){
+    datosObj = nuevos;
+    var desde = desdeCero || !datosAct ? cero(nuevos) : datosAct;
+    if (tween) cancelAnimationFrame(tween);
+    if (QUIETO){ datosAct = nuevos; dibujar(nuevos); return; }
+    var t0 = null, dur = desdeCero ? 900 : 480;
+    function paso(ts){
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      datosAct = mezclar(desde, nuevos, e); dibujar(datosAct);
+      if (k < 1) tween = requestAnimationFrame(paso);
+    }
+    tween = requestAnimationFrame(paso);
+  }
+  function enganchar(){
+    var cap = $('captura'), svg = $('graf'), lec = $('lectura'), cruz = $('cruz');
+    function mover(ev){
+      var r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * G.W / r.width;
+      var i = Math.max(0, Math.min(59, Math.round((sx - G.ml) / (G.W - G.ml - G.mr) * 59)));
+      var x = G.ml + (G.W - G.ml - G.mr) * i / 59, rr = ultimo.rs[i];
+      cruz.setAttribute('x1', x); cruz.setAttribute('x2', x); cruz.setAttribute('visibility', 'visible');
+      var filas = vista === 'us'
+        ? [['Usuarios activos', ent(rr.activos)], ['Registrados', ent(rr.registrados)], ['Comercios', ent(rr.aliados)], ['Reservas', ent(rr.reservas)]]
+        : vista === 'caja' ? [['Caja acumulada', fmtM(rr.caja)], ['EBITDA del mes', fmtM(rr.ebitda)]]
+        : vista === 'ing' ? [['Reservas', fmtM(rr.ing.comision + rr.ing.tarifa)], ['Comercios', fmtM(rr.ing.mensualidad + rr.ing.destacados)], ['SOAT, tecno e informe', fmtM(rr.ing.renov)], ['Publicidad', fmtM(rr.ing.publicidad)], ['Crédito, seguros, clasif.', fmtM(rr.ing.financiero + rr.ing.mercado)], ['Total', fmtM(rr.ingT)]]
+        : vista === 'cos' ? [['Equipo', fmtM(rr.cos.equipo)], ['Pauta', fmtM(rr.cos.pauta)], ['Variables', fmtM(rr.var)], ['Software y otros', fmtM(rr.cos.tech + rr.cos.comercial + rr.cos.admin + rr.cos.unicos)], ['Total', fmtM(rr.cosT)]]
+        : [['Ingresos', fmtM(rr.ingT)], ['Costos', fmtM(rr.cosT)], ['EBITDA', fmtM(rr.ebitda)]];
+      lec.innerHTML = '<b>Mes ' + rr.m + (rr.k >= 1 ? ' · ' + rr.k + ' en el mercado' : ' · desarrollo') + '</b>' + filas.map(function(f){ return '<div class="fila"><span>' + f[0] + '</span><b>' + f[1] + '</b></div>'; }).join('');
+      lec.style.display = 'block';
+      var px = x / G.W * r.width, w = lec.offsetWidth;
+      lec.style.left = (px > r.width / 2 ? px - w - 15 : px + 15) + 'px';
+    }
+    function salir(){ lec.style.display = 'none'; cruz.setAttribute('visibility', 'hidden'); }
+    cap.addEventListener('pointermove', mover); cap.addEventListener('pointerdown', mover); cap.addEventListener('pointerleave', salir);
+  }
+  [].forEach.call(document.querySelectorAll('#pestanas button'), function(b){
+    b.addEventListener('click', function(){
+      vista = b.dataset.v;
+      [].forEach.call(document.querySelectorAll('#pestanas button'), function(o){ o.setAttribute('aria-selected', o === b ? 'true' : 'false'); });
+      pintarVista(); animarA(series(ultimo.rs), true);
+    });
+  });
+  function pintarVista(){
+    $('vistaTit').textContent = VISTAS[vista].t;
+    $('leyTab').innerHTML = VISTAS[vista].ley.map(function(x){ return '<span><i style="background:' + x[0] + '"></i>' + x[1] + '</span>'; }).join('');
+  }
+
+  /* --- estado de resultados --- */
+  function pintarPyG(s, rs){
+    var A = s.anios, cols = '<th class="n">Año 1</th><th class="n">Año 2</th><th class="n">Año 3</th><th class="n">Año 4</th><th class="n">Año 5</th>';
+    var m = function(v){ var t = dec(Math.abs(v) / 1e6, 1); return v < -0.05e6 ? '<span class="menos">−' + t + '</span>' : t; };
+    var fila = function(cls, n, f){ return '<tr class="' + cls + '"><th>' + n + '</th>' + A.map(function(a){ return '<td class="n">' + f(a) + '</td>'; }).join('') + '</tr>'; };
+    var sec = function(n){ return '<tr class="sec"><th colspan="6">' + n + '</th></tr>'; };
+    var h = '<thead><tr><th>Millones de COP</th>' + cols + '</tr></thead><tbody>';
+    h += sec('Ingresos');
+    M.FUENTES.forEach(function(f){ h += fila('sub', f.n + ' <span class="chip">' + f.f + '</span>', function(a){ return m(a.ing[f.k]); }); });
+    h += fila('tot', 'Total ingresos', function(a){ return m(a.ingT); });
+    h += sec('Costos variables');
+    M.RUBROS.filter(function(r){ return r.v; }).forEach(function(r){ h += fila('sub', r.n, function(a){ return m(a.cos[r.k]); }); });
+    h += fila('tot', 'Margen bruto', function(a){ return m(a.ingT - a.var); });
+    h += fila('sub', 'Margen bruto sobre ingresos', function(a){ return a.ingT > 0 ? Math.round((a.ingT - a.var) / a.ingT * 100) + ' %' : '—'; });
+    h += sec('Costos fijos');
+    M.RUBROS.filter(function(r){ return !r.v; }).forEach(function(r){ h += fila('sub', r.n, function(a){ return m(a.cos[r.k]); }); });
+    h += fila('tot', 'Total costos fijos', function(a){ return m(a.cosT - a.var); });
+    h += fila('tot', 'EBITDA', function(a){ return '<span class="' + (a.ebitda >= 0 ? 'mas' : 'menos') + '">' + (a.ebitda < 0 ? '−' : '') + dec(Math.abs(a.ebitda) / 1e6, 1) + '</span>'; });
+    h += fila('sub', 'Margen EBITDA', function(a){ var g = a.ingT > 0 ? a.ebitda / a.ingT : null; return g === null ? '—' : g < -1 ? 'menor de −100 %' : Math.round(g * 100).toLocaleString('es-CO') + ' %'; });
+    h += fila('tot', 'Caja acumulada al cierre', function(a){ return m(a.caja); });
+    h += sec('Operación al cierre del año');
+    h += fila('sub', 'Usuarios activos', function(a){ return ent(a.activos); });
+    h += fila('sub', 'Usuarios registrados', function(a){ return ent(a.registrados); });
+    h += fila('sub', 'Comercios aliados', function(a){ return ent(a.aliados); });
+    h += fila('sub', 'Reservas en el año', function(a){ return ent(a.reservas); });
+    h += fila('sub', 'Valor de las reservas (M COP)', function(a){ return dec(a.gmv / 1e6, 1); });
+    $('pyg').innerHTML = h + '</tbody>';
+    /* economía por usuario, año 3 */
+    var a3 = rs.slice(24, 36), actProm = a3.reduce(function(x, r){ return x + r.activos; }, 0) / 12;
+    var ing3 = a3.reduce(function(x, r){ return x + r.ingT; }, 0), var3 = a3.reduce(function(x, r){ return x + r.var; }, 0);
+    var arpu = actProm > 0 ? ing3 / 12 / actProm : 0, mb = actProm > 0 ? (ing3 - var3) / 12 / actProm : 0;
+    var cac = par.cpi * T / par.activacion, ltv = mb / par.churn;
+    $('unidad').innerHTML = [
+      ['Costo de un usuario activo', fmt(cac), 'pauta por instalación ÷ instalaciones que registran un vehículo'],
+      ['Ingreso por activo al mes', fmt(arpu), 'promedio del año 3'],
+      ['Margen bruto por activo al mes', fmt(mb), 'después de pasarela, infraestructura e ICA, año 3'],
+      ['Valor de un usuario ÷ su costo', dec(cac > 0 ? ltv / cac : 0, 1) + '×', 'margen bruto mensual ÷ abandono mensual, sobre el costo de adquirirlo']
+    ].map(function(u){ return '<div class="dato"><span class="etq suave">' + u[0] + '</span><b class="cifra-d num">' + u[1] + '</b><span class="fuente">' + u[2] + '</span></div>'; }).join('');
+  }
+
+  /* --- comparación y supuestos --- */
+  var RES_CASOS = {};
+  function calcularCasos(){
+    var corte = $('corteOn').checked;
+    for (var c in CASOS){ var p = Object.assign({}, CASOS[c], {corte:corte}), rs = M.correr(p); RES_CASOS[c] = {p:p, rs:rs, s:M.resumen(rs), sem:M.semaforo(p), metas:cumpleMetas(rs, p)}; }
+  }
+  function textoEq(s, rs){ return rs[rs.length - 1].cortado ? 'Se detiene en el mes 8' : s.equilibrio ? 'Mes ' + s.equilibrio : 'No llega en 60 meses'; }
+  function pintarComparar(){
+    var cs = ['pesimista', 'conservador', 'favorable'];
+    var h = '<thead><tr><th></th>' + cs.map(function(c){ return '<th class="n"' + (c === caso && !personal ? ' style="color:var(--txt-1);box-shadow:inset 0 -2px 0 var(--acc-2)"' : '') + '>' + CASOSN[c] + '</th>'; }).join('') + '</tr></thead><tbody>';
+    var fila = function(n, f){ return '<tr><th>' + n + '</th>' + cs.map(function(c){ return '<td class="n">' + f(RES_CASOS[c]) + '</td>'; }).join('') + '</tr>'; };
+    h += fila('Ingresos año 5', function(r){ return fmtM(r.s.anios[4].ingT); });
+    h += fila('EBITDA año 5', function(r){ return fmtM(r.s.anios[4].ebitda); });
+    h += fila('Equilibrio', function(r){ return textoEq(r.s, r.rs); });
+    h += fila('Capital necesario', function(r){ return fmtM(r.s.capital); });
+    h += fila('Usuarios activos, mes 60', function(r){ return ent(r.rs[59].activos); });
+    h += fila('Comercios aliados, mes 60', function(r){ return ent(r.rs[59].aliados); });
+    h += fila('Metas H1 a H4 cumplidas', function(r){ return r.metas.filter(Boolean).length + ' de 4'; });
+    h += fila('Métricas de corte en zona de replantear', function(r){ return r.sem.replantear + ' de 5'; });
+    $('comparar').innerHTML = h + '</tbody>';
+    $('comparar').querySelectorAll('thead th')[0].textContent = '';
+  }
+  (function(){
+    var cs = ['pesimista', 'conservador', 'favorable'];
+    var h = '<thead><tr><th>Supuesto</th>' + cs.map(function(c){ return '<th class="n">' + CASOSN[c] + '</th>'; }).join('') + '</tr></thead><tbody>';
+    P.forEach(function(p){ h += '<tr><th>' + p.n + '</th>' + cs.map(function(c){ return '<td class="n">' + p.f(CASOS[c][p.k]) + '</td>'; }).join('') + '</tr>'; });
+    $('supuestos').innerHTML = h + '<tr><th>Comercios firmados antes del lanzamiento</th>' + cs.map(function(c){ return '<td class="n">' + CASOS[c].preFirma + '</td>'; }).join('') + '</tr><tr><th>Meses sin mensualidad</th>' + cs.map(function(c){ return '<td class="n">' + CASOS[c].mesesGratis + '</td>'; }).join('') + '</tr></tbody>';
+  })();
+
+  /* --- semáforo de corte (sección Metas) --- */
+  var DOM_C = {cpi:[.5, 4, 1.2, 2.5, true, function(v){ return 'US$' + dec(v, 1); }], activacion:[.2, .8, .40, .65, false, pct0], pctReserva:[0, .2, .03, .08, false, pct0], churn:[.03, .25, .08, .15, true, pct0], pctPagan:[.05, .8, .10, .30, false, pct0]};
+  var DESC_C = {
+    cpi:'Se replantea con US$2,5 o más (≈ $ 8.250) · se escala con US$1,2 o menos (≈ $ 3.960)',
+    activacion:'Se replantea con 40 % o menos · se escala con 65 % o más',
+    pctReserva:'Se replantea con 3 % o menos · se escala con 8 % o más',
+    churn:'Se replantea con 15 % o más · se escala con 8 % o menos',
+    pctPagan:'Se replantea con 10 % o menos · se escala con 30 % o más'
+  };
+  function marcas(k, pos){
+    var fila = [[], []];
+    return ['pesimista', 'conservador', 'favorable'].map(function(cs){
+      var x = Math.max(0, Math.min(100, pos(CASOS[cs][k]))), r = fila[0].some(function(o){ return Math.abs(o - x) < 4.5; }) ? 1 : 0;
+      fila[r].push(x);
+      return '<i class="mk" data-c="' + cs + '" style="left:' + x + '%;top:' + (r ? 0 : 17) + 'px">' + cs[0].toUpperCase() + '</i>';
+    }).join('');
+  }
+  (function(){
+    var h = '';
+    M.CORTE.forEach(function(c){
+      var d = DOM_C[c.k], pos = function(v){ return (v - d[0]) / (d[1] - d[0]) * 100; }, a = pos(d[2]), b = pos(d[3]);
+      var zonas = d[4] ? '<i class="z-esc" style="width:' + a + '%"></i><i class="z-aju" style="width:' + (b - a) + '%"></i><i class="z-rep" style="flex:1"></i>' : '<i class="z-rep" style="width:' + a + '%"></i><i class="z-aju" style="width:' + (b - a) + '%"></i><i class="z-esc" style="flex:1"></i>';
+      h += '<div class="c-fila"><div class="bloque"><h3>' + c.n + '</h3><p class="fuente" style="font-size:16px;color:var(--txt-2)">' + DESC_C[c.k] + '</p></div><div class="pista" data-k="' + c.k + '"><div class="zonas">' + zonas + '</div>' +
+        '<span class="umbral" style="left:' + a + '%">' + d[5](d[2]) + '</span><span class="umbral" style="left:' + b + '%">' + d[5](d[3]) + '</span>' +
+        '<i class="mk actual" data-c="actual" style="width:2px;height:60px;top:0"></i>' + marcas(c.k, pos) + '</div></div>';
+    });
+    $('corte').innerHTML = h;
+  })();
+  function pintarCorte(){
+    M.CORTE.forEach(function(c){
+      var d = DOM_C[c.k], v = (par[c.k] - d[0]) / (d[1] - d[0]) * 100, mk = document.querySelector('.pista[data-k="' + c.k + '"] .mk.actual');
+      mk.style.left = Math.max(0, Math.min(100, v)) + '%';
+    });
+  }
+
+  /* --- recálculo --- */
+  var ultimo = null;
+  function recalcular(){
+    var rs = M.correr(par), s = M.resumen(rs), sem = salidas();
+    ultimo = {rs:rs, s:s};
+    $('chipPers').hidden = !personal;
+    $('casoTxt').textContent = personal ? 'Personalizado a partir del caso ' + CASOSN[caso].toLowerCase() + '. Restablece el caso para volver a sus supuestos.' : CASOTXT[caso];
+    var a5 = s.anios[4], cort = rs[59].cortado;
+    contar('kIng', a5.ingT, fmtM);
+    contar('kEb', a5.ebitda, fmtM, a5.ebitda < 0 ? 'neg' : 'pos');
+    var mg = a5.ingT > 0 ? a5.ebitda / a5.ingT : null;
+    $('kEbTxt').textContent = mg === null ? 'sin ingresos en el año 5' : mg < -1 ? 'las pérdidas superan a los ingresos' : 'margen de ' + Math.round(mg * 100).toLocaleString('es-CO') + ' % sobre ingresos';
+    contar('kEq', cort ? 'Corte' : s.equilibrio ? s.equilibrio : 'No llega', function(v){ return 'Mes ' + Math.round(v); });
+    $('kEqTxt').textContent = cort ? 'la operación se detiene en el mes 8' : s.equilibrio ? 'año ' + Math.ceil(s.equilibrio / 12) + ' · primer mes con 3 meses seguidos en positivo' : 'en 60 meses no hay 3 meses seguidos en positivo';
+    contar('kCap', s.capital, fmtM);
+    $('kCapTxt').textContent = 'la caja más baja, en el mes ' + s.mesMin;
+    contar('kAct', rs[59].activos, ent);
+    contar('kCom', rs[59].aliados, ent);
+    $('semaforo').innerHTML = '<span class="etq suave" style="align-self:center">Métricas de corte</span>' + sem.lista.map(function(x){ return '<span class="chip" title="' + x.n + '"><i style="background:' + ZONA[x.e] + '"></i>' + CORTO[x.k] + ' · ' + x.v + '</span>'; }).join('');
+    pintarPyG(s, rs);
+    calcularCasos(); pintarComparar(); pintarCorte();
+    animarA(series(rs), false);
+  }
+  pintarVista();
+  sincronizar();
+  recalcular();
+  alVer($('graf'), function(){ animarA(series(ultimo.rs), true); }, 0.3);
+
+  /* ================= Inversión ================= */
+  var SERIES = [
+    {k:'claude', n:'Claude', c:'var(--ser-4)'},
+    {k:'infra', n:'Software y tiendas', c:'var(--ser-1)'},
+    {k:'legal', n:'S.A.S. y marca', c:'var(--n-2)'},
+    {k:'comercios', n:'Salidas a firmar comercios', c:'var(--n-3)'},
+    {k:'pauta', n:'Pauta', c:'var(--ser-2)'},
+    {k:'auxilio', n:'Auxilio de ingenieros', c:'var(--n-1)'}
+  ];
+  function leerAux(){ var v = +($('auxilio').value.replace(/\D/g, '')) || 0; return Math.min(10000000, Math.max(0, v)); }
+  $('auxilio').addEventListener('blur', function(){ this.value = fmt(leerAux()); });
+  $('auxilio').addEventListener('focus', function(){ var v = leerAux(); this.value = v ? String(v) : ''; });
+  function leer(){
+    return {d:$('meses3').checked ? 3 : 4, pauta:+$('pauta').value, aux:leerAux(), n:$('ing3').checked ? 3 : 2, cf:$('cloudflare').checked};
+  }
+  function plan(o){
+    var meses = [], L = o.d + 1, total = o.d + 4;
+    for (var m = 1; m <= total; m++){
+      var x = {m:m, claude:0, infra:0, legal:0, comercios:0, pauta:0, auxilio:0, det:[]}, lanz = m >= L;
+      x.claude = (lanz ? 100 : 300) * T; x.det.push(lanz ? 'Claude Max 5x' : 'Claude Max 20x + 5x');
+      if (!o.cf){ x.infra += 20 * T; x.det.push('Vercel Pro'); }
+      if (m >= o.d){ x.infra += 25 * T; x.det.push('Supabase Pro'); }
+      if (lanz){ x.infra += 19 * T; x.det.push('Expo EAS Starter'); }
+      if (m === 1){ x.infra += 164 * T; x.legal += 1700000; x.det.push('Apple, Google, dominio, S.A.S. y marca'); }
+      if (m >= o.d - 1 && m <= o.d + 2){ x.comercios += 500000; x.det.push('salidas a firmar comercios'); }
+      if (lanz){ x.pauta += o.pauta; x.det.push('pauta'); }
+      if (o.aux > 0){ x.auxilio += o.aux * o.n; x.det.push('auxilio de ' + o.n + ' ingenieros'); }
+      x.tot = x.claude + x.infra + x.legal + x.comercios + x.pauta + x.auxilio; x.lanz = lanz;
+      meses.push(x);
+    }
+    return meses;
+  }
+  var gInv = $('grafica'), tip = $('tip'), invVisto = false;
+  function pintarInv(animar){
+    var o = leer(), ms = plan(o), total = ms.reduce(function(a, x){ return a + x.tot; }, 0);
+    var t1 = ms.filter(function(x){ return !x.lanz; }).reduce(function(a, x){ return a + x.tot; }, 0);
+    $('total').textContent = fmt(total); $('cierreTotal').textContent = fmt(total); $('cierreMeses').textContent = o.d + 4;
+    $('totalTxt').textContent = 'Total del plan: ' + o.d + ' meses de desarrollo + 4 de lanzamiento' + (o.aux > 0 ? ', con auxilio de ' + o.n + ' ingenieros.' : ', sin auxilio de ingenieros.');
+    $('t1').textContent = fmt(t1); $('t2').textContent = fmt(total - t1);
+    $('t1Txt').textContent = 'Meses 1 a ' + o.d + ': desarrollo, tiendas, S.A.S., marca y primeras salidas a firmar comercios' + (o.aux > 0 ? ', con auxilio.' : '.');
+    $('t2Txt').textContent = 'Meses ' + (o.d + 1) + ' a ' + (o.d + 4) + ': pauta, software y salidas a firmar comercios' + (o.aux > 0 ? ', con auxilio.' : '.');
+    $('leyenda').innerHTML = SERIES.filter(function(s){ return s.k !== 'auxilio' || o.aux > 0; }).map(function(s){ return '<span><i style="background:' + s.c + '"></i>' + s.n + '</span>'; }).join('') + '<span><i style="background:var(--acc-2);height:2px;vertical-align:3px"></i>Acumulado</span>';
+    var W = 640, H = 300, ml = 52, mr = 60, mt = 30, mb = 34;
+    var max = Math.max.apply(null, ms.map(function(x){ return x.tot; }));
+    var paso = max > 20e6 ? 5e6 : max > 8e6 ? 2e6 : 1e6, tope = Math.ceil(max * 1.12 / paso) * paso;
+    var y = function(v){ return mt + (H - mt - mb) * (1 - v / tope); };
+    var sc = escala(0, total, 4), yA = function(v){ return mt + (H - mt - mb) * (1 - v / sc.hi); };
+    var bw = (W - ml - mr) / ms.length, g = '';
+    for (var v = 0; v <= tope; v += paso) g += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="var(--linea)"/><text x="' + (ml - 7.5) + '" y="' + (y(v) + 4) + '" text-anchor="end" fill="var(--txt-3)" ' + TXT + '>' + (v === 0 ? '0' : dec(v / 1e6, 0)) + '</text>';
+    sc.ts.forEach(function(v){ g += '<text x="' + (W - mr + 7.5) + '" y="' + (yA(v) + 4) + '" fill="var(--acc-2)" ' + TXT + '>' + (v === 0 ? '0' : dec(v / 1e6, 0)) + '</text>'; });
+    g += '<text x="' + (W - mr + 7.5) + '" y="' + (mt - 15) + '" fill="var(--acc-2)" ' + TXT + ' font-weight="600" letter-spacing="1.76">ACUM.</text>';
+    var L = o.d + 1, xL = ml + bw * (L - 1);
+    g += '<line x1="' + xL + '" x2="' + xL + '" y1="' + (mt - 15) + '" y2="' + (H - mb) + '" stroke="var(--txt-3)" stroke-dasharray="3 3"/><text x="' + (xL + 6) + '" y="' + (mt - 15) + '" fill="var(--txt-2)" ' + TXT + ' font-weight="600" letter-spacing="1.76">LANZAMIENTO</text>';
+    var acum = 0, pasos = [];
+    ms.forEach(function(x, i){
+      var x0 = ml + bw * i + bw * 0.2, w = bw * 0.6, a = 0;
+      g += '<g class="mes" data-i="' + i + '" tabindex="0" role="button" aria-label="Mes ' + x.m + ': ' + fmt(x.tot) + '"><rect x="' + (ml + bw * i) + '" y="' + mt + '" width="' + bw + '" height="' + (H - mt - mb) + '" fill="transparent"/><g class="pila">';
+      SERIES.forEach(function(s){ var v = x[s.k]; if (!v) return; var y1 = y(a + v), y0 = y(a); g += '<rect x="' + x0 + '" y="' + y1 + '" width="' + w + '" height="' + Math.max(0, y0 - y1) + '" fill="' + s.c + '"/>'; a += v; });
+      g += '</g><text x="' + (x0 + w / 2) + '" y="' + (H - mb + 18) + '" text-anchor="middle" fill="var(--txt-3)" ' + TXT + ' font-weight="600" letter-spacing="1.76">MES ' + x.m + '</text>';
+      g += '<text class="vt" x="' + (x0 + w / 2) + '" y="' + (y(x.tot) - 7.5) + '" text-anchor="middle" fill="var(--txt-2)" ' + TXT + '>' + dec(x.tot / 1e6, 2) + '</text></g>';
+      var xa0 = ml + bw * i, xa1 = ml + bw * (i + 1);
+      pasos.push([xa0, yA(acum)]); acum += x.tot; pasos.push([xa0, yA(acum)]); pasos.push([xa1, yA(acum)]);
+    });
+    g += '<polyline id="escal" fill="none" stroke="var(--acc-2)" stroke-width="2" points="' + pasos.map(function(p){ return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ') + '"/>';
+    g += '<rect id="lector" x="-5" y="-5" width="10" height="10" fill="var(--acc-2)" transform="translate(' + (W - mr) + ' ' + yA(total) + ')"/>';
+    gInv.innerHTML = g;
+    var cum = []; acum = 0; ms.forEach(function(x){ acum += x.tot; cum.push(acum); });
+    [].forEach.call(gInv.querySelectorAll('.mes'), function(el){
+      var i = +el.dataset.i, x = ms[i];
+      var ver = function(){
+        tip.textContent = 'Mes ' + x.m + (x.lanz ? ' · lanzamiento' : ' · desarrollo') + ': ' + fmt(x.tot) + '. Acumulado: ' + fmt(cum[i]) + '. Incluye ' + x.det.join(', ') + '.';
+        $('lector').setAttribute('transform', 'translate(' + (ml + bw * (i + 1)) + ' ' + yA(cum[i]) + ')');
+      };
+      el.addEventListener('mouseenter', ver); el.addEventListener('focus', ver); el.addEventListener('click', ver);
+    });
+    if (animar && !QUIETO){
+      [].forEach.call(gInv.querySelectorAll('.pila'), function(p, i){ p.style.transformOrigin = 'center ' + y(0) + 'px'; p.style.transformBox = 'view-box'; anim(p, [{transform:'scaleY(0)'}, {transform:'scaleY(1)'}], {d:620, delay:i * 70, e:'cubic-bezier(.3,1.25,.5,1)'}); });
+      [].forEach.call(gInv.querySelectorAll('.vt'), function(t, i){ anim(t, [{opacity:0}, {opacity:1}], {d:300, delay:500 + i * 70}); });
+      var es = $('escal'), len = es.getTotalLength ? es.getTotalLength() : 2000;
+      anim(es, [{strokeDasharray:len + ' ' + len, strokeDashoffset:len}, {strokeDasharray:len + ' ' + len, strokeDashoffset:0}], {d:1400, delay:300, e:'cubic-bezier(.5,0,.3,1)'});
+    }
+    var dev = o.d, filas = [
+      ['Claude', 'Max 20x + Max 5x × ' + dev + ' meses; luego Max 5x × 4 meses', (300 * dev + 100 * 4) * T],
+      ['Vercel', o.cf ? 'Reemplazado por Cloudflare Pages (gratis)' : 'Pro, 1 puesto × ' + (dev + 4) + ' meses', o.cf ? 0 : 20 * (dev + 4) * T],
+      ['Supabase', 'Gratis hasta el mes ' + (dev - 1) + '; Pro × 5 meses', 25 * 5 * T],
+      ['Expo EAS', 'Gratis en el desarrollo; Starter × 4 meses', 19 * 4 * T],
+      ['Apple, Google y dominio', 'US$99 + US$25 + ~US$40', 164 * T],
+      ['Constitución de la S.A.S.', 'Socios jóvenes (Ley 1780 de 2016; exige más de la mitad de las acciones en socios de hasta 35 años)', 500000],
+      ['Registro de marca', 'Una marca, dos clases (estimado)', 1200000],
+      ['Pauta en Meta y TikTok', fmt(o.pauta) + ' × 4 meses', o.pauta * 4],
+      ['Salidas a firmar comercios', 'Transporte y material, 4 meses (estimado)', 2000000]
+    ];
+    if (o.aux > 0) filas.push(['Auxilio de ingenieros', fmt(o.aux) + ' × ' + o.n + ' × ' + (dev + 4) + ' meses', o.aux * o.n * (dev + 4)]);
+    document.querySelector('#desglose tbody').innerHTML = filas.map(function(f){ return '<tr><th>' + f[0] + '</th><td>' + f[1] + '</td><td class="n">' + fmt(f[2]) + '</td></tr>'; }).join('');
+    $('desgloseTotal').textContent = fmt(filas.reduce(function(a, f){ return a + f[2]; }, 0));
+    $('desgloseTit').textContent = 'Total del plan por rubro, ' + (dev + 4) + ' meses, en COP';
+  }
+  ['meses3', 'meses4', 'pauta', 'auxilio', 'ing2', 'ing3', 'cloudflare'].forEach(function(id){
+    var el = $(id); el.addEventListener('change', function(){ pintarInv(true); });
+    if (id === 'auxilio') el.addEventListener('input', function(){ pintarInv(false); });
+  });
+  pintarInv(false);
+  alVer(gInv, function(){ pintarInv(true); }, 0.35);
+
+  /* ================= Tacómetro del cierre ================= */
+  (function(){
+    var svg = $('taco'), cx = 160, cy = 170, R = 130, n = 24, a0 = -210, a1 = 30, h = '';
+    for (var i = 0; i < n; i++){
+      var a = (a0 + (a1 - a0) * i / (n - 1)) * Math.PI / 180, alta = i >= n - 4;
+      var x = cx + R * Math.cos(a), y = cy + R * Math.sin(a);
+      h += '<rect class="led' + (alta ? ' alta' : '') + (i === n - 1 ? ' tope' : '') + '" x="-4" y="-11" width="8" height="22" transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') rotate(' + ((a0 + (a1 - a0) * i / (n - 1)) + 90) + ')"/>';
+    }
+    ['V1', 'V2', 'V3', 'V4'].forEach(function(v, j){
+      var a = (a0 + (a1 - a0) * [2, 8, 14, 19][j] / (n - 1)) * Math.PI / 180;
+      h += '<text class="eje-t" x="' + (cx + (R - 30) * Math.cos(a)).toFixed(1) + '" y="' + (cy + (R - 30) * Math.sin(a) + 4).toFixed(1) + '" text-anchor="middle">' + v + '</text>';
+    });
+    h += '<g id="aguja"><line class="aguja" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + R - 24) + '" y2="' + cy + '"/></g><rect x="' + (cx - 7.5) + '" y="' + (cy - 7.5) + '" width="15" height="15" fill="var(--txt-1)"/>';
+    svg.innerHTML = h;
+    var leds = [].slice.call(svg.querySelectorAll('.led')), ag = $('aguja');
+    ag.style.transformOrigin = cx + 'px ' + cy + 'px'; ag.style.transformBox = 'view-box';
+    function final(){ leds.forEach(function(l){ l.classList.add('on'); }); ag.style.transform = 'rotate(' + a1 + 'deg)'; }
+    if (QUIETO){ final(); return; }
+    ag.style.transform = 'rotate(' + a0 + 'deg)';
+    alVer(svg, function(){
+      leds.forEach(function(l, i){ setTimeout(function(){ l.classList.add('on'); }, 200 + i * 55); });
+      ag.style.transform = 'rotate(' + a1 + 'deg)';
+      ag.animate([{transform:'rotate(' + a0 + 'deg)'}, {transform:'rotate(' + (a1 + 6) + 'deg)', offset:.82}, {transform:'rotate(' + a1 + 'deg)'}], {duration:1700, delay:200, easing:'cubic-bezier(.4,0,.2,1)', fill:'backwards'});
+    }, 0.5);
+  })();
+
+  /* ================= Navegación activa y progreso ================= */
+  var enlaces = [].slice.call(document.querySelectorAll('.barra nav a'));
+  var mapa = {comercios:'modelo', ia:'modelo', funcionamiento:'inversion', ronda:'equipo', fuentes:'equipo'};
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var id = mapa[e.target.id] || e.target.id;
+        enlaces.forEach(function(a){
+          var on = a.getAttribute('href') === '#' + id;
+          a.setAttribute('aria-current', on ? 'true' : 'false');
+          if (on && a.scrollIntoView && window.innerWidth < 960){ var nav = a.closest('nav'); nav.scrollTo({left:a.offsetLeft - 24, behavior:'smooth'}); }
+        });
+      });
+    }, {rootMargin:'-40% 0px -55% 0px'});
+    [].forEach.call(document.querySelectorAll('main section[id]'), function(s){ io.observe(s); });
+  }
+  var prog = $('progreso'), pend = false;
+  function progreso(){ pend = false; var h = document.documentElement.scrollHeight - innerHeight; prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')'; }
+  addEventListener('scroll', function(){ if (!pend){ pend = true; requestAnimationFrame(progreso); } }, {passive:true});
+  progreso();
+})();
+
+</script>
+
+</body>
+</html>
